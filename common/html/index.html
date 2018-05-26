@@ -1,10 +1,28 @@
 <!DOCTYPE html>
+<!--
+    トップページ。登録・参加・登録したビンゴの実行・ログインボタン　ログインしなくても使える今回は
+    よってログインボタンは右上に追いやってよし
+    一応メインは新規ビンゴ登録
+ -->
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<script type="text/javascript" src="../js//jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+<title>ビンゴソロエールZZ</title>
 </head>
 <body>
-
+<h1>ビンゴソロエールZZ</h1>
+<?php
+readfile("header.html");
+?>
+<div>
+    <button type = "button" value = "register" id="register">ビンゴ登録</button>
+    <button type = "button" value = "join" id="join">ビンゴに参加する</button>
+    <button type = "button" value = "execute" id="execute">実行</button>
+</div>
 </body>
 </html>

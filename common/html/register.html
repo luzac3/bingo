@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- 登録ページ。基本機能は値入力とタグ入力。まず初期フォーム一個作ってclone -->
+<!-- 更新の際もまったく同じ動きをします -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id ="import">
+    <p>インポート</p>
+    <!-- csvファイルのインポートスペース -->
+</div>
+<!-- 全体設定 -->
+<p id = "base">基本設定</p>
+<form id ="enviroment_base">
+<table>
+    <tr>
+        <th>設定項目</th>
+        <th>設定値</th>
+
+    </tr>
+    <tr>
+        <td>freeマスを使用する<input type = "checkbox" id = "free_flg" class = "enviroment_base" checked = "checked"></td>
+    </tr>
+
+</table>
+</form>
+
+<p id = "detail">詳細設定</p>
+<form id ="enviroment_detail">
+<table>
+    <tr>
+        <th>設定項目</th>
+        <th>設定値</th>
+
+    </tr>
+    <tr>
+        <td>freeマスの位置を変更する</td>
+        <td>freeマスを増やす</td>
+        <td>クリアマスを使用する</td>
+        <td>終了マスを使用する？</td>
+
+        <td>確率を変更する</td>
+        <td>選択数の多い項目の読み上げ確率を下げる</td>
+        <td>項目ごとに読み上げ確率を設定する</td>
+
+    </tr>
+
+</table>
+</form>
+
+<!-- 個別項目 -->
+<form id ="item">
+<table>
+    <tr>
+        <th>項目名</th>
+        <th>項目略名</th>
+        <th>タグ(スペース区切り)</th>
+    </tr>
+
+
+</table>
+</form>
+</body>
+</html>
