@@ -1,0 +1,60 @@
+<?php
+    if(empty($_GET["BNG_NO"])){
+        // なかった場合は・・・トップページに飛ばすか。リンクからここに飛んでない可能性はないし
+
+    }else{
+        $bng_no = $_GET["BNG_NO"];
+    }
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<script type="text/javascript" src="../js//jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+<title>項目登録</title>
+</head>
+<body>
+<?php
+    echo "<div id='bng_id' class='".$bng_no."'>ビンゴ番号:".$bng_no."<div>";
+?>
+<button type="button" value="csv_laod" id ="csv_load">CSV読み込み</button>
+
+<!-- 個別項目 -->
+<form id ="item">
+<table>
+    <tr>
+        <th>項目名</th>
+        <th>項目略名</th>
+        <th>タグ(スペース区切り)</th>
+    </tr>
+    <?php
+    for($i=0; $i<10; $i++){
+        echo "<tr>\n";
+            echo "<td><input type='text' class='item_name'></td>\n";
+            echo "<td><input type='text' class='item_short_name'></td>\n";
+            echo "<td><input type='text' class='tag'></td>\n";
+        echo "</tr>\n";
+    }
+    ?>
+    <tr>
+
+    </tr>
+
+</table>
+</form>
+<p id = "add_item">項目を増やす　
+<select>
+<?php
+    for($i=0; $i<100; $i++){
+        echo "<option value = '".$i."'>".$i."\n";
+    }
+?>
+</select>個
+<button type="button" value="add_item">追加</button>
+</p>
+</body>
+</html>
