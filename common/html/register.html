@@ -17,11 +17,37 @@
 <table>
     <tr>
         <th>設定項目</th>
-        <th>設定値</th>
 
     </tr>
     <tr>
-        <td>freeマスを使用する<input type = "checkbox" id = "free_flg" class = "enviroment_base" checked = "checked"></td>
+        <td>ビンゴ名<input type = "text" id = "BNG_NAME" class = "enviroment_base"></td>
+    </tr>
+    <tr>
+        <td>タグ(スペース区切り)<input type = "text" id = "BNG_TAG" class = "enviroment_base"></td>
+    </tr>
+    <tr>
+        <td>freeマスを使用する<input type = "checkbox" id = "FREE_MSRE" class = "enviroment_base" checked = "checked"></td>
+    </tr>
+    <tr>
+        <td>演出を使用する<input type = "checkbox" id = "PRFMNC_FLG" class = "enviroment_base" checked = "checked"></td>
+    </tr>
+    <tr>
+        <td>ビンゴ人数上限設定<input type = "number" id = "BNG_FNSH_NUM" class = "enviroment_base" checked = "checked"></td>
+    </tr>
+    <tr>
+        <td>マス数
+        <select id = "BNG_FNSH_NUM" class = "enviroment_base">
+        <?php
+            for($i=3; $i<11; $i++){
+                if($i==5){
+                    echo "<option value='".($i^2)."' selected>".($i^2);
+                }else{
+                    echo "<option value='".($i^2)."'>".($i^2);
+                }
+            }
+        ?>
+        </select>
+        </td>
     </tr>
 
 </table>
@@ -36,31 +62,62 @@
 
     </tr>
     <tr>
-        <td>freeマスの位置を変更する</td>
-        <td>freeマスを増やす</td>
-        <td>クリアマスを使用する</td>
-        <td>終了マスを使用する？</td>
-
-        <td>確率を変更する</td>
-        <td>選択数の多い項目の読み上げ確率を下げる</td>
-        <td>項目ごとに読み上げ確率を設定する</td>
-
+        <td>freeマスの位置を変更する<input type = "checkbox" id ="free_msre_pos" class="enviroment_detail"></td>
     </tr>
-
-</table>
-</form>
-
-<!-- 個別項目 -->
-<form id ="item">
-<table>
     <tr>
-        <th>項目名</th>
-        <th>項目略名</th>
-        <th>タグ(スペース区切り)</th>
+        <td>終了マスを設定する<input type = "checkbox" id ="END_MSRE_FLG" class="enviroment_detail"></td>
+    </tr>
+    <tr>
+        <td>終了ラインを設定する<input type = "checkbox" id ="END_LN_FLG" class="enviroment_detail"></td>
+    </tr>
+    <tr>
+        <td>
+        ビンゴ可能回数(0は無制限)
+        <select id = "BNG_NUM">
+        <?php
+            for($i = 0; $i<11; $i++){
+                "<option value= '".$i."'>".$i;
+            }
+        ?>
+        </select>
+        </td>
     </tr>
 
+    <tr>
+        <td>確率を変更させる<input type = "checkbox" id ="PRBBLTY_FLG" class="enviroment_detail"></td>
+    </tr>
+    <!-- コード値の取得 -->
+    <tr>
+        <td>
+        選択数の多い項目の読み上げ確率を下げる・
+        項目ごとに読み上げ確率を設定する
+        <select>
+        <?php
+            require_once ("../../common/php/stored.php");
+                $arg_arr = array(
+                    "table_name" => "C_PRBBLTY_CD"
+                    ,"cd_clmn_name" => "PRBBLTY_CD"
+                );
+
+                $result = stored("prbblty_cd_load_001",$arg_arr);
+
+                foreach($result as $val){
+                    // 先にフラグ判断して分岐
+                    echo "<option value = '".$val["PRBBLTY_CD"]."' class='".$val["PRBBLTY_CD"]."'>".$val["PRBBLTY_NAME"];
+                }
+        ?>
+        </select>
+        </td>
+    </tr>
+    <tr>
+        <td>自動一時停止解除時間を変更する<input type = "number" id ="AT_STP_LRS_TM" class="enviroment_detail">秒</td>
+    </tr>
 
 </table>
 </form>
+
+<button type="button" value="register">全体設定登録</button>
+<!-- 個別項目が登録されていればビンゴ確認に戻る。登録されていなければ個別項目登録に移行 -->
+
 </body>
 </html>
