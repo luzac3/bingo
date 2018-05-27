@@ -25,39 +25,49 @@ $(document).ready(function(){
             enviroment_lst.foreach(function(obj){
                 enviroment_base[obj.prop("id")] = obj.val();
             });
+            enviroment_lst = null;
 
+            enviroment_lst = $(".enviroment_detail");
 
+            let enviroment_detail = {};
+            enviroment_lst.foreach(function(obj){
+                enviroment_detail[obj.prop("id")] = obj.val();
+            });
 
 
             // 最後に実行
             let old_password = enviroment_base["old_password"];
 
-            // パスワード変更時のみ
-            let new_password = enviroment_base["new_password"];
-            let new_password2 = enviroment_base["new_password2"];
-            if(new_password !== new_password2){
-                alert("パスワードが一致しません");
-                return;
+            if(enviroment_base["new_password"]){
+                // パスワード変更時のみ
+                let new_password = enviroment_base["new_password"];
+                let new_password2 = enviroment_base["new_password2"];
+                if(new_password !== new_password2){
+                    alert("パスワードが一致しません");
+                    return;
+                }
+                login(bng_no,old_password).then(
+                    function(){
+                        // 成功しても何もしない
+                    },function(error){
+                        alert(error);
+                        return;
+                    }
+                ).then(new_user().then(
+                    function(data){
+                        // 登録呼び出し
+                    },function(error){
+                        alert(error);
+                        return;
+                    }
+                ));
+            }else{
+                enviroment_base["HASH"] = null;
             }
-            login(bng_no,old_password).then(
-                function(){
-                    // 成功しても何もしない
-                },function(error){
-                    alert(error);
-                    return;
-                }
-            ).then(new_user().then(
-                function(data){
-                    // 登録呼び出し
-                },function(error){
-                    alert(error);
-                    return;
-                }
-            ));
-
             // パスワードを変更しない場合
         }
 
     });
 
 });
+
