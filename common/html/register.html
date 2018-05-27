@@ -24,6 +24,9 @@ if(!empty($_GET["BNG_NO"])){
 <title>全体設定登録</title>
 </head>
 <body>
+<?php
+echo "<div id = 'bng_no' class='".$bng_no."'>".$bng_no."</div>\n";
+?>
 <div id ="import">
     <p>インポート</p>
     <!-- csvファイルのインポートスペース -->
@@ -41,6 +44,15 @@ if(!empty($_GET["BNG_NO"])){
     </tr>
     <tr>
         <td>タグ(スペース区切り)<input type = "text" id = "BNG_TAG" class = "enviroment_base"></td>
+    </tr>
+    <tr>
+        <td>
+        古いパスワード<input type = "password" id = "old_password" class = "enviroment_base">
+        <br>
+        新しいパスワード<input type = "password" id = "new_password" class = "enviroment_base">
+        <br>
+        新しいパスワード(確認)<input type = "password" id = "new_password2" class = "enviroment_base">
+        </td>
     </tr>
     <tr>
         <td>freeマスを使用する<input type = "checkbox" id = "FREE_MSRE" class = "enviroment_base" checked = "checked"></td>
@@ -70,7 +82,7 @@ if(!empty($_GET["BNG_NO"])){
 </table>
 </form>
 
-<p id = "detail">詳細設定</p>
+<p id = "detail"><button type="button" value="open">開く</button>詳細設定</p>
 <form id ="enviroment_detail">
 <table>
     <tr>
