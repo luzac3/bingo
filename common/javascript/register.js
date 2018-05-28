@@ -34,6 +34,9 @@ $(document).ready(function(){
                 enviroment_detail[obj.prop("id")] = obj.val();
             });
 
+            // マスマスタ
+            
+
 
             // 最後に実行
             let old_password = enviroment_base["old_password"];
