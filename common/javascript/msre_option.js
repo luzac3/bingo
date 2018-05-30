@@ -74,7 +74,9 @@ function initialize(){
     // free_flgがオン、かつマス番号が奇数
     if($("#FREE_MSRE").prop("checked") && msre_num % 2 != 0){
         let free_num = parseInt(msre_num / 2);
-        msre_property[free_num].color = "red";
+        msre_property[free_num].r = "255";
+        msre_property[free_num].g = "0";
+        msre_property[free_num].b = "51";
         msre_property[free_num].item_name = "free";
     }
 
@@ -163,7 +165,7 @@ function draw(canvas_obj,obj){
     let ctx = canvas_obj[0];
 
     // 色を設定
-    ctx.fillStyle="rgb("+this.r+","+this.g+","+this.b+")";
+    ctx.fillStyle="rgb("+obj.r+","+obj.g+","+obj.b+")";
     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
 
     // 枠線
