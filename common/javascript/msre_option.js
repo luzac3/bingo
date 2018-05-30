@@ -13,8 +13,16 @@ $(window).on("load",function(){
     initialize();
 
     // サイズ変更時
+    // マス長だけ変更してDraw
 
     // コマ数変更時
+    $("#BNG_FNSH_NUM").on("change",function(){
+    	initialize();
+    });
+
+    $("canvas").on("click",function(event){
+        msre_set(event);
+    })
 });
 
 function initialize(){
@@ -73,17 +81,53 @@ function initialize(){
     // 描画するCanvasの設定とCanvasオブジェクト
     canvas_obj = canvas_change(msre_property_master);
 
-    let ctx = canvas_obj[0];
-
     for(let i=0; i<msre_num; i++){
-        draw(ctx,msre_property[i]);
+        draw(canvas_obj,msre_property[i]);
     }
-    // 描画した下のレイヤを表示、表のレイヤを非表示
-    $("#pz_canvas"+arr[1]).css('visibility','visible');
-    $("#pz_canvas"+arr[2]).css('visibility','hidden');
 
     //ローカルストレージに配列を保存
     storager.set("msre_property_master", msre_property_master);
+    storager.set("msre_property", msre_property);
+}
+
+function msre_set(e){
+    // freeフラグがオフなら発生しない
+    if(!$("#FREE_MSRE").prop("checked")){
+        return;
+    }
+
+    // マス数を取得
+    let msre_num = $("#BNG_FNSH_NUM").val();
+
+    // クリックされた場所を特定、画面上の座標からCanvas上の絶対座標に変換
+    let x = 0;
+    let y = 0;
+
+    let msre_property = storager.get("msre_property");
+
+    let pos = null;
+
+    let rect = e.target.getBoundingClientRect();
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+
+    // 自分自身を取得
+    for(let i = 0; i < msre_num; i++){
+        if(msre_property[i].x == x && msre_property[i].y == y){
+        	msre_property[i].color = "red";
+        	msre_property[i].item_name = "free";
+            break;
+        }
+    }
+
+    let msre_property_master = storager.get("msre_property_master");
+
+    // 描画するCanvasの設定とCanvasオブジェクト
+    canvas_obj = canvas_change(msre_property_master);
+
+    draw(canvas_obj,Obj);
+
+    //ローカルストレージに配列を保存
     storager.set("msre_property", msre_property);
 }
 
@@ -115,7 +159,9 @@ function canvas_change(master_obj){
     return arr;
 }
 
-function draw(ctx,obj){
+function draw(canvas_obj,obj){
+    let ctx = canvas_obj[0];
+
     // 色を設定
     ctx.fillStyle="rgb("+this.r+","+this.g+","+this.b+")";
     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
@@ -126,4 +172,7 @@ function draw(ctx,obj){
     if(obj.item_name){
         // 文字を描画
     }
+    // 描画した下のレイヤを表示、表のレイヤを非表示
+    $("canvas"+canvas_obj[1]).css('visibility','visible');
+    $("canvas"+canvas_obj[2]).css('visibility','hidden');
 }
