@@ -7,10 +7,6 @@ let Msre_property = function(msre_no,posX,posY,width,height){
     this.width = width;
     this.height = height;
 
-    this.r = r;
-    this.g = g;
-    this.b = b;
-
     this.free_flg = null;
     this.end_flg = null;
 

@@ -113,11 +113,29 @@ function msre_set(e){
     x = e.clientX - rect.left;
     y = e.clientY - rect.top;
 
+
+    let xStart = 0;
+    let yStart = 0;
+
+    let xEnd = 0;
+    let yEnd = 0;
     // 自分自身を取得
     for(let i = 0; i < msre_num; i++){
-        if(msre_property[i].x == x && msre_property[i].y == y){
-        	msre_property[i].color = "red";
-        	msre_property[i].item_name = "free";
+        xStart = msre_property[i].x;
+        yStart = msre_property[i].y;
+
+        xEnd = xStart + msre_property[i].width;
+        yEnd = yStart + msre_property[i].height;
+        if(xStart < x && x < xEnd && yStart < y && y < yEnd){
+            if(msre_property[i].item_cd != "00"){
+                msre_property[i].color = "red";
+                msre_property[i].item_cd = "00";
+                msre_property[i].item_name = "free";
+            }else{
+                msre_property[i].color = "white";
+                msre_property[i].item_cd = null;
+                msre_property[i].item_name = null;
+            }
             break;
         }
     }
@@ -169,10 +187,13 @@ function draw(canvas_obj,obj){
     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
 
     // 枠線
-    ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
+    ctx.lineWidth = 5;
+    ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
 
     if(obj.item_name){
         // 文字を描画
+        ctx.textalign = "center";
+        ctx.fillText(obj.item_name,obj.x + (obj.width / 2),obj.y + (obj.height / 2));
     }
     // 描画した下のレイヤを表示、表のレイヤを非表示
     $("canvas"+canvas_obj[1]).css('visibility','visible');
