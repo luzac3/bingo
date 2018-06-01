@@ -1,14 +1,13 @@
 function login(bng_no,password){
     return new Promise(function(resolve, reject){
         $.ajax({
-            // ログイン処理呼び出し
-            url: url,
+            url: "../../php/login_check.php",
             cache: false,
             timeout: 10000,
             type:'POST',
             dataType: 'json',
             data:{
-            	bng_no:bng_no
+                bng_no:bng_no
                 ,password:password
             }
         }).then(
@@ -23,7 +22,6 @@ function login(bng_no,password){
 
             },
             function(XMLHttpRequest, textStatus, errorThrown){
-                // ログを吐き出す関数を作る
                 console.log("通信に失敗しました");
                 console.log("XMLHttpRequest : " + XMLHttpRequest.status);
                 console.log("textStatus     : " + textStatus);
