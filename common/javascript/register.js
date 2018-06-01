@@ -158,7 +158,7 @@ function msre_register(bng_num){
 
     let str = "";
 
-    // ここを即時関数で囲んでPromissにする
+    // INSERTの文字列として登録
     msre_property.forEach(function(property){
         str += "(";
         str += property.bng_num;

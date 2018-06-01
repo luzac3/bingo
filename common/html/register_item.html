@@ -1,9 +1,9 @@
 <?php
-    if(empty($_GET["BNG_NO"])){
+    if(empty($_GET["bng_no"])){
         // なかった場合は・・・トップページに飛ばすか。リンクからここに飛んでない可能性はないし
 
     }else{
-        $bng_no = $_GET["BNG_NO"];
+        $bng_no = $_GET["bng_no"];
     }
 ?>
 <!DOCTYPE html>
@@ -40,9 +40,6 @@
         echo "</tr>\n";
     }
     ?>
-    <tr>
-
-    </tr>
 
 </table>
 </form>
@@ -54,7 +51,8 @@
     }
 ?>
 </select>個
-<button type="button" value="add_item">追加</button>
+<button type="button" value="add">追加</button>
 </p>
+<p><button type = "button" value="register">登録</button></p>
 </body>
 </html>
