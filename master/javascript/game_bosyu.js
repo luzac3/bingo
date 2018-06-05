@@ -1,23 +1,27 @@
 function game_bosyu(val){
+    let bng_no = $("#all").prop("class");
     if(val == "bosyu"){
         // 参加者募集処理開始
         // ゲームステータスを募集中に書き換え
         // ここはさすがにコード値直接入力でいいと思う。取ってくることもできんことはないが
         let arg_arr = {
-            game_status : 1
+            bng_no : bng_no
+            ,game_status : 1
         }
         let result = call_stored("game_status_update_001",arg_arr);
 
         arg_arr = {
-            user_list:null
+            bng_no : bng_no
+            ,user_list:null
             ,user_exist_num:0
         }
 
         user_bosyu_loop(0,arg_arr);
 
         // ユーザー配列のDB保管
+
     }else if(val == "pause"){
-    	wait_status(false);
+        wait_status(false);
     }
 }
 

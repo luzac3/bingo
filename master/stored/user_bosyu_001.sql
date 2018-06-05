@@ -25,6 +25,7 @@ DELIMITER //
 --  2018.6.05 大杉　新規作成
 -- ********************************************************************************************
 CREATE PROCEDURE `user_bosyu_001`(
+    IN `_bng_no` CHAR(5)
     IN `_user_list` VARCHAR(2000)
     , IN `_user_exist_num` INTEGER
     , OUT `exit_cd` INTEGER
@@ -35,6 +36,14 @@ BEGIN
 
     -- 異常終了ハンドラ
     DECLARE EXIT HANDLER FOR SQLEXCEPTION SET exit_cd = 99;
+
+    UPDATE
+        T_BNG_USR
+    SET
+        EXST_FLG = null;
+    WHERE
+        KUSN_NTJ < ( NOW() - INTERVAL 30 SECOND )
+    ;
 
     WHILE _user_exist_num = @ul_num AND _user_exist_num = @ul1_num DO
         SELECT
@@ -73,6 +82,7 @@ BEGIN
                 ,GROUP_CONCAT(USR_CD) AS USR_CD
                 ,GROUP_CONCAT(USR_NAME) AS USR_NAME
                 ,GROUP_CONCAT(EXST_FLG) AS EXST_FLG
+                ,NOW() AS DATETIME
             FROM
                 T_BNG_USR
             WHERE

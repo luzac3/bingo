@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<?php
+if(!empty($_GET["BNG_NO"])){
+    // 番号がないのはおかしいのでリダイレクト
+}else{
+    // ビンゴ番号をテーブルから設定
+    // ユーザー名の紐付けはここで行われないため引数なし
+    $result = stored("register_001",null);
+    $bng_no = $result["BNG_NO"];
+}
+?>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -11,6 +21,9 @@
 <link rel="stylesheet" href="../../common/css/base.css" type="text/css" media="screen">
 <title>ビンゴソロエールZZ</title>
 <body>
+<?php
+echo "<div id = 'all' class = '".$bng_no."'></div>\n";
+?>
 <div id = "bosyu">
 <div id = "logo">ビンゴソロエールZZ　マスタページ</div>
 <!-- 人数ログ -->
