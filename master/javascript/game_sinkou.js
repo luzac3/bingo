@@ -4,12 +4,12 @@
  *
  * @param user_list 登録画面で取得した参加ユーザーリスト
  */
-function game_sinkou(user_list){
-	let pause = $("#pause").val();
+function game_sinkou(game_property){
+    let pause = $("#pause").val();
 
-	if(pause == "pause"){
+    if(pause == "pause"){
         wait_status(false);
-	}
+    }
 
     let bng_no = $("#all").prop("class");
 
@@ -18,43 +18,79 @@ function game_sinkou(user_list){
         ,game_status : 2
     }
     // ゲームステータスを更新
-    let result = call_stored("game_status_update_001",arg_arr);
+    call_stored("game_status_update_001",gameProperty).then(function(){
+
+    });
 
     // 確率設定登録・初期化
-    kakuritu(bng_no);
+    game_property = kakuritu(game_property);
 
     // ゲーム進行ループ呼び出し
     game_sinkou_loop(user_list);
 }
 
-function game_sinkou_loop(user_list){
+function game_sinkou_loop(game_property){
     // 継続フラグチェック
     let continue_flg = wait_status()();
     if(!continue_flg){
         return;
     }
+    let arg_arr = {
+        bng_no:game_property["bng_no"]
+    }
     // 参加ユーザーの登録フラグをリセット
+    call_stored_wait("user_flg_reset_001",arg_arr).then(function(data){
+        // 項目選択
+        item_select(game_property);
 
-    // 待機開始
-    call_stored_wait("user_bosyu_001",arg_arr).then(function(data){
-        // ヒットした自動割り振りのユーザーコードとユーザー名が返却される
-        // 0,1は人数が入っている
-        user_list(data);
-        user_bosyu_loop(num++,arg_arr,user_list()(),user_num()());
-    },function(){
-        if(num > 100){
-            // ユーザ募集を続けるかどうか確認
-            // 続ける場合はnumをリセット
+        // 演出呼び出し
+        if(ensyutu_flg){
+            ensyutu(game_property);
+        }else{
+
         }
-        user_bosyu_loop(num++,arg_arr);
+    },function(){
+
     });
 }
 
 /*
- * ユーザーのリストを登録するためのプロパティ
- * 文字列で返すことになっているが、考え中(マップで帰ってきてもいいのではないかと)
+ * 項目の選択を行う
  */
-function user_list(arr_str){
+function item_select(game_prpoerty){
+    let item_cd = "";
+    // 確率設定有無チェック
+    if(game_proerty.kakuritu_flg){
+        let kakuritu = Math.rondom();
+        let kakuritu_hikaku = 0;
+        let kakuritu_group = 0;
+        // 確率[0]の確率+確率[1]の確率・・・とやっていく
+        for(let i=0,len = game_proerty.kakuritu_list.length(); i < len; i++){
+            kakuritu_hikaku += game_proerty.kakuritu_list[i] / 100;
+            if(kakuritu < kakuritu_hikaku){
+                kakuritu_group = i;
+                break;
+            }
+        }
+        let arr_length = game_property.kakuritu_list[kakuritu_group].length();
+
+        item_cd = game_property.kakuritu_list[kakuritu_group][Math,floor(Math.rondom()) * arr_length];
+    }else{
+        let arr_length = game_property.no_kakuritu_list.length();
+        item_cd = game_property.no_kakuritu_list[Math,floor(Math.rondom()) * arr_length];
+    }
+    // 登録が完了するまで配列の削除は行わないが、一度でも選択されたら読み上げられたというフラグを立てにいく
+    // 演出完了前に落ちた場合、すでに値は選択されたものとして扱う(すでにチェックが完了していた場合はフラグが立っているため、進行する)
+    // 配列生成の際にチェックして読み上げフラグが立っている場合は選択項目に登録せず、完了リストにセットして進める
+    return item_cd;
+}
+
+
+/*
+ * 演出を行う関数
+ * 演出前段階でキャラクター選別は済
+ */
+function ensyutu(game_property){
 
     if(this.user_list == null){
         this.user_list = {};

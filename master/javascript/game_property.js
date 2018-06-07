@@ -19,8 +19,12 @@ let Game_property = function(bng_no,user_num){
     this.user_property = {};
     // 読み上げる項目のプロパティリスト
     this.item_list = {};
-    // 確率ごとにまとめた項目の配列(固定確率の場合)
-    this.kakuritu_list = [[],[],[],[],[]];
+    // 確率を持たない場合のリスト
+    this.no_kakuritu_list = [];
+    // 確率ごとにまとめた項目の配列
+    this.kakuritu_list = [];
+    // 存在する確率のリスト
+    this.kakuritu_item_list = [];
 }
 
 /*
@@ -70,19 +74,19 @@ function kakuritu_kugiri(group){
     let kakuritu = "";
     switch(group){
       case 0:
-        kakuritu = "1%";
+        kakuritu = 1;
         break;
       case 1:
-        kakuritu = "4%";
+        kakuritu = 4;
         break;
       case 2:
-        kakuritu = "15%";
+        kakuritu = 15;
         break;
       case 3:
-        kakuritu = "30%";
+        kakuritu = 30;
         break;
       case 4:
-        kakuritu = "50%";
+        kakuritu = 50;
         break;
     }
     return kakuritu;
