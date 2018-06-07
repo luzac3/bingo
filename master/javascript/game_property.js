@@ -10,9 +10,9 @@ let Game_property = function(bng_no,user_num){
     // ユーザー人数
     this.user_num = user_num;
     // 演出フラグ
-    this.flg;
+    this.prfmnc_flg;
     // 確率フラグ
-    this.flg;
+    this.prbblty_flg;
     // 確率コード
     this.cd;
     // ユーザーのプロパティ
@@ -20,11 +20,11 @@ let Game_property = function(bng_no,user_num){
     // 読み上げる項目のプロパティリスト
     this.item_list = {};
     // 確率を持たない場合のリスト
-    this.no_kakuritu_list = [];
+    this.no_prbblty_list = [];
     // 確率ごとにまとめた項目の配列
-    this.kakuritu_list = [];
+    this.prbblty_list = [];
     // 存在する確率のリスト
-    this.kakuritu_item_list = [];
+    this.prbblty_item_list = [];
 }
 
 /*
@@ -54,7 +54,7 @@ let User_property = function(cd,name){
  * @param sh_name アイテム略称
  * @param choose_num 選択された回数
  */
-let Item_property = function(cd,name,sh_name,kakuritu,choose_num){
+let Item_property = function(cd,name,sh_name,prbblty,choose_num){
     // コード番号
     this.cd = cd;
     // 名前
@@ -62,7 +62,7 @@ let Item_property = function(cd,name,sh_name,kakuritu,choose_num){
     // 略称
     this.sh_name = sh_name;
     // 確率
-    this.kakuritu = kakuritu;
+    this.prbblty = prbblty;
     // 選択された回数
     this.item_selected_num = choose_num;
 
@@ -70,7 +70,8 @@ let Item_property = function(cd,name,sh_name,kakuritu,choose_num){
     this.flg = null;
 }
 
-function kakuritu_kugiri(group){
+//
+function prbblty_kugiri(group){
     let kakuritu = "";
     switch(group){
       case 0:
