@@ -11,6 +11,10 @@ function game_sinkou(game_property){
         wait_status(false);
     }
 
+    // 非同期系のチェック関数を設定
+    let asynchronous_checker = new Asynchronous_checker();
+    asynchronous_checker_storage(asynchronous_checker);
+
     let bng_no = $("#all").prop("class");
 
     let arg_arr = {
@@ -19,15 +23,21 @@ function game_sinkou(game_property){
     }
     // ゲームステータスを更新
     call_stored("game_status_update_001",gameProperty).then(function(){
-
+        // 確率設定登録・初期化
+        initialize(game_property).then(game_property => {
+            // ゲーム進行ループ呼び出し
+            game_sinkou_loop(game_property);
+        });
     });
-
-    // 確率設定登録・初期化
-    game_property = kakuritu(game_property);
-
-    // ゲーム進行ループ呼び出し
-    game_sinkou_loop(user_list);
 }
+
+async function initialize(){
+    game_property = await prbblty(game_property);
+    game_property = image_set(game_property);
+    return game_property;
+}
+
+
 
 function game_sinkou_loop(game_property){
     // 継続フラグチェック
@@ -38,6 +48,7 @@ function game_sinkou_loop(game_property){
     let arg_arr = {
         bng_no:game_property["bng_no"]
     }
+
     // 参加ユーザーの登録フラグをリセット
     call_stored_wait("user_flg_reset_001",arg_arr).then(function(data){
         // 項目選択
@@ -91,38 +102,9 @@ function item_select(game_prpoerty){
  * 演出前段階でキャラクター選別は済
  */
 function ensyutu(game_property){
+    // 本来はこれもコールバックでDBからデータを取得する必要がある(ゲームごとに画像やムービーを設定する)が、Phase1では省略
+    // 固定の演出を取得
 
-    if(this.user_list == null){
-        this.user_list = {};
-    }
-
-    if(user_arr != null){
-        let user_arr = arr_str.split(",");
-
-        for(let i = 2,len = user_arr.length(); i< len; i++){
-            this.user_list[user_arr[i]] = new User_property(user_arr);
-        }
-    }
-
-    return (function(){
-        return this.user_list;
-    });
-}
-
-/*
- * ユーザー人数(全体と存在している人数)のプロパティを返却するクロージャ
- */
-function user_num(user_arr){
-    return (function(){
-        return this.user_num;
-    });
-    let User_num_arr = function(user_arr){
-        this.user_num_whole = user_arr[0];
-        this.user_num_exist = user_arr[1];
-    }
-    if(user_num != null){
-        this.user_num = new User_num_arr(user_arr);
-    }
 }
 
 /*
@@ -136,13 +118,4 @@ function wait_status(status){
     return (function(){
         return this.status;
     });
-}
-
-/*
- * ユーザの情報を設定するプロパティ
- */
-let User_property = function(){
-    this.user_cd;
-    this.user_name;
-    this.exist_flg;
 }

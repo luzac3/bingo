@@ -25,6 +25,8 @@ let Game_property = function(bng_no,user_num){
     this.prbblty_list = [];
     // 存在する確率のリスト
     this.prbblty_item_list = [];
+    // コード値をキーとしたイメージのリスト
+    this.image_list = {};
 }
 
 /*
@@ -44,6 +46,8 @@ let User_property = function(cd,name){
     this.bng_num = "";
     // 終了フラグ
     this.end_flg = "";
+    // 存在フラグ(デフォルトは存在)
+    this.exist_flg = "1";
 }
 
 /*
