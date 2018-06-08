@@ -26,7 +26,6 @@ $(window).on("load",function(){
 });
 
 function initialize(){
-
     // マスごとのプロパティを格納する配列
     let msre_property = [];
 
@@ -34,6 +33,7 @@ function initialize(){
     let msre_num = $("#BNG_FNSH_NUM").val();
 
     // マス数にあわせてマスのプロパティをインスタンス化、配列に保存してストレージに格納
+    // こっちを呼び出しもとで行う
 
     // ラッパークラスの長さを取得
     let wrapper_length = $("#wrapper").outerwWidth();
