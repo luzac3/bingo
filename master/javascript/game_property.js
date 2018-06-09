@@ -9,12 +9,23 @@ let Game_property = function(bng_no,user_num){
     this.bng_no = bng_no;
     // ユーザー人数
     this.user_num = user_num;
+    // 描画オブジェクトリスト
+    this.draw_obj_list = [];
+    // 背景使用フラグ
+    this.bg_us_flg = null;
+    // 背景URL
+    this.bg_url = "";
+
     // 演出フラグ
-    this.prfmnc_flg;
+    this.prfmnc_flg = null;
+
+    // 終了マスフラグ
+    this.end_msre_flg = null;
+
     // 確率フラグ
-    this.prbblty_flg;
+    this.prbblty_flg = null;
     // 確率コード
-    this.cd;
+    this.prbblty_cd = null;
     // ユーザーのプロパティ
     this.user_property = {};
     // 読み上げる項目のプロパティリスト
@@ -27,6 +38,11 @@ let Game_property = function(bng_no,user_num){
     this.prbblty_item_list = [];
     // コード値をキーとしたイメージのリスト
     this.image_list = {};
+
+    // 現在選択されている項目のコード値
+    this.item_cd = "";
+    // 残項目
+    this.left_item_num = 0;
 }
 
 /*

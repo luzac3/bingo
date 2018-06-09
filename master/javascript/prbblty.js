@@ -11,10 +11,7 @@ function prbblty(game_property){
         bng_no:game_property["bng_no"]
     }
 
-    // 非同期関数値チェッカー取得
-    let asynchronous_checker = asynchronous_checker_storage();
-
-    return new Promise(function(resolve,reject){
+    return new Promise(resolve,reject => {
         // 存在するコードとコード数をすべて受信
         call_stored("item_list_choose_001",arg_arr).then(function(data){
             let kugiri = 0;
@@ -43,9 +40,6 @@ function prbblty(game_property){
                 game_property.prbblty_item_list[prbblty].push(val["item_cd"]);
 
                 resolve(game_property);
-
-                asynchronous_checker.item_set_flg = true;
-                asynchronous_checker_storage(asynchronous_checker);
             })
         },function(data){
             // 通信に失敗した旨を通知。リトライするかどうかを選択

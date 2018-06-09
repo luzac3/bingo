@@ -11,15 +11,10 @@ function game_sinkou(game_property){
         wait_status(false);
     }
 
-    // 非同期系のチェック関数を設定
-    let asynchronous_checker = new Asynchronous_checker();
-    asynchronous_checker_storage(asynchronous_checker);
-
-    let bng_no = $("#all").prop("class");
 
     let arg_arr = {
-        bng_no : bng_no
-        ,game_status : 2
+        bng_no : game_property.bng_no
+        ,game_status : "2"
     }
     // ゲームステータスを更新
     call_stored("game_status_update_001",gameProperty).then(function(){
@@ -33,13 +28,25 @@ function game_sinkou(game_property){
 
 async function initialize(){
     game_property = await prbblty(game_property);
-    game_property = image_set(game_property);
+    game_property = await image_set(game_property);
+
+    if(game_property.prfmnc_flg){
+        let obj = new Draw_obj();
+        if(game_property.bg_us_flg){
+            obj.img = new Image();
+            obj.img.src = "../../img/"+game_property.bg_url;
+        }
+        let property = {
+            obj:obj
+            ,wrapper:"mstr_wrapper"
+            ,canvas_name:"mstr_canvas"
+        }
+        await initialize(draw_initialize,property);
+    }
     return game_property;
 }
 
-
-
-function game_sinkou_loop(game_property){
+async function game_sinkou_loop(game_property){
     // 継続フラグチェック
     let continue_flg = wait_status()();
     if(!continue_flg){
@@ -50,61 +57,32 @@ function game_sinkou_loop(game_property){
     }
 
     // 参加ユーザーの登録フラグをリセット
-    call_stored_wait("user_flg_reset_001",arg_arr).then(function(data){
+    call_stored_wait("user_flg_reset_001",arg_arr).then(function(){
         // 項目選択
-        item_select(game_property);
+        game_property = await item_select(game_property);
 
         // 演出呼び出し
-        if(ensyutu_flg){
-            ensyutu(game_property);
+        if(game_property.prfmnc_flg){
+            performance(game_property).then(function(){
+                // DB登録、ループ呼び出し
+                // 演出アリでもDB登録はちゃんと待つ(即落ちの可能性も0ではない)
+                let arg_arr = {
+                    bng_no:bng_no
+                    ,item_cd:game_property.item_cd;
+                    ,cd:"2"
+                }
+                call_stored("item_status_update_001",arg_arr).then(function(){
+                    game_sinkou_loop(game_prpoerty);
+                })
+            });
         }else{
-
+            call_stored("item_status_update_001",arg_arr).then(function(){
+                game_sinkou_loop(game_prpoerty);
+            })
         }
-    },function(){
+    },function(data){
 
     });
-}
-
-/*
- * 項目の選択を行う
- */
-function item_select(game_prpoerty){
-    let item_cd = "";
-    // 確率設定有無チェック
-    if(game_proerty.kakuritu_flg){
-        let kakuritu = Math.rondom();
-        let kakuritu_hikaku = 0;
-        let kakuritu_group = 0;
-        // 確率[0]の確率+確率[1]の確率・・・とやっていく
-        for(let i=0,len = game_proerty.kakuritu_list.length(); i < len; i++){
-            kakuritu_hikaku += game_proerty.kakuritu_list[i] / 100;
-            if(kakuritu < kakuritu_hikaku){
-                kakuritu_group = i;
-                break;
-            }
-        }
-        let arr_length = game_property.kakuritu_list[kakuritu_group].length();
-
-        item_cd = game_property.kakuritu_list[kakuritu_group][Math,floor(Math.rondom()) * arr_length];
-    }else{
-        let arr_length = game_property.no_kakuritu_list.length();
-        item_cd = game_property.no_kakuritu_list[Math,floor(Math.rondom()) * arr_length];
-    }
-    // 登録が完了するまで配列の削除は行わないが、一度でも選択されたら読み上げられたというフラグを立てにいく
-    // 演出完了前に落ちた場合、すでに値は選択されたものとして扱う(すでにチェックが完了していた場合はフラグが立っているため、進行する)
-    // 配列生成の際にチェックして読み上げフラグが立っている場合は選択項目に登録せず、完了リストにセットして進める
-    return item_cd;
-}
-
-
-/*
- * 演出を行う関数
- * 演出前段階でキャラクター選別は済
- */
-function ensyutu(game_property){
-    // 本来はこれもコールバックでDBからデータを取得する必要がある(ゲームごとに画像やムービーを設定する)が、Phase1では省略
-    // 固定の演出を取得
-
 }
 
 /*
@@ -119,3 +97,4 @@ function wait_status(status){
         return this.status;
     });
 }
+
