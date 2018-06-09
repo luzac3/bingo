@@ -4,11 +4,11 @@
  * @param bng_no ビンゴ番号
  * @param user_num ユーザー人数
  */
-let Game_property = function(bng_no,user_num){
+let Game_property = function(bng_no){
     // ビンゴ番号
     this.bng_no = bng_no;
     // ユーザー人数
-    this.user_num = user_num;
+    this.user_num = 0;
     // 描画オブジェクトリスト
     this.draw_obj_list = [];
     // 背景使用フラグ

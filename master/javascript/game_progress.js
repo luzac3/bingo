@@ -21,6 +21,9 @@ function game_progress(game_property){
 
 async function initialize(){
     game_property = await prbblty(game_property);
+    // ゲーム状態を保存
+    game_property_stocker(game_property);
+
     game_property = await image_set(game_property);
 
     if(game_property.prfmnc_flg){

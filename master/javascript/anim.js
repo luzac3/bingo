@@ -6,53 +6,111 @@
 /*
  * アニメーションフレームのアニメーション処理部分
  * 描画オブジェクトを受け取り、コールバックでdraw関数を動かす
+ *
+ * @return 終了コード値(フラグ？)
+ * ・0　一時停止
+ * ・1　正常終了
  */
-function anim(draw_obj,draw,fn_animloop,animloop){
-    // 描画リストの演出画像を切り替え
-    // ていうかこの中でやるのって描画処理呼び出しだけでよくない？何で複雑にしようとしてるの？
-    // オブジェクトの描画関数呼び出し
-    let result = draw(draw_obj);
-    if(result){
-        return;
-    }
-    fn_animloop(animloop);
-}
-
-function animloop(property,draw){
-    let obj = property.obj;
-    let time = property.time;
-
-    let timer_set_flg = timer_set_flg()();
-
-    let timer = null;
-
-    if(time && !timer_set_flg){
-        timer = new Timer();
-        timer.start();
-        timer_set_flg(true);
-    }
-
-    /* 共通関数用 */
-    let speed = property.speed;
-    if(time){
-        let now_time = timer.get_time();
-        if(time < now_time){
-            anim(property.bind(property),draw,window.requestAnimationFrame(animloop).bind(window),animloop);
+function anim(draw_obj,draw){
+    return new Promise(resolve,reject => {
+        // オブジェクトの描画関数呼び出し
+        let result = draw(draw_obj);
+        if(!result){
+            resolve(result);
         }else{
-            window.requestAnimationFrame(animloop);
+            reject(result);
         }
+    });
+}
+
+/*
+ * @param プロパティ
+ * ・描画オブジェクトプロパティ(リスト)
+ * ・ラッパークラスの名称(ID)
+ * ・Canvasの名称
+ *
+ * ・リピート回数(未指定無限回リピート、0なら1回で終了)
+ * ・稼働時間(未指定なら無限時間稼動、0なら即時終了(アニメーションしない)) ミリ秒指定
+ * ＊回数と時間を同時に入れる場合、どちらかが0になった時点で終了するので注意(片方が無限指定であっても)
+ * ・スピード(1動作が何FPSか)
+ */
+function animloop(property,draw){
+    return new Promise(resolve,reject => {
+        let obj = property.obj;
+        // wrapperクラスの名称
+        let wrapper = property.wrapper;
+        // Canvas名称
+        let canvas_name = property.canvas_name;
+
+        // リピート回数
+        let repeat = property.repeat;
+        if(repeat != null){
+            // タイマー起動
+            let repeat_num = repeat_num()();
+            if(repeat_num > repeat){
+                resolve(1);
+            }
+        }
+
+        // 稼働時間
+        let time = property.time;
+        if(time != null){
+            // タイマー起動
+            let timer = timer_storage()().getTime();
+            if(timer > time){
+                resolve(1);
+            }
+        }
+
+        // スピード
+        let speed = property.speed;
+
+        anim(property,draw).then(function(data){
+            reject(data);
+        },function(data){
+            if(data == 1){
+                animloop(property,draw);
+            }else{
+                reject(data);
+            }
+        });
+    });
+}
+
+let Timer = function(){
+    /*
+     * タイマー開始/リセット
+     */
+    this.startTimer = function(){
+        this.now = Date.now();
+    }
+
+    /*
+     * 時間取得
+     */
+    this.getTime = function(){
+        return Date.now() - this.now;
     }
 }
 
-// オブジェクトを変更する関数
-// こちらはセットタイムアウト？
-// フロー
-/*
- * 1、アニメーションを回す関数を設定(時間ごとにSETTIMEOUTを呼んで制御？　時間制御も出来るようにしとくか
- * 　プロパティで受け取るようにすればいいわけだし(引数が省略できる共通関数になる)。完了したらresolveを返す非同期関数)
- * 2、
- */
+function timer_storage(){
+    if(!this.timer){
+        this.timer = new Timer();
+        this.timer.startTimer();
+    }
+    return (function(){
+        return this.timer;
+    });
+}
 
+function repeat_num(){
+    if(!this.num && this.num != 0){
+        this.num = 0;
+    }
+    return (function(){
+        return this.num;
+    })
+}
 
 /*
  * 以下、AnimFrame未対応ブラウザのための再定義
