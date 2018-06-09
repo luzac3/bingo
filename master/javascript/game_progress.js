@@ -4,14 +4,7 @@
  *
  * @param user_list 登録画面で取得した参加ユーザーリスト
  */
-function game_sinkou(game_property){
-    let pause = $("#pause").val();
-
-    if(pause == "pause"){
-        wait_status(false);
-    }
-
-
+function game_progress(game_property){
     let arg_arr = {
         bng_no : game_property.bng_no
         ,game_status : "2"
@@ -21,7 +14,7 @@ function game_sinkou(game_property){
         // 確率設定登録・初期化
         initialize(game_property).then(game_property => {
             // ゲーム進行ループ呼び出し
-            game_sinkou_loop(game_property);
+            game_progress_loop(game_property);
         });
     });
 }
@@ -46,10 +39,10 @@ async function initialize(){
     return game_property;
 }
 
-async function game_sinkou_loop(game_property){
-    // 継続フラグチェック
-    let continue_flg = wait_status()();
-    if(!continue_flg){
+async function game_progress_loop(game_property){
+    // ポーズ状態チェック
+    let pause = pause()();
+    if(!pause){
         return;
     }
     let arg_arr = {
@@ -72,12 +65,12 @@ async function game_sinkou_loop(game_property){
                     ,cd:"2"
                 }
                 call_stored("item_status_update_001",arg_arr).then(function(){
-                    game_sinkou_loop(game_prpoerty);
+                    game_progress_loop(game_prpoerty);
                 })
             });
         }else{
             call_stored("item_status_update_001",arg_arr).then(function(){
-                game_sinkou_loop(game_prpoerty);
+                game_progress_loop(game_prpoerty);
             })
         }
     },function(data){

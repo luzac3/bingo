@@ -1,6 +1,6 @@
-function game_bosyu(val){
+function game_recruit(button){
     let bng_no = $("#all").prop("class");
-    if(val == "bosyu"){
+    if(val == "start"){
         // 参加者募集処理開始
         // ゲームステータスを募集中に書き換え
         // ここはさすがにコード値直接入力でいいと思う。取ってくることもできんことはないが
