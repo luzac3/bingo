@@ -38,3 +38,47 @@ function draw_initialize(ctx,obj){
         ctx.drawImage(obj.img, obj.x, obj.y, obj.width, obj.height);
     }
 }
+
+function image_set(game_property){
+    return new Promise(resolve,reject => {
+        let loop_num = 0;
+        let img_num = game_property.item_num;
+        for (let  key in game_property.item_list) {
+            game_property.image_list[key] = new Draw_obj();
+            game_property.image_list[key].img = new Image();
+            game_property.image_list[key].img.src = "../../img/"+game_property.item_list[key].url;
+            game_property.image_list[key].img.onload = load_num(img_num,
+                function(){
+                    resolve(game_proerty);
+                }
+                ,game_proerty
+            )();
+        }
+    })
+    function load_num(img_num,callback,game_property){
+        let num = 0;
+        return (function(){
+            if(++num == img_num){ callback();}
+        })
+    }
+}
+/*
+ * ランダムに画像を表示する関数
+ */
+function draw_random(ctx,obj){
+    // 背景オブジェクトのプロパティ取得
+    let initialize_property = storager.get("initialize_property");
+    // 背景の描画
+    canvas_initialize(draw_initialize,initialize_property)
+}
+
+
+
+
+
+
+
+
+
+
+

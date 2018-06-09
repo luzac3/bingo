@@ -1,9 +1,4 @@
 /*
- * Canvasの共通処理についてCanvas共通名設定
- * 共通に出来る部分もあるが、共通に出来ない詳細設定が多すぎてあまり具合良くないっぽい
- */
-
-/*
  * アニメーションフレームのアニメーション処理部分
  * 描画オブジェクトを受け取り、コールバックでdraw関数を動かす
  *
@@ -11,10 +6,23 @@
  * ・0　一時停止
  * ・1　正常終了
  */
-function anim(draw_obj,draw){
+function anim(property,draw){
     return new Promise(resolve,reject => {
+        // キャンバス変更用のマスタ取得
+        let property_master = storager.get("property_master");
+
+        // 描画するCanvasの設定とCanvasオブジェクト
+        canvas_obj = canvas_change(property_master,property.canvas_name);
+
         // オブジェクトの描画関数呼び出し
-        let result = draw(draw_obj);
+        // draw_propertyに変更前後の値を入れておく必要アリ(移動とか出来ないし)
+        // speed等のデータを使うためこちらを取得
+        let result = draw(canvas_obj[0],property);
+
+        // canvasの入れ替え
+        document.getElementById(canvas_name+canvas_obj[1]).css('visibility','visible');
+        document.getElementById(canvas_name+canvas_obj[2]).css('visibility','hidden');
+
         if(!result){
             resolve(result);
         }else{

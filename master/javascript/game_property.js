@@ -16,6 +16,9 @@ let Game_property = function(bng_no){
     // 背景URL
     this.bg_url = "";
 
+    // 項目数
+    this.item_num = 0;
+
     // 演出フラグ
     this.prfmnc_flg = null;
 
@@ -28,7 +31,7 @@ let Game_property = function(bng_no){
     this.prbblty_cd = null;
     // ユーザーのプロパティ
     this.user_property = {};
-    // 読み上げる項目のプロパティリスト
+    // 読み上げる項目のプロパティ(Item_property)リスト
     this.item_list = {};
     // 確率を持たない場合のリスト
     this.no_prbblty_list = [];
@@ -36,7 +39,10 @@ let Game_property = function(bng_no){
     this.prbblty_list = [];
     // 存在する確率のリスト
     this.prbblty_item_list = [];
-    // コード値をキーとしたイメージのリスト
+    /*
+     * コード値をキーとしたイメージのリスト
+     * ・コード値：imgオブジェクト
+     */
     this.image_list = {};
 
     // 現在選択されている項目のコード値
@@ -74,7 +80,7 @@ let User_property = function(cd,name){
  * @param sh_name アイテム略称
  * @param choose_num 選択された回数
  */
-let Item_property = function(cd,name,sh_name,prbblty,choose_num){
+let Item_property = function(cd,name,sh_name,prbblty,choose_num,url){
     // コード番号
     this.cd = cd;
     // 名前
@@ -88,6 +94,9 @@ let Item_property = function(cd,name,sh_name,prbblty,choose_num){
 
     // 読み上げフラグ(読み上げられたら立つ)
     this.flg = null;
+
+    // 項目のURL
+    this.url = url;
 }
 
 //

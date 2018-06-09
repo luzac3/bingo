@@ -37,7 +37,7 @@ async function initialize(){
             ,wrapper:"mstr_wrapper"
             ,canvas_name:"mstr_canvas"
         }
-        await initialize(draw_initialize,property);
+        await canvas_initialize(draw_initialize,property);
     }
     return game_property;
 }

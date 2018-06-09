@@ -24,7 +24,7 @@ function canvas_initialize(draw,property){
         // 描画するCanvasの設定とCanvasオブジェクト
         canvas_obj = canvas_change(property_master,canvas_name);
 
-        draw(canvas_obj[0],property);
+        draw(canvas_obj[0],property.draw_property);
 
         // canvasの入れ替え
         document.getElementById(canvas_name+canvas_obj[1]).css('visibility','visible');
@@ -32,6 +32,7 @@ function canvas_initialize(draw,property){
 
         //ローカルストレージに配列を保存
         storager.set("property_master", property_master);
+        storager.set("initialize_property",property);
         return resolve();
     });
 }

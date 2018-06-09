@@ -15,7 +15,7 @@ function prbblty(game_property){
         // 存在するコードとコード数をすべて受信
         call_stored("item_list_choose_001",arg_arr).then(function(data){
             let kugiri = 0;
-            let prbblty = 0;
+            let prbblty_group = 0;
             // ユーザーリスト設定
             data.forEach(function(val){
                 kugiri = game_property.user_num / 5;
@@ -25,7 +25,7 @@ function prbblty(game_property){
                     prbblty_group = 4;
                 }
                 for(let i = 0; i<4; i++){
-                	prbblty_group.prbblty_list[i] = [];
+                    prbblty_group.prbblty_list[i] = [];
                     game_property.prbblty_list.push(prbblty_kugiri(i));
                 }
                 // 項目のプロパティ
@@ -33,11 +33,12 @@ function prbblty(game_property){
                     val["item_cd"]
                     ,val["item_name"]
                     ,val["item_sh_name"]
-                    ,kakuritu_kugiri(prbblty)
+                    ,prbblty_kugiri(prbblty_group)
                     ,val["item_num"]
+                    ,val["item_url"]
                 );
                 // 確率をベースにしたリスト
-                game_property.prbblty_item_list[prbblty].push(val["item_cd"]);
+                game_property.prbblty_item_list[prbblty_group].push(val["item_cd"]);
 
                 resolve(game_property);
             })
