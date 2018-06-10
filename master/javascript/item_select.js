@@ -36,7 +36,7 @@ function item_select (game_prpoerty){
             let arg_arr = {
                 bng_no:bng_no
                 ,item_cd:game_property.item_cd
-                ,cd:"1"
+                ,status_cd:"1"
             }
             call_stored("item_status_update_001",arg_arr).then(function(){
                 resolve(game_property);

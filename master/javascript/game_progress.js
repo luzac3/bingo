@@ -60,7 +60,7 @@ async function game_progress_loop(game_property){
         let arg_arr = {
             bng_no:bng_no
             ,item_cd:game_property.item_cd;
-            ,cd:"2"
+            ,status_cd:"2"
         }
 
         let arg_arr2 = {
@@ -90,8 +90,8 @@ async function game_progress_loop(game_property){
                             // NOにしたらユーザーの探索だけ続けて一時停止状態に
                             // ユーザーの探索は原則30秒？1分？
                         }
-                    })
-                })
+                    });
+                });
             });
         }else{
             call_stored("item_status_update_001",arg_arr).then(function(){
