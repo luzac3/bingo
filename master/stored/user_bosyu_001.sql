@@ -42,6 +42,8 @@ BEGIN
     SET
         EXST_FLG = null;
     WHERE
+        BNG_NO = _bng_no
+    AND
         KUSN_NTJ < ( NOW() - INTERVAL 30 SECOND )
     ;
 

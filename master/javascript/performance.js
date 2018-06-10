@@ -2,16 +2,33 @@
  * 演出を行う関数
  * 演出前段階でキャラクター選別は済
  */
-function performance(game_property){
+async function performance(game_property){
     // 本来はこれもコールバックでDBからデータを取得する必要がある(ゲームごとに画像やムービーを設定する)が、Phase1では省略
     // 固定の演出を取得
     // 演出前にz-indexを変更、演出終了と同時に戻す
-    animloop().then(function(data){
-        // 演出が完了したらデータを更新に行く
-
-    },function(){
-
-    });
+    animloop(
+        {
+            game_property:game_property
+            ,wrapper:"image"
+            ,canvas_name:"canvas_view"
+            ,repeat:null
+            ,operation_time:null
+            ,draw_interval:2000
+        }
+        ,image_set
+    );
+    animloop(
+        {
+            game_property:game_property
+            ,wrapper:"image"
+            ,canvas_name:"canvas_view"
+            ,repeat:null
+            ,operation_time:null
+            ,draw_interval:0
+        }
+        ,select_img_draw
+    );
+    return true;
 }
 
 function draw_initialize(ctx,obj){
@@ -84,8 +101,8 @@ function draw_performance(ctx,obj){
     // game_property取得
     let game_property = obj.game_property;
 
-    random_draw(ctx,game_property);
-    random_draw(whiteout,initialize_property);
+    random_draw(ctx,game_property,initialize_property);
+    random_draw(ctx,initialize_property);
 
     let rate = rate(0)();
     let opactity = opacity(0)();
@@ -108,7 +125,7 @@ function draw_performance(ctx,obj){
     }
 }
 
-function random_draw(ctx,game_property){
+function random_draw(ctx,game_property,initialize_property){
     // ランダム表示用のオブジェクトの長さを求める
     let len = obj.length;
 
@@ -117,10 +134,16 @@ function random_draw(ctx,game_property){
 
     // 画像のサイズは50%→80%
     let rate = rate(0)();
-    if(rate < 0.8){
-        rate = rate(0.01)();
+    if(number1()() % 30){
+        if(rate < 0.8){
+            rate = rate(0.01)();
+        }
     }
 
+    draw_image_common(ctx,game_property,cd,initialize_property,"black");
+}
+
+function draw_image_common(ctx,game_property,cd,initialize_property,color){
     let width_rate = property_master.width / obj.width * rate;
     let height_rate = property_master.height / obj.height * rate;
 
@@ -160,15 +183,17 @@ function random_draw(ctx,game_property){
         );
     }
 
-    ctx.globalCompositeOperation = 'destination-in';
+    if(color == "black"){
+        ctx.globalCompositeOperation = 'destination-in';
 
-    ctx.fillStyle = "rgb(255,255,255)";
-    ctx.fillRect(
-        game_property.image_list[cd].x
-        ,game_property.image_list[cd].y
-        ,game_property.image_list[cd].width
-        ,game_property.image_list[cd].height
-    );
+        ctx.fillStyle = "rgb(255,255,255)";
+        ctx.fillRect(
+            game_property.image_list[cd].x
+            ,game_property.image_list[cd].y
+            ,game_property.image_list[cd].width
+            ,game_property.image_list[cd].height
+        );
+    }
 }
 
 function rate(add){
@@ -178,8 +203,15 @@ function rate(add){
     })
 }
 
+function number1(){
+    let num = 0;
+    return (function(){
+        return ++num;
+    })
+}
+
 function whiteout(ctx,initialize_property){
-    let number = number()();
+    let number = number2()();
     // 不透明度初期化
     let opacity = 0;
     if(number % 10 == 0){
@@ -203,14 +235,36 @@ function opacity(add){
     })
 }
 
-function number(){
+function number2(){
     let num = 0;
     return (function(){
         return ++num;
     })
 }
 
+function select_img_draw(game_property){
+    // 背景オブジェクトのプロパティ取得
+    let initialize_property = storager.get("initialize_property");
+    // 背景の描画
+    canvas_initialize(draw_initialize,initialize_property);
 
+    // game_property取得
+    let game_property = obj.game_property;
+
+    // 選択項目のコード値
+    let cd = game_property.item_cd;
+
+    draw_image_common(ctx,game_property,cd,initialize_property);
+    if(game_property.image_list[cd].img){
+     // 文字を描画
+        ctx.textalign = "center";
+        ctx.fillText(
+            game_property.image_list[cd].name
+            ,game_property.image_list[cd].x + (game_property.image_list[cd].width / 2)
+            ,game_property.image_list[cd].y + (game_property.image_list[cd].height)
+        );
+    }
+}
 
 
 

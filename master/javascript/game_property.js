@@ -32,8 +32,12 @@ let Game_property = function(bng_no){
     this.prbblty_flg = null;
     // 確率コード
     this.prbblty_cd = null;
+
     // ユーザーのプロパティ
     this.user_property = {};
+    // ユーザーコードリスト
+    this.user_list = [];
+
     // 読み上げる項目のプロパティ(Item_property)リスト
     this.item_list = {};
     // 読上げる項目のコード値リスト

@@ -10,7 +10,7 @@ function game_progress(game_property){
         ,game_status : "2"
     }
     // ゲームステータスを更新
-    call_stored("game_status_update_001",gameProperty).then(function(){
+    call_stored("game_status_update_001",arg_arr).then(function(){
         // 確率設定登録・初期化
         initialize(game_property).then(game_property => {
             // ゲーム進行ループ呼び出し
@@ -52,23 +52,45 @@ async function game_progress_loop(game_property){
         bng_no:game_property["bng_no"]
     }
 
-    // 参加ユーザーの登録フラグをリセット
+    // 参加ユーザーの存在フラグをリセット
     call_stored_wait("user_flg_reset_001",arg_arr).then(function(){
         // 項目選択
         game_property = await item_select(game_property);
 
+        let arg_arr = {
+            bng_no:bng_no
+            ,item_cd:game_property.item_cd;
+            ,cd:"2"
+        }
+
+        let arg_arr2 = {
+            bng_no : bng_no
+            ,user_list:game_property.user_list;
+            ,user_exist_num:game_property.user_num;
+        }
         // 演出呼び出し
         if(game_property.prfmnc_flg){
             performance(game_property).then(function(){
                 // DB登録、ループ呼び出し
                 // 演出アリでもDB登録はちゃんと待つ(即落ちの可能性も0ではない)
-                let arg_arr = {
-                    bng_no:bng_no
-                    ,item_cd:game_property.item_cd;
-                    ,cd:"2"
-                }
                 call_stored("item_status_update_001",arg_arr).then(function(){
-                    game_progress_loop(game_prpoerty);
+                    call_stored("user_response_wait_001",arg_arr2).then(function(){
+                        game_progress_loop(game_prpoerty);
+                    },function(data){
+                        let str = "";
+                        // 死んだユーザーと追加ユーザーを含む全ユーザーのリスト
+                        data.forEach(val){
+                            if(!val["exst_flg"]){
+                                // アラートに表示する文字列(ユーザー名)
+                                str += val["user_name"];
+                                str += "\n";
+                            }
+                            str += "がオフラインです。ゲームを続けますか？"
+                            // 選択肢ボックス
+                            // NOにしたらユーザーの探索だけ続けて一時停止状態に
+                            // ユーザーの探索は原則30秒？1分？
+                        }
+                    })
                 })
             });
         }else{

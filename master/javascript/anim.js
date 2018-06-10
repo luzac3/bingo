@@ -17,17 +17,18 @@ function anim(property,draw){
         // オブジェクトの描画関数呼び出し
         // draw_propertyに変更前後の値を入れておく必要アリ(移動とか出来ないし)
         // speed等のデータを使うためこちらを取得
-        let result = draw(canvas_obj[0],property);
+        draw(canvas_obj[0],property).then(function(data){
+            // canvasの入れ替え
+            document.getElementById(canvas_name+canvas_obj[1]).css('visibility','visible');
+            document.getElementById(canvas_name+canvas_obj[2]).css('visibility','hidden');
+            if(!data){
+                resolve(data);
+            }else{
+                reject(data);
+            }
+        },function(){
 
-        // canvasの入れ替え
-        document.getElementById(canvas_name+canvas_obj[1]).css('visibility','visible');
-        document.getElementById(canvas_name+canvas_obj[2]).css('visibility','hidden');
-
-        if(!result){
-            resolve(result);
-        }else{
-            reject(result);
-        }
+        });
     });
 }
 
@@ -37,7 +38,7 @@ function anim(property,draw){
  * ・ラッパークラスの名称(ID)
  * ・Canvasの名称
  *
- * ・リピート回数(未指定無限回リピート、0なら1回で終了)
+ * ・リピート回数(未指定無限回リピート、0なら1回で終了)←未実装
  * ・稼働時間(未指定なら無限時間稼動、0なら即時終了(アニメーションしない)) ミリ秒指定
  * ＊回数と時間を同時に入れる場合、どちらかが0になった時点で終了するので注意(片方が無限指定であっても)
  * ・描画間隔(何ミリ秒後に次の描画を始めるか)　必須：0なら即時
@@ -61,7 +62,7 @@ function animloop(property,draw){
         }
 
         // 稼働時間
-        let time = property.time;
+        let time = property.operation_time;
         if(time != null){
             // タイマー起動
             let timer = timer_storage()().getTime();
