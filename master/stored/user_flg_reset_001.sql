@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS user_flg_reset_001;
 DELIMITER //
 -- ********************************************************************************************
--- user_flg_reset_001 ユーザー募集処理
+-- user_flg_reset_001 ユーザー存在フラグリセット処理
 --
 -- 【処理概要】
 --  ユーザーの存在フラグをリセットする
@@ -26,7 +26,7 @@ CREATE PROCEDURE `user_flg_reset_001`(
     IN `_bng_no` CHAR(5)
     , OUT `exit_cd` INTEGER
 )
-COMMENT 'ユーザー募集処理'
+COMMENT 'ユーザー存在フラグリセット処理'
 
 BEGIN
 

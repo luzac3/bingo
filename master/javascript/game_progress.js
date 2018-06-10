@@ -74,15 +74,15 @@ async function game_progress_loop(game_property){
                 // DB登録、ループ呼び出し
                 // 演出アリでもDB登録はちゃんと待つ(即落ちの可能性も0ではない)
                 call_stored("item_status_update_001",arg_arr).then(function(){
-                    call_stored("user_response_wait_001",arg_arr2).then(function(){
+                    call_stored_wait("user_response_wait_001",arg_arr2).then(function(){
                         game_progress_loop(game_prpoerty);
                     },function(data){
                         let str = "";
                         // 死んだユーザーと追加ユーザーを含む全ユーザーのリスト
                         data.forEach(val){
-                            if(!val["exst_flg"]){
+                            if(!val["EXST_FLG"]){
                                 // アラートに表示する文字列(ユーザー名)
-                                str += val["user_name"];
+                                str += val["USR_NAME"];
                                 str += "\n";
                             }
                             str += "がオフラインです。ゲームを続けますか？"
@@ -95,7 +95,23 @@ async function game_progress_loop(game_property){
             });
         }else{
             call_stored("item_status_update_001",arg_arr).then(function(){
-                game_progress_loop(game_prpoerty);
+                call_stored_wait("user_response_wait_001",arg_arr2).then(function(){
+                    game_progress_loop(game_prpoerty);
+                },function(data){
+                    let str = "";
+                    // 死んだユーザーと追加ユーザーを含む全ユーザーのリスト
+                    data.forEach(val){
+                        if(!val["exst_flg"]){
+                            // アラートに表示する文字列(ユーザー名)
+                            str += val["user_name"];
+                            str += "\n";
+                        }
+                        str += "がオフラインです。ゲームを続けますか？"
+                        // 選択肢ボックス
+                        // NOにしたらユーザーの探索だけ続けて一時停止状態に
+                        // ユーザーの探索は原則30秒？1分？
+                    }
+                })
             })
         }
     },function(data){
