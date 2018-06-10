@@ -68,32 +68,4 @@ function canvas_change(master_obj,canvas_name){
     return arr;
 }
 
-/*
- * キャンバスの幅と高さを保持するプロパティ
- */
-let Property_master = function(width,height){
-    this.width = width;
-    this.height = height;
-}
-
-/*
- * 描画するオブジェクトを保持するためのプロパティテンプレート
- */
-let Draw_obj = function(){
-    this.x=0;
-    this.y=0;
-    this.width=0;
-    this.heihgt=0;
-
-    this.r=0;
-    this.g=0;
-    this.b=0;
-
-    // imageをインスタンス化したときの格納先
-    this.img = null;
-
-    // text用
-    this.text;
-    // フォントなど
-}
 

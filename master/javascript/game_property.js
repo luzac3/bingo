@@ -11,6 +11,7 @@ let Game_property = function(bng_no){
     this.user_num = 0;
     // 描画オブジェクトリスト
     this.draw_obj_list = [];
+
     // 背景使用フラグ
     this.bg_us_flg = null;
     // 背景URL
@@ -18,6 +19,8 @@ let Game_property = function(bng_no){
 
     // 項目数
     this.item_num = 0;
+    // 画像数(URLの設定されている数)
+    this.url_item_num = 0;
 
     // 演出フラグ
     this.prfmnc_flg = null;
@@ -33,11 +36,19 @@ let Game_property = function(bng_no){
     this.user_property = {};
     // 読み上げる項目のプロパティ(Item_property)リスト
     this.item_list = {};
-    // 確率を持たない場合のリスト
-    this.no_prbblty_list = [];
-    // 確率ごとにまとめた項目の配列
+    // 読上げる項目のコード値リスト
+    this.item_cd_list = [];
+
+    /*
+     * 確率ごとにまとめた項目の配列
+     * ・[i]確率グループi(コード値のリスト)
+     */
     this.prbblty_list = [];
-    // 存在する確率のリスト
+
+    /*
+     * 確率のリスト
+     * Int 確率
+     */
     this.prbblty_item_list = [];
     /*
      * コード値をキーとしたイメージのリスト
@@ -97,6 +108,38 @@ let Item_property = function(cd,name,sh_name,prbblty,choose_num,url){
 
     // 項目のURL
     this.url = url;
+}
+
+/*
+ * キャンバスの幅と高さを保持するプロパティ
+ */
+let Property_master = function(width,height){
+    this.width = width;
+    this.height = height;
+}
+
+/*
+ * 描画するオブジェクトを保持するためのプロパティテンプレート
+ */
+let Draw_obj = function(){
+    this.x=0;
+    this.y=0;
+    this.width=0;
+    this.heihgt=0;
+
+    this.r=0;
+    this.g=0;
+    this.b=0;
+
+    // 不透明度設定(0.0~1.0、0が透明)
+    this.opacity = 1;
+
+    // imageをインスタンス化したときの格納先
+    this.img = null;
+
+    // text用
+    this.text;
+    // フォントなど
 }
 
 //

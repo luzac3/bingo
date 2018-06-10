@@ -40,7 +40,7 @@ function anim(property,draw){
  * ・リピート回数(未指定無限回リピート、0なら1回で終了)
  * ・稼働時間(未指定なら無限時間稼動、0なら即時終了(アニメーションしない)) ミリ秒指定
  * ＊回数と時間を同時に入れる場合、どちらかが0になった時点で終了するので注意(片方が無限指定であっても)
- * ・スピード(1動作が何FPSか)
+ * ・描画間隔(何ミリ秒後に次の描画を始めるか)　必須：0なら即時
  */
 function animloop(property,draw){
     return new Promise(resolve,reject => {
@@ -71,13 +71,17 @@ function animloop(property,draw){
         }
 
         // スピード
-        let speed = property.speed;
+        let draw_interval = property.draw_interval;
 
         anim(property,draw).then(function(data){
             reject(data);
         },function(data){
             if(data == 1){
-                animloop(property,draw);
+                if(!draw_interval){
+                    animloop(property,draw);
+                }else{
+                    setTimeout(animloop.bind(undefined,property,draw),draw_interval);
+                }
             }else{
                 reject(data);
             }
