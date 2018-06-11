@@ -67,6 +67,7 @@ async function game_status_initizalize(bng_no){
         }
         let result = await call_stored("get_bng_mstr_001",arg_arr);
         let game_proerty = new Game_property(bng_no);
+        
     })
 
 }
