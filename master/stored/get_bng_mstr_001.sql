@@ -39,16 +39,43 @@ BEGIN
             SELECT
                 BNG_NO
                 ,USR_NUM
+
                 ,BG_US_FLG
+                ,BG_URL
+
                 ,ITEM_NUM
                 ,URL_ITEM_NUM
+
+                -- 選択アイテム数
+                ,CHSED_ITEM_NUM
+                ,CHSED_URL_ITEM_NUM
+
                 ,PRFMNC_FLG
-                ,END_MSRE_FLG
-                ,PRBBLTY_FLG
-                ,PRBBLTY_CD
+                ,PRFMNC_CD
+
+                -- 残り項目数
+                ,LFT_ITM_NUM
                 -- ユーザー情報プロパティ
+                ,USR_CD
+                ,USR_NAME
+                ,USR_LCH_NUM
+                ,USR_BNG_NUM
+                ,USR_END_FLG
+                ,USR_EXST_FLG
 
                 -- 項目情報プロパティ
+                ,ITM_CD
+                ,ITM_NAME
+                ,ITM_SH_NAME
+                ,ITM_PRBBLTY
+                ,ITM_NUM
+
+                -- 選択項目情報プロパティ
+                ,CHSD_ITM_CD
+                ,CHSD_ITM_NAME
+                ,CHSD_ITM_SH_NAME
+                ,CHSD_ITM_PRBBLTY
+                ,CHSD_ITEM_NUM
             FROM
                 T_BNG_MSTR GP
                 -- ユーザー情報
@@ -61,6 +88,7 @@ BEGIN
                         ,GROUP_CONCAT(LCH_NUM) AS LCH_NUM
                         ,GROUP_CONCAT(BNG_NUM) AS BNG_NUM
                         ,GROUP_CONCAT(END_FLG) AS END_FLG
+                        ,GROUP_CONCAT(EXST_FLG) AS EXST_FLG
                     FROM
                         T_USR
                     WHERE
@@ -74,46 +102,47 @@ BEGIN
                 ,(
                     SELECT
                         TBCM.BNG_NO
-                        ,GROUP_CONCAT(TBCM.ITEM_CD)
-                        ,GROUP_CONCAT(TBCM.ITEM_NAME)
-                        ,GROUP_CONCAY(TBCM.SH_NAME)
-                        ,GROUP_CONCAT(TBCM.PRBBLTY)
-                        ,GROUP_CONCAT(TU.ITEM_CD) AS CHSED_ITEM
-                        ,GROUP_CONCAT(COUNT(TBCM.ITEM_CD))) AS CHSED_ITEM_NUM
+                        ,GROUP_CONCAT(TBI.ITM_CD) ITM_CD
+                        ,GROUP_CONCAT(TBI.ITM_NAME) ITM_NAME
+                        ,GROUP_CONCAY(TBI.SH_NAME) SH_NAME
+                        ,GROUP_CONCAT(TBI.PRBBLTY) PRBBLTY
                         ,GROUP_CONCAT(
                             CASE
-                                WHEN TU.ITEM_CD ISNULL THEN NULL
-                                WHEN TU.ITEM_CD ISNOTNULL THEN TBCM.ITEM_NAME
-                                ELSE 99
+                                WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_NAME
+                                ELSE NULL
                             END
-                        ) AS CHSED_ITEM_NAME
+                        ) AS CHSD_ITEM_CD
                         ,GROUP_CONCAT(
                             CASE
-                                WHEN TU.ITEM_CD ISNULL THEN NULL
-                                WHEN TU.ITEM_CD ISNOTNULL THEN TBCM.SH_NAME
-                                ELSE 99
+                                WHEN TBI.TBI.CHSD_NUM > 0 TBI.CHSD_NUM
+                                ELSE NULL
                             END
-                        ) AS CHSED_SH_NAME
+                        ) AS CHSD_ITEM_NUM
                         ,GROUP_CONCAT(
-                            SUM(
-                                CASE
-                                    WHEN TU.ITEM_CD IS NOT NULL THEN 1
-                                    ELSE 0
-                                END
-                            )
-                        ) AS ALL_ITEM_NUM
+                            CASE
+                                WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_SH_NAME
+                                ELSE NULL
+                            END
+                        ) AS CHSD_ITEM_NAME
+                        ,GROUP_CONCAT(
+                            CASE
+                                WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_SH_NAME
+                                ELSE NULL
+                            END
+                        ) AS CHSD_SH_NAME
+                        ,GROUP_CONCAT(
+                            CASE
+                                WHEN TBI.CHSD_NUM > 0 THEN TBI.PRBBLTY
+                                ELSE NULL
+                            END
+                        ) AS CHSD_PRBBLTY
+                        ,GROUP_CONCAT(COUNT(1)) AS ALL_ITEM_NUM
                     FROM
-                        T_BNG_CNTNT_MSTR TBCM
-                    LEFT OUTER JOIN
-                        T_USR TU
-                    ON
-                        TU.BNG_NO = TBCM.BNG_NO
-                    AND
-                        TU.ITEM_CD = TBCM.ITEM_CD
+                        T_BNG_ITM TBI
                     WHERE
-                        TBCM.BNG_NO = ",_bnng_no,"
+                        TBI.BNG_NO = ",_bnng_no,"
                     GROUP BY
-                        TBCM.BNG_NO
+                        TBI.BNG_NO
                 ) IP
             WHERE
                 BNG_NO = ",_bng_no,"
