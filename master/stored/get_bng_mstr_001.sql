@@ -50,11 +50,23 @@ BEGIN
                 ,CHSED_ITEM_NUM
                 ,CHSED_URL_ITEM_NUM
 
+                // 演出
                 ,PRFMNC_FLG
                 ,PRFMNC_CD
 
+                // 終了マス
+                ,END_MSRE_FLG
+
+                // 確率
+                ,PRBBLTY_FLG
+                ,PRBBLTY_CD
+
+                -- ゲームモード
+                ,BNG_MD_CD
+
                 -- 残り項目数
                 ,LFT_ITM_NUM
+
                 -- ユーザー情報プロパティ
                 ,USR_CD
                 ,USR_NAME
