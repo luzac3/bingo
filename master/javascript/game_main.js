@@ -83,3 +83,8 @@ function game_property_stocker(game_property){
         return this.game_property;
     })
 }
+
+/**
+ * 現在使用されているキャンバスを保持するクロージャ
+ *
+ */
