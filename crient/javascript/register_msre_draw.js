@@ -5,7 +5,12 @@
 function register_msre_draw(game_property){
     // ビンゴ番号入力画面を閉じる
     return (resolve,reject => {
-        initialize(property,initialize_draw).then(function(){
+        let property = {
+            game_property:game_property
+            ,wrapper:"register_wrapper"
+            ,canvas_name:"register_canvas"
+        }
+        canvas_initialize(property,initialize_draw).then(function(){
             resolve(game_property);
         },function(){
             reject();

@@ -10,3 +10,7 @@ function get_checkbox(name){
     });
     return result;
 }
+
+function get_radiobutton(name){
+
+}

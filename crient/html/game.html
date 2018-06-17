@@ -21,24 +21,31 @@
 
 <!-- ビンゴ番号入力画面 -->
 <div id = "input_bng_no">
-<form>
-</form>
-<button type = "button" value="recruit">参加</button>
-<br>
+    <form>
+    </form>
+    <button type="button" value="enter">参加</button>
+</div>div>
+<div id="item_register">
+    <!-- 登録 -->
+    <div id="register_wrapper">
+        <canvas id="register_canvas1"></canvas>
+        <canvas id="register_canvas2"></canvas>
+    </div>
+    <button type="button" value="register">登録</button>
 
-<!-- 項目選択用の選択窓 -->
-<!-- サイズは80%ほど？ -->
-<div id="search_main" class="hidden">
-    <button value="close"><img src="close.jpg" class="close"></button>
-    <form>検索<input id="search_word" type="text"></form><button type="button" id="search" value="search">検索</button>
-    <!-- タグ(ビンゴ番号を取得したときに一緒に持ってきて張っとく) -->
-    <form>タグ<input type="checkbox" value="sample">sample</form>
-    <!-- 項目リスト表示領域画像については未定  クラスにインデックス番号を埋め込み -->
-    <div id = "item_list" class="0">
-        <button type="button" class="item_button">サンプル</button>
+    <!-- 項目選択用の選択窓 -->
+    <!-- サイズは80%ほど？ -->
+    <div id="search_main" class="hidden">
+        <button value="close"><img src="close.jpg" class="close"></button>
+        <form>検索<input id="search_word" type="text"></form><button type="button" id="search" value="search">検索</button>
+        <!-- タグ(ビンゴ番号を取得したときに一緒に持ってきて張っとく) -->
+        <form>タグ<input type="checkbox" value="sample">sample</form>
+        <!-- 項目リスト表示領域画像については未定  クラスにインデックス番号を埋め込み -->
+        <div id = "item_list" class="0">
+            <button type="button" class="item_button">サンプル</button>
+        </div>
     </div>
 </div>
-
 <div id = "game" class="hidden">
 <div id = "leach">リーチ者
 <button type = "button" value="small" class="small_hidden">―</button>
@@ -79,11 +86,6 @@
 <div id = "lb"><canvas id ="canvas_lb1"></canvas><canvas id ="canvas_lb2"></canvas></div>
 
 <button type = "button" value="pause">ゲーム一時停止</button>
-</div>
-
-
-
-
 </div>
 
 
