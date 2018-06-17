@@ -48,7 +48,6 @@ function search_main(event){
             $("#search_main").attr("class",hidden);
         });
     });
-
 }
 
 function msre_set(e,arg_arr){
