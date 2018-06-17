@@ -52,6 +52,9 @@ let animLoop = function(){
         // 初期オブジェクトの保持
         first_object(property);
 
+        // animFrameストップ用にanimFrameを格納する変数
+        let animFrame = null;
+
         return new Promise(resolve,reject => {
             let obj = property.obj;
             // wrapperクラスの名称
@@ -88,70 +91,81 @@ let animLoop = function(){
             },function(data){
                 if(data == 1){
                     if(!draw_interval){
-                        animloop(property,draw);
+                        requestAnimationframe(animloop,property,draw);
                     }else{
-                        setTimeout(animloop.bind(undefined,property,draw),draw_interval);
+                        setTimeout(requestAnimationframe(animloop.bind(undefined,property,draw),draw_interval));
                     }
                 }else{
                     reject(data);
                 }
             });
         });
+    }
 
-        let Timer = function(){
-            /*
-             * タイマー開始/リセット
-             */
-            this.startTimer = function(){
-                this.now = Date.now();
-            }
+    // アニメーションフレームを起動する関数
+    this.start = function(){
+        animFrame = (function(){requestAnimationFrame(animloop,property,draw)})
+    }
 
-            /*
-             * 時間取得
-             */
-            this.getTime = function(){
-                return Date.now() - this.now;
-            }
+    // アニメーションフレームを停止する関数
+    this.stop = function(){
+        cancelAnimationFrame(animFrame);
+    }
+
+    let Timer = function(){
+        /*
+         * タイマー開始/リセット
+         */
+        this.startTimer = function(){
+            this.now = Date.now();
         }
 
-        function timer_storage(){
-            if(!this.timer){
-                this.timer = new Timer();
-                this.timer.startTimer();
-            }
-            return (function(){
-                return this.timer;
-            });
-        }
-
-        // 繰り返し回数
-        function repeat_num(){
-            if(!this.num && this.num != 0){
-                this.num = 0;
-            }
-            return (function(){
-                return this.num + 1;;
-            })
-        }
-
-        // 初期オブジェクトの保持
-        function first_object(object){
-            // objectが定義されていない一度目のみ保持する
-            if(!this.object){
-                this.object = object;
-            }
-
-            return (function(){
-                return this.object;
-            });
-
+        /*
+         * 時間取得
+         */
+        this.getTime = function(){
+            return Date.now() - this.now;
         }
     }
+
+    function timer_storage(){
+        if(!this.timer){
+            this.timer = new Timer();
+            this.timer.startTimer();
+        }
+        return (function(){
+            return this.timer;
+        });
+    }
+
+    // 繰り返し回数
+    function repeat_num(){
+        if(!this.num && this.num != 0){
+            this.num = 0;
+        }
+        return (function(){
+            return this.num + 1;;
+        })
+    }
+
+    // 初期オブジェクトの保持
+    function first_object(object){
+        // objectが定義されていない一度目のみ保持する
+        if(!this.object){
+            this.object = object;
+        }
+
+        return (function(){
+            return this.object;
+        });
+
+    }
+
 
     /*
      * 以下、AnimFrame未対応ブラウザのための再定義
      */
-    window.requestAnimationFrame  = (function(){
+    let requestAnimationFrame  = (function(){
         return  window.requestAnimationFrame   ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame    ||
@@ -162,7 +176,7 @@ let animLoop = function(){
         };
     })();
 
-    window.cancelAnimationFrame = (function() {
+    let cancelAnimationFrame = (function() {
       return window.cancelAnimationFrame ||
              window.cancelRequestAnimationFrame ||
              window.webkitCancelAnimationFrame ||
