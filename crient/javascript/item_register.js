@@ -23,7 +23,7 @@ function item_register(game_property){
     // 項目の登録処理
     $("#register").on("click",function(){
         register_user_msre(game_property);
-    })
+    });
 
 }
 
