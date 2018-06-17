@@ -22,11 +22,7 @@ function item_register(game_property){
 
     // 項目の登録処理
     $("#register").on("click",function(){
-        let arg_arr = {
-            bng_no:property.bng_no
-            ,user_cd:property.user_cd
-        }
-
+        register_user_msre(game_property);
     })
 
 }
