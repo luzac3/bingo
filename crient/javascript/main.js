@@ -36,16 +36,16 @@ function main(){
         });
         break;
 
-    // 以下開閉処理はマスタと同様
-    case "open":
-        $(this).addClass("hidden");
-        $(this).next().removeClass();
-      game_recruit(button);
-      break;
-    case "close":
-        $(this).addClass("hidden");
-        $(this).next().removeClass();
-        game_progress(game_status);
-      break;
-  }
+        // 以下開閉処理はマスタと同様
+        case "open":
+          $(this).addClass("hidden");
+          $(this).next().removeClass();
+          game_recruit(button);
+          break;
+        case "close":
+          $(this).addClass("hidden");
+          $(this).next().removeClass();
+          game_progress(game_status);
+          break;
+    }
 }

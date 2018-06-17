@@ -16,18 +16,27 @@
 <div id = 'set_user_name' class = 'default'></div>
 <div id = 'set_user_cd' class = 'default'></div>
 
-<div id = "bosyu">
+
 <div id = "logo">ビンゴソロエールZZ　参加者ページ</div>
 
 <!-- ビンゴ番号入力画面 -->
-<div id = "">
-<p>参加者リスト</p>
-<ul>
-<li>サンプル</li>
-</ul>
-<button type = "button" value="recruit">参加者募集開始</button>
+<div id = "input_bng_no">
+<form>
+</form>
+<button type = "button" value="recruit">参加</button>
 <br>
-<button type = "button" value="start">ゲーム開始</button>
+
+<!-- 項目選択用の選択窓 -->
+<!-- サイズは80%ほど？ -->
+<div id="search_main" class="hidden">
+    <button value="close"><img src="close.jpg" class="close"></button>
+    <form>検索<input id="search_word" type="text"></form><button type="button" id="search" value="search">検索</button>
+    <!-- タグ(ビンゴ番号を取得したときに一緒に持ってきて張っとく) -->
+    <form>タグ<input type="checkbox" value="sample">sample</form>
+    <!-- 項目リスト表示領域画像については未定  クラスにインデックス番号を埋め込み -->
+    <div id = "item_list" class="0">
+        <button type="button" class="item_button">サンプル</button>
+    </div>
 </div>
 
 <div id = "game" class="hidden">
