@@ -37,7 +37,7 @@ function search_main(event){
         game_property.msre_property[index].item_cd = $(this).val();
         game_property.msre_property[index].item_name = $(this).text();
 
-        register_msre_draw(game_property).then(function(){
+        msre_draw(game_property,"register_wrapper","register_canvas").then(function(){
             load_anim.stop();
             // game_propertyをストレージ
             storager.set("game_property",game_property);

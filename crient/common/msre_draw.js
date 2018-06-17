@@ -2,13 +2,13 @@
  * 項目登録用のマスを表示する部分
  * 項目更新時に再描画
  */
-function register_msre_draw(game_property){
+function msre_draw(game_property,wrapper,canvas_name){
     // ビンゴ番号入力画面を閉じる
     return (resolve,reject => {
         let property = {
             game_property:game_property
-            ,wrapper:"register_wrapper"
-            ,canvas_name:"register_canvas"
+            ,wrapper:wrapper
+            ,canvas_name:canvas_name
         }
         canvas_initialize(property,initialize_draw).then(function(){
             resolve(game_property);
