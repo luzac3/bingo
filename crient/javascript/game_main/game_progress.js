@@ -53,14 +53,10 @@ function wait_get_item(game_property){
 
                     // hitアニメーション表示/リーチ判定処理/青色点滅
 
-
-                    // 終了判定処理
-
-
                     // DB登録
 
 
-                    if(end){
+                    if(game_property.end_flg){
                         return;
                     }
                     // タイマーをリセット
@@ -69,9 +65,6 @@ function wait_get_item(game_property){
                 }
                 num++;
             });
-            // 終了判定処理
-
-
             // DB登録
 
 
