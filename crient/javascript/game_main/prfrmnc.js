@@ -3,7 +3,18 @@
  * ビンゴ/リーチ演出
  */
 function prfrmnc(game_property){
+    let animLoop = new AnimLoop();
+
+    let property = {
+        obj:game_property
+        ,wrapper:game_property
+        ,canvas:canvas_name
+        ,repeat:null
+        ,operation_time:null
+        ,draw_interval:null
+    }
     // ヒットアニメーション表示
+    animLoop.animloop(property,hit_anim);
 
     // マス塗りつぶし処理
 
@@ -12,13 +23,14 @@ function prfrmnc(game_property){
     // ビンゴ増加フラグが立っていたらリーチ演出
 
 
+
     resolve(game_property);
 }
 
 /*
  * ヒットアニメーション表示
  */
-function hit_anim(){
+function hit_anim(animLoop){
 
 }
 

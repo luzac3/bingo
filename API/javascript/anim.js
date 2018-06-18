@@ -1,7 +1,7 @@
 /**
  * インスタンス化して利用する
  */
-let animLoop = function(){
+let AnimLoop = function(){
     /*
      * アニメーションフレームのアニメーション処理部分
      * 描画オブジェクトを受け取り、コールバックでdraw関数を動かす
@@ -42,11 +42,10 @@ let animLoop = function(){
      * ・ラッパークラスの名称(ID)
      * ・Canvasの名称
      *
-     * ・リピート回数(未指定無限回リピート、0なら1回で終了)←未実装
+     * ・リピート回数(未指定無限回リピート、0なら1回で終了)
      * ・稼働時間(未指定なら無限時間稼動、0なら即時終了(アニメーションしない)) ミリ秒指定
      * ＊回数と時間を同時に入れる場合、どちらかが0になった時点で終了するので注意(片方が無限指定であっても)
      * ・描画間隔(何ミリ秒後に次の描画を始めるか)　必須：0なら即時
-     * ・描画回数(nullなら無限回。繰り返すのは一回分の動作終了分)
      */
     function animloop(property,draw){
         // 初期オブジェクトの保持
@@ -62,15 +61,9 @@ let animLoop = function(){
             // Canvas名称
             let canvas_name = property.canvas_name;
 
-            // リピート回数
-            let repeat = property.repeat;
-
-            if(repeat != null){
-                // リピート回数の確認
-                let repeat_num = repeat_num()();
-                if(repeat_num > repeat){
-                    resolve(1);
-                }
+            if(repeat == null && property.repeat != null){
+                // リピート回数初期化
+                let repeat = property.repeat;
             }
 
             // 稼働時間
@@ -96,7 +89,19 @@ let animLoop = function(){
                         setTimeout(requestAnimationframe(animloop.bind(undefined,property,draw),draw_interval));
                     }
                 }else{
-                    reject(data);
+                    if(repeat != null){
+                        // リピート回数の確認
+                        let repeat_num = repeat_num()();
+                        if(repeat_num < repeat){
+                            if(!draw_interval){
+                                requestAnimationframe(animloop,property,draw);
+                            }else{
+                                setTimeout(requestAnimationframe(animloop.bind(undefined,property,draw),draw_interval));
+                            }
+                        }
+                    }else{
+                        reject(data);
+                    }
                 }
             });
         });
