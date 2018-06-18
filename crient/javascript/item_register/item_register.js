@@ -24,7 +24,6 @@ function item_register(game_property){
     $("#register").on("click",function(){
         register_user_msre(game_property);
     });
-
 }
 
 /*
@@ -65,6 +64,3 @@ function get_target_object(e,obj_list){
     }
     return index;
 }
-
-
-
