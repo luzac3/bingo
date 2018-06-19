@@ -7,7 +7,7 @@ function item_register(game_property){
     // 読み込み画像アニメーションを表示
 
     set_property(game_property).then(function(game_property){
-        register_msre_draw(game_property).then(function(){
+    	msre_draw(game_property).then(function(){
             load_anim.stop();
             // game_propertyをストレージ
             storager.set("game_property",game_property);
