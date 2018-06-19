@@ -20,7 +20,11 @@ function game_progress(game_property){
                 if(num > 60){
                     return;
                 }
-                call_stored("update_user_001",function(data){
+                let arg_arr = {
+                    bng_no:game_property.bng_no
+                    ,user_cd:game_property.user_cd
+                }
+                call_stored("update_user_001",arg_arr).then(function(data){
                     update_check();
 
                     // タイマーをリセット

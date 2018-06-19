@@ -67,6 +67,9 @@ BEGIN
         AND
             EXST_FLG = 1
         ;
+
+        SLEEP(1);
+
     END WHILE
 
         SELECT
