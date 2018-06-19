@@ -52,9 +52,9 @@ function wait_get_item(game_property){
                     game_property = check_bng(game_property,item);
 
                     // hitアニメーション表示/リーチ判定処理/青色点滅
-
-                    // DB登録
-
+                    prfrmnc(game_property).then(function(){
+                        // DB登録
+                    });
 
                     if(game_property.end_flg){
                         return;
@@ -71,9 +71,6 @@ function wait_get_item(game_property){
             if(end){
                 return;
             }
-            // タイマーをリセット
-            timer_storage(true);
-            wait_get_item(game_property);
         },function(){
             // DB通信自体に失敗している場合
             // 再度呼ぶかどうか聞く
@@ -99,8 +96,35 @@ function check_bng(game_property,item){
 
 
 /**
- * DB登録、終了判定処理
+ * DB登録処理
  */
+function db_register(game_property){
+    let index = null;
+    let num = 0;
+    game_property.item_list.forEach(function(item){
+        if(item.cll_flg){
+            index = num;
+            game_property.item_list[num] = null;
+        }
+        num++;
+    });
+
+    let arg_arr = {
+        bng_no:game_proprerty.bng_no
+        ,usr_cd:game_proprerty.user_cd
+        ,msre_num:index
+        ,cntnt_id:item_cd
+        ,exst_flg:1
+    }
+    call_stored("db_rgister_001",arg_arr).then(function(data){
+        if(data["end_flg"]){
+            return;
+        }
+        // タイマーをリセット
+        timer_storage(true);
+        wait_get_item(game_property);
+    });
+}
 
 /*
  * 終了判定処理

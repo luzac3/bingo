@@ -8,8 +8,8 @@ async function prfrmnc(game_property){
 
         let property = {
             obj:game_property
-            ,wrapper:game_property
-            ,canvas:canvas_name
+            ,wrapper:"prffrmnc_top"
+            ,canvas:"prffrmnc_top"
             ,repeat:null
             ,operation_time:null
             ,draw_interval:null
@@ -17,6 +17,15 @@ async function prfrmnc(game_property){
         // ヒットアニメーション表示
         // animLoop.animloop(property,hit_anim);
 
+
+        let property = {
+            obj:game_property
+            ,wrapper:"progress_wrapper"
+            ,canvas:"progress_canvas"
+            ,repeat:null
+            ,operation_time:null
+            ,draw_interval:null
+        }
         // マス塗りつぶし処理
         gmae_proeprty = await animLoop.animloop(property,msre_hit_anim);
 
@@ -45,8 +54,6 @@ function msre_hit_anim(ctx,property){
     let cnt = 0;
     return new Promise(resolve,reject => {
         function flash(){
-            let num = 0;
-            let index = 0;
             property.obj.item_list.forEach(function(item){
                 if(item.cll_flg){
                     if(cnt % 2 == 0){
@@ -58,14 +65,11 @@ function msre_hit_anim(ctx,property){
                         item.g = 0;
                         item.b = 0;
                     }
-                    index = num;
                 }
-                num++;
             });
 
             msre_draw(game_property,wrapper,canvas_name).then(function(){
                 if(cnt == 10){
-                    game_property.item_list[index].cll_flg = null;
                     resolve(game_property);
                 }
                 setInterval(function(){
