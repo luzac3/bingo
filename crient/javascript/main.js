@@ -20,6 +20,7 @@ function main(){
 
     switch(button){
       case "enter":
+        // join.matching
         matching().then(function(data){
             let bng_no = data[0];
             let user_name = data[1];
@@ -30,6 +31,7 @@ function main(){
             $("#set_user_cd").addClass(data["user_cd"]);
 
             // ゲームプロパティ(ユーザ)をこっちでもインスタンス化すべき
+
 
             if(data["itm_lst"]){
                 // 項目リスト設定済(選択済)→ゲーム進行処理起動
