@@ -4,15 +4,16 @@ $(document).ready(function(){
         switch(button_val){
           case register:
             // 登録画面に遷移
-            location.href = "../html/register.html"
+            location.href = "/bingo/environment/html/register.html"
             break;
           case join:
             // クライアントページに遷移
-            location.href = "../../crient/html/game.html";
+            location.href = "/bingo/crient/html/main.html";
             break;
           case master:
-              // ゲーム一覧画面に遷移
-              location.href = "../html/game_list.html";
+              // ゲーム一覧画面に遷移→マスタではなくエントランス？
+              // マスタはあくまでゲーム開始後の画面を想定
+              location.href = "/bingo/entrance/html/game_list.html";
               break;
         }
     });
