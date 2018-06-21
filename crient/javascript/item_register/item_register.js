@@ -1,16 +1,16 @@
 /*
  * マスごとの項目のプロパティを取得、設定する
  */
-function item_register(game_property){
+function item_register(user_property){
     // ビンゴ番号入力画面を閉じる
 
     // 読み込み画像アニメーションを表示
 
-    set_property(game_property).then(function(game_property){
-    	msre_draw(game_property).then(function(){
+    set_property(user_property).then(function(user_property){
+    	msre_draw(user_property).then(function(){
             load_anim.stop();
-            // game_propertyをストレージ
-            storager.set("game_property",game_property);
+            // user_propertyをストレージ
+            storager.set("user_property",user_property);
         });
     });
 
@@ -22,7 +22,7 @@ function item_register(game_property){
 
     // 項目の登録処理
     $("#register").on("click",function(){
-        register_user_msre(game_property);
+        register_user_msre(user_property);
     });
 }
 

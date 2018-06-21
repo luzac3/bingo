@@ -11,7 +11,7 @@ function initialize(){
 
 function main(){
     // 項目登録
-    let game_property = new Game_proeprty();
+    let user_property = new User_property();
 
     let button = $(this).val();
 
@@ -19,23 +19,23 @@ function main(){
       case "enter":
         // join.matching
         matching().then(function(data){
-            game_property.bng_no = data[0];
-            game_property.user_name = data[1];
-            game_property.user_cd = data[2];
+            user_property.bng_no = data[0];
+            user_property.user_name = data[1];
+            user_property.user_cd = data[2];
 
-            $("#set_bng_no").addClass(game_property.bng_no);
-            $("#set_user_name").addClass(game_property.user_name);
-            $("#set_user_cd").addClass(game_property.user_cd);
+            $("#set_bng_no").addClass(user_property.bng_no);
+            $("#set_user_name").addClass(user_property.user_name);
+            $("#set_user_cd").addClass(user_property.user_cd);
 
             if(data["itm_lst"]){
                 // 項目リスト設定済(選択済)→ゲーム進行処理起動
                 // ゲームステータスによって表示/非表示ボタンが切り替わるため、切り替えを関数内で行う
                 //
-                game_progress(data);
+                game_progress(user_property);
             }else{
                 // 項目リスト設定関数起動
                 // 上に合わせる
-                item_register(data);
+                item_register(user_property);
             }
         });
         break;

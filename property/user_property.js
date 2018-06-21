@@ -5,6 +5,8 @@
  * @param name ユーザー名
  */
 let User_property = function(cd,name){
+    // ビンゴ番号
+    this.bng_num = "";
     // ユーザーコード
     this.cd = cd;
     // ユーザー名

@@ -2,12 +2,12 @@
  * ヒットアニメーション表示/リーチ判定/点滅処理
  * ビンゴ/リーチ演出
  */
-async function prfrmnc(game_property){
+async function prfrmnc(user_property){
     return new Promise(function(){
         let animLoop = new AnimLoop();
 
         let property = {
-            obj:game_property
+            obj:user_property
             ,wrapper:"prffrmnc_top"
             ,canvas:"prffrmnc_top"
             ,repeat:null
@@ -19,7 +19,7 @@ async function prfrmnc(game_property){
 
 
         let property = {
-            obj:game_property
+            obj:user_property
             ,wrapper:"progress_wrapper"
             ,canvas:"progress_canvas"
             ,repeat:null
@@ -33,7 +33,7 @@ async function prfrmnc(game_property){
 
         // ビンゴ増加フラグが立っていたらリーチ演出
 
-        return game_property;
+        return user_property;
     })
 }
 
@@ -68,9 +68,9 @@ function msre_hit_anim(ctx,property){
                 }
             });
 
-            msre_draw(game_property,wrapper,canvas_name).then(function(){
+            msre_draw(user_property,wrapper,canvas_name).then(function(){
                 if(cnt == 10){
-                    resolve(game_property);
+                    resolve(user_property);
                 }
                 setInterval(function(){
                     flash()

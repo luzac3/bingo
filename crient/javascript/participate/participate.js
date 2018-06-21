@@ -9,13 +9,21 @@ function participate(){
             bng_no:bng_no
             ,user_cd:user_cd
         }
+
         call_stored("participate_001",arg_arr).then(function(data){
-            // データをgame_propertyにつめなおす
+            // データをuser_propertyにつめなおす
+            user_property.bng_no = data["BNG_NO"];
+            user_property.user_cd = data["USR_CD"];
+            user_property.user_name = data["USR_NAME"];
+            user_property.lch_num = data["USR_LCH_NUM"];
+            user_property.bng_num = data["USR_BNG_NUM"];
+            user_property.end_flg = data["USR_END_FLG"];
+
             if(!data["game_status"]){
                 // エラー募集開始してない
                 reject();
             }
-            wait_game_start(game_property);
+            wait_game_start(user_property);
         },function(){
             // エラーの場合募集停止なのでスルー
             // メッセージ「募集が開始されていないか、通信状態が悪いかもしれません」
@@ -23,13 +31,13 @@ function participate(){
     });
 }
 
-function wait_game_start(game_property){
+function wait_game_start(user_property){
     // これを行うとき、
     call_stored_wait("get_status_001",function(data){
         // データをチェックする
         if(data["game_status"] == 2){
             // 再起呼び出しを行う
-            game_progress(game_property);
+            game_progress(user_property);
         }
     },function(){
         let num = try_number()();
@@ -43,7 +51,7 @@ function wait_game_start(game_property){
 */
         // エラーで帰ってきているので、再起呼び出しを行う
         // 本当はエラーの種類をチェックすべき
-        wait_game_start(game_property);
+        wait_game_start(user_property);
     });
 }
 

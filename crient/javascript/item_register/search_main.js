@@ -34,13 +34,13 @@ function search_main(event){
         // ロード開始
 
         let index = $("#item_list").prop("class");
-        game_property.msre_property[index].item_cd = $(this).val();
-        game_property.msre_property[index].item_name = $(this).text();
+        user_property.msre_property[index].item_cd = $(this).val();
+        user_property.msre_property[index].item_name = $(this).text();
 
-        msre_draw(game_property,"register_wrapper","register_canvas").then(function(){
+        msre_draw(user_property,"register_wrapper","register_canvas").then(function(){
             load_anim.stop();
-            // game_propertyをストレージ
-            storager.set("game_property",game_property);
+            // user_propertyをストレージ
+            storager.set("user_property",user_property);
 
             // ロード終了
 
@@ -52,11 +52,11 @@ function search_main(event){
 
 function msre_set(e,arg_arr){
     // ゲームプロパティ取得
-    let game_property = storager.get("game_property");
+    let user_property = storager.get("user_property");
 
-    let msre_num = game_property.msre_num;
+    let msre_num = user_property.msre_num;
 
-    let index_num = get_target_object(e,game_property.msre_property);
+    let index_num = get_target_object(e,user_property.msre_property);
 
     // index番号を渡してDivを表示
     show();

@@ -1,14 +1,14 @@
-function register_user_msre(game_property){
+function register_user_msre(user_property){
     // ロード画面表示
     str = "";
 
     let num = 0;
 
-    game_property.msre_property.forEach(function(data){
+    user_property.msre_property.forEach(function(data){
         str += "(";
-        str += "'" + game_property.bng_no + "'";
+        str += "'" + user_property.bng_no + "'";
         str += ",";
-        str += "'" + game_property.user_cd + "'";
+        str += "'" + user_property.user_cd + "'";
         str += ",";
         str += "LPAD(" + num + ",2,0)";
         str += ",";

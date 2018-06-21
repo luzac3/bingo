@@ -1,8 +1,8 @@
-function game_progress(game_property){
+function game_progress(user_property){
     // ロード処理
 
     // 初期描画処理
-    msre_draw(game_property,"progress_wrapper","progress_canvas").then(function(){
+    msre_draw(user_property,"progress_wrapper","progress_canvas").then(function(){
         // ロード終了
         load_anim.stop();
 
@@ -21,8 +21,8 @@ function game_progress(game_property){
                     return;
                 }
                 let arg_arr = {
-                    bng_no:game_property.bng_no
-                    ,user_cd:game_property.user_cd
+                    bng_no:user_property.bng_no
+                    ,user_cd:user_property.user_cd
                 }
                 call_stored("update_user_001",arg_arr).then(function(data){
                     update_check();
@@ -36,11 +36,11 @@ function game_progress(game_property){
         },5*1000));
 
         // 取得待機
-        wait_get_item(game_property);
+        wait_get_item(user_property);
     });
 }
 
-function wait_get_item(game_property){
+function wait_get_item(user_property){
     // タイマーをリセット
     timer_storage(true);
     return new Promise(resolve,reject => {
@@ -48,28 +48,28 @@ function wait_get_item(game_property){
         call_stored_wait("get_item_001",arg_arr).then(function(data){
             // これが帰ってきた時点でコードの更新処理は走ってないといけない
             let num = 0;
-            game_property.item_list.forEach(function(item){
+            user_property.item_list.forEach(function(item){
                 if(data["item_cd"] == item){
                     // ゲームプロパティ更新
-                    game_property.item_list[num].cll_flg = 1;
+                    user_property.item_list[num].cll_flg = 1;
 
                     // ビンゴ、リーチ判定、GameProperty更新処理
-                    game_property = check_bng(game_property,data);
+                    user_property = check_bng(user_property,data);
 
                     // hitアニメーション表示/リーチ判定処理/青色点滅
-                    prfrmnc(game_property).then(function(){
+                    prfrmnc(user_property).then(function(){
                         // DB登録
-                        db_register(game_property).then(function(){
+                        db_register(user_property).then(function(){
                             //
                         });
                     });
 
-                    if(game_property.end_flg){
+                    if(user_property.end_flg){
                         return;
                     }
                     // タイマーをリセット
                     timer_storage(true);
-                    wait_get_item(game_property);
+                    wait_get_item(user_property);
                 }
                 num++;
             });
@@ -89,28 +89,28 @@ function wait_get_item(game_property){
 /*
  * ビンゴ・リーチ判定、ゲームプロパティ更新処理
  */
-function check_bng(game_property,data){
+function check_bng(user_property,data){
     // item["leach_num"]と["bng_num"]の二つを使用
-    if(game_property.leach_num < data["leach_num"]){
-        game_property.leach_flg = 1;
+    if(user_property.leach_num < data["leach_num"]){
+        user_property.leach_flg = 1;
     }
-    if(game_property.bng_num < data["bng_num"]){
-        game_property.bng_flg = 1;
+    if(user_property.bng_num < data["bng_num"]){
+        user_property.bng_flg = 1;
     }
-    return game_property;
+    return user_property;
 }
 
 
 /**
  * DB登録処理
  */
-function db_register(game_property){
+function db_register(user_property){
     let index = null;
     let num = 0;
-    game_property.item_list.forEach(function(item){
+    user_property.item_list.forEach(function(item){
         if(item.cll_flg){
             index = num;
-            game_property.item_list[num] = null;
+            user_property.item_list[num] = null;
         }
         num++;
     });
@@ -127,14 +127,14 @@ function db_register(game_property){
         }
         // タイマーをリセット
         timer_storage(true);
-        wait_get_item(game_property);
+        wait_get_item(user_property);
     });
 }
 
 /*
  * 終了判定処理
  */
-function end_process(game_property){
+function end_process(user_property){
 
 }
 

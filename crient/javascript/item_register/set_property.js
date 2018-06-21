@@ -1,7 +1,7 @@
 /*
  * マスごとの項目のプロパティを取得、設定する
  */
-function set_property(game_property){
+function set_property(user_property){
     // ビンゴ番号入力画面を閉じる
     return (resolve,reject => {
 
@@ -36,11 +36,11 @@ function set_property(game_property){
                     y = y + msre_length;
                     ln_count = 1;
                 }
-                game_property.msre_property[i] = new Msre_property(i+1,x,y,msre_length,msre_length);
+                user_property.msre_property[i] = new Msre_property(i+1,x,y,msre_length,msre_length);
                 x = x + msre_length;
                 ln_count++;
             }
-            resolve(game_property);
+            resolve(user_property);
         });
     });
 }
