@@ -12,8 +12,7 @@ DELIMITER //
 --
 -- 【引数】
 --   _bng_no              ：ビンゴ番号
---   _item_cd             ：項目コード
---   _status_cd           ：ステータスコード
+--   _user_cd             ：ユーザコード
 --
 --
 -- 【戻り値】
@@ -26,6 +25,7 @@ DELIMITER //
 -- ********************************************************************************************
 CREATE PROCEDURE `get_item_001`(
     IN `_bng_no` CHAR(5)
+    , IN `_user_cd` CHAR(5)
     , OUT `exit_cd` INTEGER
 )
 COMMENT '更新待機処理'
@@ -52,16 +52,56 @@ BEGIN
 
     END WHILE
 
-        SET @query = CONCAT("
+        -- ユーザーマスの呼び出し済みフラグをアップデート
+        UPDATE
+            T_USR_MSRE
+        SET
+            CLL_FLG = 1
+            ,KUSN_NTJ = NOW()
+        WHERE
+            BNG_NO = _bng_no
+        AND
+            CNTNT_ID IN (
+                SELECT DISTINCT
+                    CNTNT_ID
+                FROM
+                    T_BNG_ITM
+                WHERE
+                    BNG_NO = _bng_no
+                AND
+                    KUSN_NYU_CD = "2"
+            )
+        ;
 
+        SET @query = CONCAT("
+            -- VIEWと結合してリーチ、ビンゴ数を取得
             SELECT
-                ITM_CD
+                TBI.ITM_CD ITM_CD
+                ,USR_LN.LCH_NUM LCH_NUM
+                ,USR_LN.BNG_NUM BNG_NUM
+                ,MAX(KUSN_NTJ) AS KUSN_NTJ
             FROM
-                T_BNG_ITM
+                T_BNG_ITM TBI
+                ,(
+                    SELECT
+                        COUNT (IF LCH_FLG = 1 THEN 1 ELSE NULL) AS LCH_NUM
+                        COUNT (IF BNG_FLG = 1 THEN 1 ELSE NULL) AS BNG_NUM
+                    FROM
+                        V_USR_LN
+                    WHERE
+                        USR_CD = ",_usr_cd,"
+                    GROUP BY
+                        BNG_NO
+                        ,LN_NUM
+                ) USR_LN
             WHERE
-                BNG_NO = ",_bng_no,"
+                TBI.BNG_NO = ",_bng_no,"
             AND
-               KUSN_NYU_CD = '2'
+                TBI.KUSN_NYU_CD = '2'
+            GROUP BY
+                ITM_CD
+                ,LCH_NUM
+                ,BNG_NUM
         ")
         ;
 

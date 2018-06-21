@@ -45,7 +45,8 @@ function wait_get_item(game_property){
     timer_storage(true);
     return new Promise(resolve,reject => {
         // 待機を開始
-        call_stored_wait("get_item_001",function(data){
+        call_stored_wait("get_item_001",arg_arr).then(function(data){
+            // これが帰ってきた時点でコードの更新処理は走ってないといけない
             let num = 0;
             game_property.item_list.forEach(function(item){
                 if(data["item_cd"] == item){
@@ -53,11 +54,14 @@ function wait_get_item(game_property){
                     game_property.item_list[num].cll_flg = 1;
 
                     // ビンゴ、リーチ判定、GameProperty更新処理
-                    game_property = check_bng(game_property,item);
+                    game_property = check_bng(game_property,data);
 
                     // hitアニメーション表示/リーチ判定処理/青色点滅
                     prfrmnc(game_property).then(function(){
                         // DB登録
+                        db_register(game_property).then(function(){
+                            //
+                        });
                     });
 
                     if(game_property.end_flg){
@@ -85,16 +89,14 @@ function wait_get_item(game_property){
 /*
  * ビンゴ・リーチ判定、ゲームプロパティ更新処理
  */
-function check_bng(game_property,item){
+function check_bng(game_property,data){
     // item["leach_num"]と["bng_num"]の二つを使用
-    if(game_property.leach_num < item["leach_num"]){
+    if(game_property.leach_num < data["leach_num"]){
         game_property.leach_flg = 1;
     }
-    if(game_property.bng_num < item["bng_num"]){
+    if(game_property.bng_num < data["bng_num"]){
         game_property.bng_flg = 1;
     }
-    game_property.end_flg = item["end_flg"];
-
     return game_property;
 }
 
@@ -117,10 +119,9 @@ function db_register(game_property){
         bng_no:game_proprerty.bng_no
         ,usr_cd:game_proprerty.user_cd
         ,msre_num:index
-        ,cntnt_id:item_cd
         ,exst_flg:1
     }
-    call_stored("db_rgister_001",arg_arr).then(function(data){
+    call_stored("db_register_001",arg_arr).then(function(data){
         if(data["end_flg"]){
             return;
         }

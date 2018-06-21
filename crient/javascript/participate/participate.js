@@ -2,16 +2,24 @@
  * 参加表明時の確認/データ取得関数
  */
 function participate(){
-    call_stored("participate_001",function(data){
-        // データをgame_propertyにつめなおす
-        if(!data["game_status"]){
-            // エラー募集開始してない
-            return;
+    let bng_no = $("#set_bng_no").attr("class");
+    let user_cd = $("#set_user_cd").attr("class");
+    return new Promise(resolve,reject => {
+        let arg_arr = {
+            bng_no:bng_no
+            ,user_cd:user_cd
         }
-        wait_game_start(game_property);
-    },function(){
-        // エラーの場合募集停止なのでスルー
-        // メッセージ「募集が開始されていないか、通信状態が悪いかもしれません」
+        call_stored("participate_001",arg_arr).then(function(data){
+            // データをgame_propertyにつめなおす
+            if(!data["game_status"]){
+                // エラー募集開始してない
+                reject();
+            }
+            wait_game_start(game_property);
+        },function(){
+            // エラーの場合募集停止なのでスルー
+            // メッセージ「募集が開始されていないか、通信状態が悪いかもしれません」
+        });
     });
 }
 

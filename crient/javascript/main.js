@@ -11,10 +11,7 @@ function initialize(){
 
 function main(){
     // 項目登録
-    choose_item();
-
-    // (常に)必ずビンゴ番号入力画面から遷移する
-    // ビンゴ番号のマッチングを行う
+    let game_property = new Game_proeprty();
 
     let button = $(this).val();
 
@@ -22,20 +19,18 @@ function main(){
       case "enter":
         // join.matching
         matching().then(function(data){
-            let bng_no = data[0];
-            let user_name = data[1];
-            let user_cd = data[2];
+            game_property.bng_no = data[0];
+            game_property.user_name = data[1];
+            game_property.user_cd = data[2];
 
-            $("#set_bng_no").addClass(data["bng_no"]);
-            $("#set_user_name").addClass(data["user_name"]);
-            $("#set_user_cd").addClass(data["user_cd"]);
-
-            // ゲームプロパティ(ユーザ)をこっちでもインスタンス化すべき
-
+            $("#set_bng_no").addClass(game_property.bng_no);
+            $("#set_user_name").addClass(game_property.user_name);
+            $("#set_user_cd").addClass(game_property.user_cd);
 
             if(data["itm_lst"]){
                 // 項目リスト設定済(選択済)→ゲーム進行処理起動
                 // ゲームステータスによって表示/非表示ボタンが切り替わるため、切り替えを関数内で行う
+                //
                 game_progress(data);
             }else{
                 // 項目リスト設定関数起動
