@@ -26,7 +26,7 @@ DELIMITER //
 -- ********************************************************************************************
 CREATE PROCEDURE `user_bosyu_001`(
     IN `_bng_no` CHAR(5)
-    IN `_user_list` VARCHAR(2000)
+    , IN `_user_list` VARCHAR(2000)
     , IN `_user_exist_num` INTEGER
     , OUT `exit_cd` INTEGER
 )
@@ -40,7 +40,7 @@ BEGIN
     UPDATE
         T_BNG_USR
     SET
-        EXST_FLG = null;
+        EXST_FLG = null
     WHERE
         BNG_NO = _bng_no
     AND
@@ -55,7 +55,7 @@ BEGIN
         WHERE
             BNG_NO = _bng_no
         AND
-            EXST_FLG = 1
+            EXST_FLG = '1'
         ;
 
         SELECT
@@ -65,12 +65,12 @@ BEGIN
         WHERE
             BNG_NO = _bng_no
         AND
-            EXST_FLG = 1
+            EXST_FLG = '1'
         ;
 
-        SLEEP(1);
+        SELECT SLEEP(1);
 
-    END WHILE
+    END WHILE;
 
         SELECT
             COUNT(1) INTO @ul0_num

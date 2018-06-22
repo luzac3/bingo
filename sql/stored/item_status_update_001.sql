@@ -41,10 +41,10 @@ BEGIN
             UPDATE
                 T_BNG_CNTNT_MSTR
             SET
-                KUSN_NYU_CD = ",_status_cd,"
+                KUSN_NYU_CD = '",_status_cd,"'
             WHERE
-                BNG_NO = ",_bng_no,"
-                ,CNTNT_ID = ",_status_cd,"
+                BNG_NO = '",_bng_no,"'
+                ,CNTNT_ID = '",_status_cd,"'
         ")
         ;
 

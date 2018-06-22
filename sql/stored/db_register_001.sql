@@ -27,9 +27,9 @@ DELIMITER //
 -- ********************************************************************************************
 CREATE PROCEDURE `db_register_001`(
     IN `_bng_no` CHAR(5)
-    IN `_usr_cd` CHAR(5)
-    IN `_msre_num` CHAR(2)
-    IN `_exst_flg` CHAR(1)
+    , IN `_usr_cd` CHAR(5)
+    , IN `_msre_num` CHAR(2)
+    , IN `_exst_flg` CHAR(1)
     , OUT `exit_cd` INTEGER
 )
 COMMENT 'ユーザーのデータベース登録/更新'
@@ -53,7 +53,7 @@ BEGIN
     ");
 
     SET @query_update = "";
-    IF IFNULL(_msre_num) THEN
+    IF IFNULL(_msre_num, '') != '' THEN
         SET @query_update = CONCAT("
             UPDATE
                 T_USR_MSRE
@@ -71,7 +71,7 @@ BEGIN
      END IF;
 
      SET @query_end = "";
-     IF IFNULL(_msre_num) THEN
+     IF IFNULL(_msre_num, '') != '' THEN
          SET @query_end = CONCAT("
              SELECT
                  CASE

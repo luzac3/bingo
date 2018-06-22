@@ -25,7 +25,7 @@ DELIMITER //
 -- ********************************************************************************************
 CREATE PROCEDURE `update_user_001`(
     IN `_bng_no` CHAR(5)
-    IN `_user_cd` CHAR(5)
+    , IN `_user_cd` CHAR(5)
     , OUT `exit_cd` INTEGER
 )
 COMMENT 'ステータス更新'

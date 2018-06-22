@@ -34,7 +34,10 @@ BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION SET exit_cd = 99;
 
     SELECT
-        IF COUNT(1)
+        CASE
+            WHEN COUNT(1) > 0 THEN 0
+            ELSE 99
+        END INTO exit_cd
     FROM
         T_BNG_MSTR
     WHERE

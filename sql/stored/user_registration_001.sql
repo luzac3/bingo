@@ -25,7 +25,7 @@ DELIMITER //
 -- ********************************************************************************************
 CREATE PROCEDURE `user_registration_001`(
     IN `_bng_no` CHAR(5)
-    IN `_user_name` VARCHAR(40)
+    , IN `_user_name` VARCHAR(40)
     , OUT `exit_cd` INTEGER
 )
 COMMENT 'ユーザー参加処理'
@@ -50,15 +50,13 @@ BEGIN
     VALUES (
         _bng_no
         ,@usr_cd
-        ,1
-        ,0
-        ,0
-        null
+        ,'1'
+        ,'0'
+        ,'0'
+        ,null
         ,NOW()
         ,NOW()
     )
-    WHERE
-        BNG_NO = _bng_no
     ;
 
         SET @query = CONCAT("
@@ -68,7 +66,7 @@ BEGIN
             FROM
                 T_BNG_ITM TBI
             WHERE
-                BNG_NO = ",_bnng_no,"
+                BNG_NO = '",_bng_no,"'
         ")
         ;
 

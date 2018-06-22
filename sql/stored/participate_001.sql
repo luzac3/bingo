@@ -23,7 +23,7 @@ DELIMITER //
 -- 【更新履歴】
 --  2018.6.21 大杉　新規作成
 -- ********************************************************************************************
-CREATE PROCEDURE `get_bng_mstr_001`(
+CREATE PROCEDURE `participate_001`(
     IN `_bng_no` CHAR(5)
     , IN `_user_cd` CHAR(5)
     , OUT `exit_cd` INTEGER
@@ -37,18 +37,18 @@ BEGIN
 
         SET @query = CONCAT("
             SELECT
-                BNG_NO
+                GP.BNG_NO
 
                 -- ユーザー情報プロパティ
-                ,USR_CD
-                ,USR_NAME
-                ,USR_LCH_NUM
-                ,USR_BNG_NUM
-                ,USR_END_FLG
+                ,USR.USR_CD
+                ,USR.USR_NAME
+                ,USR.USR_LCH_NUM
+                ,USR.USR_BNG_NUM
+                ,USR.USR_END_FLG
 
                 -- 項目情報プロパティ
-                ,MSRE_NUM
-                ,ITM_CD
+                ,IP.MSRE_NUM
+                ,IP.ITM_CD
 
             FROM
                 T_BNG_MSTR GP
@@ -64,7 +64,7 @@ BEGIN
                     FROM
                         T_USR
                     WHERE
-                        BNG_NO = ",_bng_no,"
+                        BNG_NO = '",_bng_no,"'
                     AND
                         USR_CD = '",_usr_cd,"'
                 ) USR
@@ -77,14 +77,14 @@ BEGIN
                     FROM
                         T_USR_MSRE TUM
                     WHERE
-                        TUM.BNG_NO = ",_bnng_no,"
+                        TUM.BNG_NO = '",_bnng_no,"'
                     AND
                        TUM.USR_CD = '",_usr_cd,"'
                     GROUP BY
                         TBI.BNG_NO
                 ) IP
             WHERE
-                BNG_NO = ",_bng_no,"
+                BNG_NO = '",_bng_no,"'
         ")
         ;
 

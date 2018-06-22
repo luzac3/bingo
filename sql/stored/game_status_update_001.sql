@@ -25,7 +25,7 @@ DELIMITER //
 -- ********************************************************************************************
 CREATE PROCEDURE `game_status_update_001`(
     IN `_bng_no` CHAR(5)
-    IN `_status` CHAR(1)
+    , IN `_status` CHAR(1)
     , OUT `exit_cd` INTEGER
 )
 COMMENT 'ステータス更新'

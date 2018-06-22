@@ -37,9 +37,9 @@ BEGIN
         UPDATE
             T_BNG_USR
         SET
-            EXST_FLG = null;
+            EXST_FLG = null
         WHERE
-            BNG_NO = ",_bng_no,"
+            BNG_NO = '",_bng_no,"'
         ;
     ")
     ;

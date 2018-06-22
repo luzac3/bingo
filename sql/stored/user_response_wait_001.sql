@@ -26,7 +26,7 @@ DELIMITER //
 -- ********************************************************************************************
 CREATE PROCEDURE `user_response_wait_001`(
     IN `_bng_no` CHAR(5)
-    IN `_user_list` VARCHAR(2000)
+    , IN `_user_list` VARCHAR(2000)
     , IN `_user_exist_num` INTEGER
     , OUT `exit_cd` INTEGER
 )
@@ -37,7 +37,7 @@ BEGIN
     -- 異常終了ハンドラ
     DECLARE EXIT HANDLER FOR SQLEXCEPTION SET exit_cd = 99;
 
-    @time = NOW();
+    SET @time = NOW();
 
     WHILE _(user_exist_num = @ul_num AND _user_exist_num = @ul1_num) OR @time < (NOW() - INTERVAL 20 SECOND) DO
         SELECT
@@ -59,7 +59,7 @@ BEGIN
         AND
             EXST_FLG = 1
         ;
-    END WHILE
+    END WHILE;
 
         SELECT
             COUNT(1) INTO @ul0_num

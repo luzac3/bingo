@@ -45,12 +45,12 @@ BEGIN
         WHERE
             BNG_NO = _bng_no
         AND
-            KUSN_NYU_CD = "2"
+            KUSN_NYU_CD = '2'
         ;
 
-        SLEEP(1);
+        SELECT SLEEP(1);
 
-    END WHILE
+    END WHILE;
 
         -- ユーザーマスの呼び出し済みフラグをアップデート
         UPDATE

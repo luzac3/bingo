@@ -93,7 +93,7 @@ BEGIN
                 -- ユーザー情報
                 ,(
                     SELECT
-                        ,BNG_NO
+                        BNG_NO
                         ,COUNT(1) AS USR_NUM
                         ,GROUP_CONCAT(USR_CD) AS USR_CD
                         ,GROUP_CONCAT(USR_NAME) AS USR_NAME
@@ -104,20 +104,20 @@ BEGIN
                     FROM
                         T_USR
                     WHERE
-                        BNG_NO = ",_bng_no,"
+                        BNG_NO = '",_bng_no,"'
                     AND
-                        EXST_FLG = "1"
+                        EXST_FLG = '1'
                     GROUP BY
                         BNG_NO
                 ) USR
                 -- 項目情報
                 ,(
                     SELECT
-                        TBCM.BNG_NO
+                        TBI.BNG_NO
                         ,GROUP_CONCAT(TBI.ITM_CD) ITM_CD
                         ,GROUP_CONCAT(TBI.ITM_NAME) ITM_NAME
-                        ,GROUP_CONCAY(TBI.SH_NAME) SH_NAME
-                        ,GROUP_CONCAT(TBI.PRBBLTY) PRBBLTY
+                        ,GROUP_CONCAT(TBI.ITM_SH_NAME) SH_NAME
+                        ,GROUP_CONCAT(TBI.PRBBLLTY) PRBBLLTY
                         ,GROUP_CONCAT(
                             CASE
                                 WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_NAME
@@ -126,13 +126,13 @@ BEGIN
                         ) AS CHSD_ITEM_CD
                         ,GROUP_CONCAT(
                             CASE
-                                WHEN TBI.TBI.CHSD_NUM > 0 TBI.CHSD_NUM
+                                WHEN TBI.CHSD_NUM > 0 THEN TBI.CHSD_NUM
                                 ELSE NULL
                             END
                         ) AS CHSD_ITEM_NUM
                         ,GROUP_CONCAT(
                             CASE
-                                WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_SH_NAME
+                                WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_NAME
                                 ELSE NULL
                             END
                         ) AS CHSD_ITEM_NAME
@@ -144,11 +144,11 @@ BEGIN
                         ) AS CHSD_SH_NAME
                         ,GROUP_CONCAT(
                             CASE
-                                WHEN TBI.CHSD_NUM > 0 THEN TBI.PRBBLTY
+                                WHEN TBI.CHSD_NUM > 0 THEN TBI.PRBBLLTY
                                 ELSE NULL
                             END
-                        ) AS CHSD_PRBBLTY
-                        ,GROUP_CONCAT(COUNT(1)) AS ALL_ITEM_NUM
+                        ) AS CHSD_PRBBLLTY
+                        ,COUNT(1) AS ALL_ITEM_NUM
                     FROM
                         T_BNG_ITM TBI
                     WHERE
