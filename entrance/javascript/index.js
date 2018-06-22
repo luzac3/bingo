@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("button").on("clock",function(){
+    $("button").on("click",function(){
         let button_val =~ $(this).val();
         switch(button_val){
           case register:
