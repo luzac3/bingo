@@ -1,17 +1,10 @@
 $(document).ready(function(){
-    // 詳細設定を閉じる
-    $("#enviroment_detail").hide();
-
     $("button").on("click",function(){
         // 詳細設定の開閉ボタン
         if($(this).val() == "open"){
-            $("#enviroment_detail").show();
-            $("#detail button").val("close");
-            $("#detail button").text("閉じる");
+            $("#enviroment_detail").removeClass();
         }else if($(this).val() == "close"){
-            $("#enviroment_detail").hide();
-            $("#detail button").val("open");
-            $("#detail button").text("開く");
+            $("#enviroment_detail").addClass("hidden");
         }else if($(this).val() == "register"){
             // 登録ボタン押下
 
