@@ -6,8 +6,8 @@
 
 $(window).on("load",function(){
     // ここが起点
-    $("#pz_canvas1").css('visibility','visible');
-    $("#pz_canvas2").css('visibility','hidden');
+    $("#msre_canvas1").css('visibility','visible');
+    $("#msre_canvas2").css('visibility','hidden');
 
     // 初期描画
     initialize();

@@ -21,6 +21,7 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
 ?>
 
 <script type="text/javascript" src="/bingo/environment/javascript/register.js"></script>
+<script type="text/javascript" src="/bingo/environment/javascript/msre_option.js"></script>
 <title>全体設定登録</title>
 </head>
 <body>
@@ -150,7 +151,8 @@ echo "<div id = 'bng_no' class='".$bng_no."'>".$bng_no."</div>\n";
         freeマスの位置を変更する<input type = "checkbox" id ="free_msre_pos" class="enviroment_detail"><br>
         <div id = "wrapper">
             <div id = "wrapper_inner">
-                 <canvas></canvas>
+                 <canvas id = "msre_canvas1"></canvas>
+                 <canvas id = "msre_canvas2"></canvas>
             </div>
         </div>
         </td>
