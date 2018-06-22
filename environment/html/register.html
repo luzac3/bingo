@@ -69,9 +69,9 @@ echo "<div id = 'bng_no' class='".$bng_no."'>".$bng_no."</div>\n";
         <?php
             for($i=3; $i<11; $i++){
                 if($i==5){
-                    echo "<option value='".($i^2)."' selected>".($i^2);
+                    echo "<option value='".pow($i,2)."' selected>".pow($i,2);
                 }else{
-                    echo "<option value='".($i^2)."'>".($i^2);
+                    echo "<option value='".pow($i,2)."'>".pow($i,2);
                 }
             }
         ?>
@@ -127,6 +127,8 @@ echo "<div id = 'bng_no' class='".$bng_no."'>".$bng_no."</div>\n";
                 );
 
                 $result = stored("prbblty_cd_load_001",$arg_arr);
+                print_r($result);
+                echo $result;
 
                 foreach($result as $val){
                     // 先にフラグ判断して分岐
