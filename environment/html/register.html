@@ -3,7 +3,7 @@
 <!-- 更新の際もまったく同じ動きをします -->
 <!-- 更新用にデータロードの必要ありGETの値があればデータをロードする -->
 <?php
-require_once ("/bingo/common/php/stored.php");
+require_once ($_SERVER['DOCUMENT_ROOT']."/bingo/common/php/stored.php");
 if(!empty($_GET["BNG_NO"])){
     $bng_no = $_GET["BNG_NO"];
 }else{
@@ -16,22 +16,11 @@ if(!empty($_GET["BNG_NO"])){
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="content-style-type" content="text/css">
-<meta name="robots" content="noindex, nofollow">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-<script type="text/javascript" src="/bingo/common/javascript/jquery-3.1.1.min.js"></script>
-
-<script type="text/javascript" src="/bingo/API/javascript/anim.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/button_click_event.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/call_stored.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/call_stored_wait.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/canvas_initialize.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/get_selected_checkbox.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/spin_anim.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/storager.js"></script>
+<?php
+readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
+?>
 
 <script type="text/javascript" src="/bingo/environment/javascript/register.js"></script>
-<link rel="stylesheet" href="/bingo/common/css/base.css" type="text/css" media="screen">
 <title>全体設定登録</title>
 </head>
 <body>

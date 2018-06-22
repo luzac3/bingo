@@ -63,6 +63,8 @@ function stored($stored_cd,$arr_arg = null){
             // エラーメッセージ
             $err = 1;
         }
+        // 接続を閉じる
+        $stmt -> close();
     }else{
         if($mysqli -> query($sql)){
             $result = $mysqli -> query("SELECT @exit_cd AS exit_cd");
@@ -76,9 +78,6 @@ function stored($stored_cd,$arr_arg = null){
 
     // 結果セットを閉じる
     // $result -> close();
-
-    // 接続を閉じる
-    $stmt -> close();
 
     $stmt = null;
     $sql = null;
