@@ -36,7 +36,7 @@ function initialize(){
     // こっちを呼び出しもとで行う
 
     // ラッパークラスの長さを取得
-    let wrapper_length = $("#wrapper").outerwWidth();
+    let wrapper_length = $("#wrapper").outerWidth();
 
     // 1列のマス数
     let msre_ln_num = Math.sqrt(msre_num);
@@ -44,9 +44,12 @@ function initialize(){
     // 1マスの長さ
     let msre_length = msre_num / msre_ln_num;
 
+    let canvas1 = $("msre_canvas1");
+    let canvas2 = $("msre_canvas2");
+
     // Canvasのサイズを設定
-    canvas.width = wrapper_length;
-    canvas.height = wrapper_length;
+    canvas1.width = wrapper_length;
+    canvas2.height = wrapper_length;
 
     // 全体プロパティを作成
     let msre_property_master = new Msre_property_master(width,height,msre_num);
