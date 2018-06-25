@@ -1,17 +1,17 @@
 @CHARSET "UTF-8";
 
-#wrapper{
+.wrapper{
     position:relative;
     width : 90%;
 }
 
-#wrapper:before{
+.wrapper:before{
     content:"";
     display:block;
     padding-top:100%;
 }
 
-#wrapper_inner{
+.wrapper_inner{
     position: absolute;
     top:0px;
     left:0px;
