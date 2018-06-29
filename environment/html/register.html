@@ -10,18 +10,22 @@ if(!empty($_GET["BNG_NO"])){
     // ビンゴ番号をテーブルから設定
     // ユーザー名の紐付けはここで行われないため引数なし
     $result = stored("register_001",null);
-    $bng_no = $result["BNG_NO"];
+    header('Location: /bingo/environment/html/register.html?BNG_NO='.$result[0]["BNG_NO"]);
 }
 ?>
 <html>
 <head>
 <meta charset="UTF-8">
 <?php
+// headerの読み込みファイル(APIなど)のリスト
 readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
 ?>
 
 <script type="text/javascript" src="/bingo/environment/javascript/register.js"></script>
 <script type="text/javascript" src="/bingo/environment/javascript/msre_option.js"></script>
+
+<link rel="stylesheet" href="/bingo/common/css/canvas.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/bingo/environment/css/canvas.css" type="text/css" media="screen">
 <title>全体設定登録</title>
 </head>
 <body>
@@ -103,7 +107,7 @@ echo "<div id = 'bng_no' class='".$bng_no."'>".$bng_no."</div>\n";
         <select id = "BNG_NUM">
         <?php
             for($i = 0; $i<11; $i++){
-                "<option value= '".$i."'>".$i;
+                echo "<option value= '".$i."'>".$i;
             }
         ?>
         </select>
@@ -148,8 +152,8 @@ echo "<div id = 'bng_no' class='".$bng_no."'>".$bng_no."</div>\n";
         freeマスの位置を変更する<input type = "checkbox" id ="free_msre_pos" class="enviroment_detail"><br>
         <div id = "wrapper" class="wrapper">
             <div id = "wrapper_inner" class="wrapper_inner">
-                 <canvas id = "msre_canvas1"></canvas>
-                 <canvas id = "msre_canvas2"></canvas>
+                 <canvas id = "msre_canvas1" class="msre_canvas"></canvas>
+                 <canvas id = "msre_canvas2" class="msre_canvas"></canvas>
             </div>
         </div>
         </td>

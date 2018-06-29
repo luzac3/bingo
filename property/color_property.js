@@ -10,8 +10,8 @@ let Color_property = function(color){
         this.g = "";
         this.b = "";
     }else if(this.color == "white"){
-        this.r = "0";
-        this.g = "0";
-        this.b = "0";
+        this.r = "255";
+        this.g = "255";
+        this.b = "255";
     }
 }
