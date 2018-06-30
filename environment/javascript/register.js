@@ -9,25 +9,32 @@ $(document).ready(function(){
             // 登録ボタン押下
 
             // ビンゴ通番取得
-            let bng_no = $("#bng_no").val();
+            let bng_no = $("#bng_no").attr("class");
 
             // 基本オプションのオブジェクトを取得
             let enviroment_lst = [];
-            enviroment_lst = $(".enviroment_base");
+            // enviroment_lst = $(".enviroment_base");
+            enviroment_lst = document.getElementsByClassName("enviroment_base");
 
             // 基本オプションの値を取得
             let enviroment = {};
-            enviroment_lst.foreach(function(obj){
-                let checkbox = obj.prop("type");
+            Array.prototype.forEach.call(enviroment_lst,function(obj){
+                let input_type = obj.type;
 
-                if(checkbox == "checkbox"){
-                    if(obj.prop("checked")){
-                        enviroment[obj.prop("id")] = 1;
+                if(input_type == "checkbox"){
+                    if(obj.checked){
+                        enviroment[obj.id] = 1;
                     }else{
-                        enviroment[obj.prop("id")] = null;
+                        enviroment[obj.id] = null;
+                    }
+                }else if(input_type == "number"){
+                    if(obj.value = ""){
+                        enviroment[obj.id] = null;
+                    }else{
+                        enviroment[obj.id] = obj.value;
                     }
                 }else{
-                    enviroment[obj.prop("id")] = obj.val();
+                    enviroment[obj.id] = obj.value;
                 }
             });
             enviroment_lst = null;
