@@ -2,52 +2,46 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="content-style-type" content="text/css">
-<meta name="robots" content="noindex, nofollow">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
-<script type="text/javascript" src="/bingo/common/javascript/jquery-3.1.1.min.js"></script>
+<?php
+// headerの読み込みファイル(APIなど)のリスト
+readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
+?>
 
-<script type="text/javascript" src="/bingo/API/javascript/button_click_event.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/call_stored.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/call_stored_wait.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/canvas_initialize.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/get_selected_checkbox.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/spin_anim.js"></script>
-<script type="text/javascript" src="/bingo/API/javascript/storager.js"></script>
-
-
+<script type="text/javascript" src="/bingo/crient/javascript/main.js"></script>
 <script type="text/javascript" src="/bingo/crient/javascript/game_main/game_progress.js"></script>
 <script type="text/javascript" src="/bingo/crient/javascript/game_main/prfrmnc.js"></script>
-<script type="text/javascript" src="/bingo/crient/javascript/item_list/item_register.js"></script>
-<script type="text/javascript" src="/bingo/crient/javascript/item_list/register_user_msre.js"></script>
-<script type="text/javascript" src="/bingo/crient/javascript/item_list/search_main.js"></script>
-<script type="text/javascript" src="/bingo/crient/javascript/item_list/set_property.js"></script>
+<script type="text/javascript" src="/bingo/crient/javascript/item_register/item_register.js"></script>
+<script type="text/javascript" src="/bingo/crient/javascript/item_register/register_user_msre.js"></script>
+<script type="text/javascript" src="/bingo/crient/javascript/item_register/search_main.js"></script>
+<script type="text/javascript" src="/bingo/crient/javascript/item_register/set_property.js"></script>
 <script type="text/javascript" src="/bingo/crient/javascript/join/number_match.js"></script>
 <script type="text/javascript" src="/bingo/crient/javascript/participate/participate.js"></script>
 
-<link rel="stylesheet" href="/bingo/common/css/base.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/bingo/common/css/canvas.css" type="text/css" media="screen">
 <title>ビンゴソロエールZZ</title>
 <body>
 
-<div id = 'set_bng_no' class = 'default'></div>
-<div id = 'set_user_name' class = 'default'></div>
-<div id = 'set_user_cd' class = 'default'></div>
+<div id = 'set_bng_no' class = ''></div>
+<div id = 'set_user_cd' class = ''></div>
+<div id = 'set_user_name' class = ''></div>
 
 <div id = "logo">ビンゴソロエールZZ　参加者ページ</div>
 
 <!-- ビンゴ番号入力画面 -->
 <div id = "input_bng_no">
     <form>
-        <input type="text">
+        <input type="text" id = "bng_no">
+        <input type="text" id = "user_name">
     </form>
     <button type="button" value="enter">参加</button>
-</div>div>
+</div>
 <div id="item_register">
     <!-- 登録 -->
-    <div id="register_wrapper">
-        <canvas id="register_canvas1"></canvas>
-        <canvas id="register_canvas2"></canvas>
+    <div id = "register_wrapper" class="wrapper">
+        <div id="register_wrapper_inner" class="wrapper_inner">
+            <canvas id="register_canvas1" class="register_canvas"></canvas>
+            <canvas id="register_canvas2" class="register_canvas"></canvas>
+        </div>
     </div>
     <button type="button" value="register">登録</button>
 

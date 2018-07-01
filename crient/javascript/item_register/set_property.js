@@ -3,7 +3,7 @@
  */
 function set_property(user_property){
     // ビンゴ番号入力画面を閉じる
-    return (resolve,reject => {
+    return new Property((resolve,reject) => {
 
         let arg_arr = {
             bng_no:property.bng_no

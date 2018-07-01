@@ -22,7 +22,7 @@ function call_stored_wait(arg,user_list,user_num){
 
     return new Promise(function(resolve, reject){
         $.ajax({
-            url: "../php/js_stored.php",
+            url: "/bingo/common/php/js_stored.php",
             cache: false,
             timeout: 30*60*1000,
             type:'POST',

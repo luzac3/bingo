@@ -33,40 +33,48 @@ COMMENT 'ユーザー参加処理'
 BEGIN
 
     -- 異常終了ハンドラ
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION SET exit_cd = 99;
-
-    -- ユーザーコードを取得
-    SELECT
-        MAX(USR_CD) + 1 AS USR_CD INTO @usr_cd
-    FROM
-        T_USR
-    WHERE
-        BNG_NO = _bng_no
-    ;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, @errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
+        SELECT @sqlstate, @errno, @text;
+        ROLLBACK;
+        SET exit_cd = 99;
+    END;
 
     -- ユーザーのインサートを行う
     INSERT INTO
         T_USR
-    VALUES (
+    SELECT
         _bng_no
-        ,@usr_cd
+        ,(
+            SELECT
+                LPAD(CAST((IFNULL(MAX(USR_CD),0) + 1) AS CHAR),5,0)
+            FROM
+                T_USR
+            WHERE
+                BNG_NO = _bng_no
+        )
+        ,_user_name
         ,'1'
         ,'0'
         ,'0'
         ,null
         ,NOW()
         ,NOW()
-    )
     ;
 
         SET @query = CONCAT("
             SELECT
                 BNG_NO
-                ,@usr_cd AS USR_CD
+                ,USR_CD
+                ,USR_NAME
             FROM
-                T_BNG_ITM TBI
+                T_USR
             WHERE
                 BNG_NO = '",_bng_no,"'
+            AND
+                USR_NAME = '",_user_name,"'
+            ;
         ")
         ;
 
@@ -78,6 +86,8 @@ BEGIN
     DEALLOCATE PREPARE main_query;
 
     SET exit_cd = 0;
+
+
 
 END
 //
