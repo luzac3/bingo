@@ -32,14 +32,6 @@ function stored($stored_cd,$arr_arg = null){
     }
 
     if($stmt->execute()){
-/*
-            $result = $mysqli -> query("SELECT @query_text AS query_text");
-            // $result = $mysqli -> query("SELECT @exit_cd AS exit_cd");
-            while ($row = $result->fetch_assoc()) {
-            	$data_array [] = $row;
-            }
-            return $data_array;
-*/
         if($result = $mysqli -> query("SELECT @exit_cd AS exit_cd")){
             while ($row = $result->fetch_assoc()) {
                 $data_array [] = $row;
@@ -52,7 +44,6 @@ function stored($stored_cd,$arr_arg = null){
             if($ret_data["exit_cd"] != 0){
                 return $ret_data["exit_cd"];
             }
-
         }else{
             $data_array = fetch_all($stmt);
             if(!$data_array){

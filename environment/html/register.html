@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<!-- 登録ページ。基本機能は値入力とタグ入力。まず初期フォーム一個作ってclone -->
-<!-- 更新の際もまったく同じ動きをします -->
-<!-- 更新用にデータロードの必要ありGETの値があればデータをロードする -->
 <?php
+session_start();
 require_once ($_SERVER['DOCUMENT_ROOT']."/bingo/common/php/stored.php");
 if(!empty($_GET["BNG_NO"])){
     $bng_no = $_GET["BNG_NO"];
 }else{
-    // ビンゴ番号をテーブルから設定
-    // ユーザー名の紐付けはここで行われないため引数なし
-    $result = stored("register_001",null);
-    header('Location: /bingo/environment/html/register.html?BNG_NO='.$result[0]["BNG_NO"]);
+    if(!empty($_SESSION["bng_no"])){
+        // リロードが行われたセッションから取得
+        $bng_no = $_SESSION["bng_no"];
+    }else{
+        // ビンゴ番号をテーブルから設定
+        $result = stored("register_001",null);
+        $_SESSION["bng_no"] = $result[0]["BNG_NO"];
+        $bng_no = $result[0]["BNG_NO"];
+    }
 }
 ?>
+<!DOCTYPE html>
+<!-- 登録ページ。基本機能は値入力とタグ入力。まず初期フォーム一個作ってclone -->
+<!-- 更新の際もまったく同じ動きをします -->
+<!-- 更新用にデータロードの必要ありGETの値があればデータをロードする -->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -52,11 +58,22 @@ echo "<div id = 'bng_no' class='".$bng_no."'>".$bng_no."</div>\n";
     </tr>
     <tr>
         <td>
-        古いパスワード<input type = "password" id = "old_password" class = "enviroment_base">
-        <br>
-        新しいパスワード<input type = "password" id = "new_password" class = "enviroment_base">
-        <br>
-        新しいパスワード(確認)<input type = "password" id = "new_password2" class = "enviroment_base">
+<?php
+    // GETで入ってきている場合はデータがあるので、パスワードを変更するように設定する
+    if(!empty($_GET["BNG_NO"])){
+        echo "古いパスワード<input type = 'password' id = 'old_password' class = 'enviroment_base'>";
+        echo "<br>";
+        echo "新しいパスワード<input type = 'password' id = 'new_password' class = 'enviroment_base'>";
+        echo "<br>";
+        echo "新しいパスワード(確認)<input type = 'password' id = 'new_password2' class = 'enviroment_base'>";
+        echo "<br>";
+    }else{
+        echo "パスワード<input type = 'password' id = 'new_password' class = 'enviroment_base'>";
+        echo "<br>";
+        echo "パスワード(確認)<input type = 'password' id = 'new_password2' class = 'enviroment_base'>";
+        echo "<br>";
+    }
+?>
         </td>
     </tr>
     <tr>
@@ -120,15 +137,13 @@ echo "<div id = 'bng_no' class='".$bng_no."'>".$bng_no."</div>\n";
     <!-- コード値の取得 -->
     <tr>
         <td>
-        選択数の多い項目の読み上げ確率を下げる・
-        項目ごとに読み上げ確率を設定する
         <select>
         <?php
                 $result = stored("prbblty_cd_load_001",null);
 
                 foreach($result as $val){
                     // 先にフラグ判断して分岐
-                    echo "<option value = '".$val["PRBBLTY_CD"]."' class='".$val["PRBBLTY_CD"]."'>".$val["PRBBLTY_NAME"];
+                    echo "<option value = '".$val["PRBBLTY_CD"]."' class='".$val["PRBBLTY_CD"]."'>".$val["PRBBLTY_EXPLAIN"];
                 }
         ?>
         </select>

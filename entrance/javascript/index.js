@@ -8,7 +8,7 @@ $(document).ready(function(){
             break;
           case "join":
             // クライアントページに遷移
-            location.href = "/bingo/crient/html/main.html";
+            location.href = "/bingo/crient/html/game.html";
             break;
           case "master":
               // ゲーム一覧画面に遷移→マスタではなくエントランス？

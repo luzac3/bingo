@@ -4,7 +4,7 @@
 function matching(){
     // 読み込み画像表示
     // animを再利用
-    return (resolve,reject => {
+    return new Promise((resolve,reject) => {
         let bng_no = $("#bng_no").val();
         let arg_arr = {
             bng_no:bng_no
@@ -14,7 +14,7 @@ function matching(){
             // ビンゴ番号とビンゴ名を表示して確認を促す
             // いずれはこれもモダンにしましょう
             let message = "ビンゴ番号:" + bng_no + "\n";
-            message += "ビンゴ名:" + data["bng_name"] + "\n";
+            message += "ビンゴ名:" + data[0]["BNG_NAME"] + "\n";
             message += "このビンゴに参加します。よろしいですか？";
             if(window.confirm(message)){
                 let user_name = $("#user_name").val();
@@ -23,6 +23,9 @@ function matching(){
                     ,user_name:user_name
                 }
                 call_stored("user_registration_001",arg_arr2).then(function(data){
+                    if(data == 99){
+                        reject();
+                    }
                     resolve(data);
                 });
             }else{
@@ -31,7 +34,7 @@ function matching(){
             }
         },function(){
             //anim停止2
-            // ビンゴ番号が発見できません
+
             alert("ビンゴ番号が発見できません");
             reject();
         });

@@ -3,7 +3,6 @@
  * ビンゴ/リーチ演出
  */
 async function prfrmnc(user_property){
-    return new Promise(function(){
         let animLoop = new AnimLoop();
 
         let property = {
@@ -34,7 +33,6 @@ async function prfrmnc(user_property){
         // ビンゴ増加フラグが立っていたらリーチ演出
 
         return user_property;
-    })
 }
 
 /*

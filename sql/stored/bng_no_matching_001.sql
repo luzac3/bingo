@@ -33,16 +33,32 @@ BEGIN
     -- 異常終了ハンドラ
     DECLARE EXIT HANDLER FOR SQLEXCEPTION SET exit_cd = 99;
 
-    SELECT
-        CASE
-            WHEN COUNT(1) > 0 THEN 0
-            ELSE 99
-        END INTO exit_cd
-    FROM
-        T_BNG_MSTR
-    WHERE
-        BNG_NO = _bng_no
-    ;
+    set @query = CONCAT("
+        SELECT
+            BNG_NO
+            ,BNG_NAME
+            ,CASE
+                WHEN COUNT(1) > 0 THEN 0
+                ELSE 99
+            END AS MATCH_FLG
+        FROM
+            T_BNG_MSTR
+        WHERE
+            BNG_NO = '",_bng_no,"'
+        GROUP BY
+            BNG_NO
+            ,BNG_NAME
+        ;
+    ");
+
+    SET @query_text = @query;
+
+        -- 実行
+    PREPARE main_query FROM @query_text;
+    EXECUTE main_query;
+    DEALLOCATE PREPARE main_query;
+
+    SET exit_cd = 0;
 
 END
 //

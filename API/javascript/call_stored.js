@@ -6,9 +6,9 @@ function call_stored(stored_name,arg_arr){
     }
     console.log(this.arg_arr);
 
-    return new Promise(function(resolve, reject){
+    return new Promise((resolve, reject) => {
         $.ajax({
-            url: "../php/js_stored.php",
+            url: "/bingo/common/php/js_stored.php",
             cache: false,
             timeout: 10000,
             type:'POST',
@@ -20,15 +20,13 @@ function call_stored(stored_name,arg_arr){
         }).then(
             function(data){
                 console.log(data);
-                let ret = parseInt(data);
-
-                console.log(ret);
-
-                if(ret){
-                    reject(ret);
+                if(!isNaN){
+                    data = parseInt(data);
+                    if(data){
+                        reject(data);
+                    }
                 }
-                resolve(ret);
-                // return;
+                resolve(data);
             },
             function(XMLHttpRequest, textStatus, errorThrown){
                 console.log("更新処理に失敗しました");
