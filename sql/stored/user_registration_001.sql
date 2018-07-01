@@ -51,7 +51,7 @@ BEGIN
         USR_NAME = _user_name
     ;
 
-    IF @user_exsts = 0
+    IF @user_exsts = 0 THEN
     -- ユーザーのインサートを行う
     INSERT INTO
         T_USR
@@ -73,14 +73,14 @@ BEGIN
         ,NOW()
         ,NOW()
     ;
-    END
+    END IF;
 
         SET @query = CONCAT("
             SELECT
-                BNG_NO
-                ,USR_CD
-                ,USR_NAME
-                ,GROUP_CONCAT(MSRE_NUM)
+                TU.BNG_NO
+                ,TU.USR_CD
+                ,TU.USR_NAME
+                ,GROUP_CONCAT(TUM.MSRE_NUM) AS ITM_LST
             FROM
                 T_USR TU
             LEFT OUTER JOIN
@@ -88,15 +88,15 @@ BEGIN
             ON
                 TU.BNG_NO = TUM.BNG_NO
             AND
-                TU.USER_CD = TUM.USR_CD
+                TU.USR_CD = TUM.USR_CD
             WHERE
-                BNG_NO = '",_bng_no,"'
+                TU.BNG_NO = '",_bng_no,"'
             AND
-                USR_NAME = '",_user_name,"'
+                TU.USR_NAME = '",_user_name,"'
             GROUP BY
-                BNG_NO
-                ,USR_CD
-                ,USR_NAME
+                TU.BNG_NO
+                ,TU.USR_CD
+                ,TU.USR_NAME
             ;
         ")
         ;

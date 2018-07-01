@@ -16,9 +16,9 @@ $(document).ready(function (){
 
 function main(_this){
     // 項目登録
-    let user_property = new User_property();
+    const user_property = new User_property();
 
-    let button = $(_this).val();
+    const button = $(_this).val();
 
     switch(button){
       case "enter":
@@ -32,10 +32,9 @@ function main(_this){
             $("#set_user_cd").addClass(user_property.user_cd);
             $("#set_user_name").addClass(user_property.user_name);
 
-            if(data["itm_lst"]){
+            if(data[0]["ITM_LST"]){
                 // 項目リスト設定済(選択済)→ゲーム進行処理起動
                 // ゲームステータスによって表示/非表示ボタンが切り替わるため、切り替えを関数内で行う
-                // この処理はおかしいです。要修正
                 game_progress(user_property);
             }else{
                 // 項目リスト設定関数起動

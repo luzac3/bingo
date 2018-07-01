@@ -7,7 +7,12 @@ function item_register(user_property){
     // 読み込み画像アニメーションを表示
 
     set_property(user_property).then(function(user_property){
-    	msre_draw(user_property).then(function(){
+        msre_draw(
+            user_property
+            ,user_property.msre_property
+            ,"register_wrapper"
+            ,"register_canvas"
+        ).then(function(){
             load_anim.stop();
             // user_propertyをストレージ
             storager.set("user_property",user_property);

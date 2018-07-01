@@ -12,11 +12,14 @@ let User_property = function(cd,name){
     // ユーザー名
     this.name = name;
     // リーチ数
-    this.leach_num = "";
+    this.leach_num = 0;
     // ビンゴ数
-    this.bng_num = "";
+    this.bng_num = 0;
     // 終了フラグ
-    this.end_flg = "";
+    this.end_flg = "0";
     // 存在フラグ(デフォルトは存在)
     this.exist_flg = "1";
+
+    // マス情報
+    this.msre_property = [];
 }

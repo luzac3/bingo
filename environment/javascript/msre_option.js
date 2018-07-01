@@ -88,7 +88,7 @@ function initialize(){
     }
 
     // 描画するCanvasの設定とCanvasオブジェクト
-    canvas_obj = canvas_change(msre_property_master);
+    const canvas_obj = canvas_change(msre_property_master);
 
     for(let i=0; i<msre_num; i++){
         draw(canvas_obj,msre_property[i]);

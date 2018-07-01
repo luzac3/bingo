@@ -5,7 +5,7 @@
  * ・Canvasの名称
  */
 function canvas_initialize(draw,property){
-    return new Promise(function(resolve,reject){
+    return new Promise((resolve,reject) => {
 
         let property_list = property["list"];
         let wrapper = property["wrapper"];
@@ -14,15 +14,20 @@ function canvas_initialize(draw,property){
         // ラッパークラスの長さを取得
         let wrapper_length = document.getElementById(wrapper).outerwWidth();
 
+        // canvasの取得
+        let canvas = document.getElementsByClassName(canvas_name);
+
         // Canvasのサイズを設定
-        canvas.width = wrapper_length;
-        canvas.height = wrapper_length;
+        canvas[0].width = wrapper_length;
+        canvas[0].height = wrapper_length;
+        canvas[1].width = wrapper_length;
+        canvas[1].height = wrapper_length;
 
         // 全体プロパティを作成
-        let property_master = new Property_master(width,height);
+        const property_master = new Property_master(width,height);
 
         // 描画するCanvasの設定とCanvasオブジェクト
-        canvas_obj = canvas_change(property_master,canvas_name);
+        const canvas_obj = canvas_change(property_master,canvas_name);
 
         draw(canvas_obj[0],property.draw_property);
 
@@ -33,7 +38,7 @@ function canvas_initialize(draw,property){
         //ローカルストレージに配列を保存
         storager.set("property_master", property_master);
         storager.set("initialize_property",property);
-        return resolve();
+        resolve();
     });
 }
 

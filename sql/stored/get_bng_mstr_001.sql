@@ -12,7 +12,6 @@ DELIMITER //
 --
 -- 【引数】
 --   _bng_no              ：ビンゴ番号
---   _item_cd             ：項目コード
 --   _status_cd           ：ステータスコード
 --
 --
@@ -33,131 +32,190 @@ COMMENT 'ゲームプロパティ取得'
 BEGIN
 
     -- 異常終了ハンドラ
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION SET exit_cd = 99;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, @errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
+        SELECT @sqlstate, @errno, @text;
+        ROLLBACK;
+        SET exit_cd = 99;
+    END;
 
         SET @query = CONCAT("
             SELECT
-                BNG_NO
-                ,USR_NUM
+                TBM.BNG_NO
+                ,USR.USR_NUM
 
-                ,BG_US_FLG
-                ,BG_URL
+                ,TBM.BG_US_FLG
+                ,TBM.BG_URL
 
-                ,ITEM_NUM
-                ,URL_ITEM_NUM
+                -- マス数
+                ,TBM.MSRE_NUM
+
+                -- アイテム数
+                ,IP.ALL_ITM_NUM
+                ,IP.ALL_URL_ITM_NUM
 
                 -- 選択アイテム数
-                ,CHSED_ITEM_NUM
-                ,CHSED_URL_ITEM_NUM
+                ,IP.CHSD_ITM_NUM
+                ,IP.CHSD_URL_ITM_NUM
 
-                // 演出
-                ,PRFMNC_FLG
-                ,PRFMNC_CD
+                -- 演出
+                ,TBM.PRFMNC_FLG
 
-                // 終了マス
-                ,END_MSRE_FLG
+                -- 演出コード未実装のため停止
+                -- ,TBM.PRFMNC_CD
 
-                // 確率
-                ,PRBBLTY_FLG
-                ,PRBBLTY_CD
+                -- 終了マス
+                ,TBM.END_MSRE_FLG
+
+                -- 確率
+                ,TBM.PRBBLTY_FLG
+                ,TBM.PRBBLTY_CD
 
                 -- ゲームモード
-                ,BNG_MD_CD
+                ,TBM.BNG_MD_CD
 
-                -- 残り項目数
-                ,LFT_ITM_NUM
+                -- 読上済項目数
+                ,IP.READ_ITM_NUM
 
                 -- ユーザー情報プロパティ
-                ,USR_CD
-                ,USR_NAME
-                ,USR_LCH_NUM
-                ,USR_BNG_NUM
-                ,USR_END_FLG
-                ,USR_EXST_FLG
+                ,USR.USR_CD
+                ,USR.USR_NAME
+                ,USR.LCH_NUM
+                ,USR.BNG_NUM
+                ,USR.END_FLG
+                ,USR.EXST_FLG
 
                 -- 項目情報プロパティ
-                ,ITM_CD
-                ,ITM_NAME
-                ,ITM_SH_NAME
-                ,ITM_PRBBLTY
-                ,ITM_NUM
+                ,IP.ITM_CD
+                ,IP.ITM_NAME
+                ,IP.SH_NAME
+                ,IP.PRBBLLTY
+
+                -- ユーザーに選択された回数
+                ,IP.CHSD_ITM_SELECTED_NUM
 
                 -- 選択項目情報プロパティ
-                ,CHSD_ITM_CD
-                ,CHSD_ITM_NAME
-                ,CHSD_ITM_SH_NAME
-                ,CHSD_ITM_PRBBLTY
-                ,CHSD_ITEM_NUM
+                ,IP.CHSD_ITM_CD
+                ,IP.CHSD_ITM_NAME
+                ,IP.CHSD_SH_NAME
+                ,IP.CHSD_PRBBLLTY
             FROM
-                T_BNG_MSTR GP
+                T_BNG_MSTR TBM
                 -- ユーザー情報
                 ,(
                     SELECT
-                        BNG_NO
+                        TU.BNG_NO
                         ,COUNT(1) AS USR_NUM
-                        ,GROUP_CONCAT(USR_CD) AS USR_CD
-                        ,GROUP_CONCAT(USR_NAME) AS USR_NAME
-                        ,GROUP_CONCAT(LCH_NUM) AS LCH_NUM
-                        ,GROUP_CONCAT(BNG_NUM) AS BNG_NUM
-                        ,GROUP_CONCAT(END_FLG) AS END_FLG
-                        ,GROUP_CONCAT(EXST_FLG) AS EXST_FLG
+                        ,GROUP_CONCAT(TU.USR_CD) AS USR_CD
+                        ,GROUP_CONCAT(TU.USR_NAME) AS USR_NAME
+                        ,GROUP_CONCAT(TU.LCH_NUM) AS LCH_NUM
+                        ,GROUP_CONCAT(TU.BNG_NUM) AS BNG_NUM
+                        ,GROUP_CONCAT(TU.END_FLG) AS END_FLG
+                        ,GROUP_CONCAT(TU.EXST_FLG) AS EXST_FLG
                     FROM
-                        T_USR
+                        T_USR TU
                     WHERE
-                        BNG_NO = '",_bng_no,"'
+                        TU.BNG_NO = '",_bng_no,"'
                     AND
-                        EXST_FLG = '1'
+                        TU.EXST_FLG = '1'
                     GROUP BY
-                        BNG_NO
+                        TU.BNG_NO
                 ) USR
                 -- 項目情報
                 ,(
                     SELECT
                         TBI.BNG_NO
+                        -- アイテムコードリスト
                         ,GROUP_CONCAT(TBI.ITM_CD) ITM_CD
+
+                        -- アイテム名リスト
                         ,GROUP_CONCAT(TBI.ITM_NAME) ITM_NAME
+
+                        -- アイテム省略名リスト
                         ,GROUP_CONCAT(TBI.ITM_SH_NAME) SH_NAME
+
+                        -- 固有確率リスト
                         ,GROUP_CONCAT(TBI.PRBBLLTY) PRBBLLTY
+
+                        -- 選択された項目の項目名リスト
                         ,GROUP_CONCAT(
                             CASE
                                 WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_NAME
                                 ELSE NULL
                             END
-                        ) AS CHSD_ITEM_CD
+                        ) AS CHSD_ITM_CD
+
+                        -- 項目の選択された回数リスト
                         ,GROUP_CONCAT(
                             CASE
                                 WHEN TBI.CHSD_NUM > 0 THEN TBI.CHSD_NUM
                                 ELSE NULL
                             END
-                        ) AS CHSD_ITEM_NUM
+                        ) AS CHSD_ITM_SELECTED_NUM
+
+                        -- 選択された項目の名前リスト
                         ,GROUP_CONCAT(
                             CASE
                                 WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_NAME
                                 ELSE NULL
                             END
-                        ) AS CHSD_ITEM_NAME
+                        ) AS CHSD_ITM_NAME
+
+                        -- 選択された項目の省略名リスト
                         ,GROUP_CONCAT(
                             CASE
                                 WHEN TBI.CHSD_NUM > 0 THEN TBI.ITM_SH_NAME
                                 ELSE NULL
                             END
                         ) AS CHSD_SH_NAME
+
+                        -- 選択された項目の固有確率リスト
                         ,GROUP_CONCAT(
                             CASE
                                 WHEN TBI.CHSD_NUM > 0 THEN TBI.PRBBLLTY
                                 ELSE NULL
                             END
                         ) AS CHSD_PRBBLLTY
-                        ,COUNT(1) AS ALL_ITEM_NUM
+
+                        -- 全項目数
+                        ,COUNT(1) AS ALL_ITM_NUM
+
+                        -- 全項目のうち、画像URLを持つ項目の数
+                        ,COUNT(TBI.IMG_URL) AS ALL_URL_ITM_NUM
+
+                        -- 選択された項目の数
+                        ,COUNT(
+                            CASE
+                                WHEN TBI.CHSD_NUM > 0 THEN 1
+                                ELSE NULL
+                            END
+                        ) AS CHSD_ITM_NUM
+
+                        -- 選択された項目のうち、画像URLを持つ項目の数
+                        ,COUNT(
+                            CASE
+                                WHEN TBI.CHSD_NUM > 0 THEN TBI.IMG_URL
+                                ELSE NULL
+                            END
+                        ) AS CHSD_URL_ITM_NUM
+
+                        -- 読上げ済み(CD02)項目数
+                        ,COUNT(
+                            CASE
+                                WHEN TBI.KUSN_NYU_CD = 2 THEN 1
+                                ELSE NULL
+                            END
+                        ) AS READ_ITM_NUM
                     FROM
                         T_BNG_ITM TBI
                     WHERE
-                        TBI.BNG_NO = ",_bnng_no,"
+                        TBI.BNG_NO = '",_bng_no,"'
                     GROUP BY
                         TBI.BNG_NO
                 ) IP
             WHERE
-                BNG_NO = ",_bng_no,"
+                TBM.BNG_NO = ",_bng_no,"
         ")
         ;
 

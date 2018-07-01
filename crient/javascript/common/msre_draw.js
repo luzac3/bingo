@@ -2,15 +2,16 @@
  * 項目登録用のマスを表示する部分
  * 項目更新時に再描画
  */
-function msre_draw(game_property,wrapper,canvas_name){
+function msre_draw(game_property,msre_property,wrapper,canvas_name){
     // ビンゴ番号入力画面を閉じる
-    return (resolve,reject => {
-        let property = {
+    return new Promise((resolve,reject) => {
+        const property = {
             game_property:game_property
+            ,list:msre_property
             ,wrapper:wrapper
             ,canvas_name:canvas_name
         }
-        canvas_initialize(property,initialize_draw).then(function(){
+        canvas_initialize(initialize_draw,property).then(function(){
             resolve(game_property);
         },function(){
             reject();

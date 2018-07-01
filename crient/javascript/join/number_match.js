@@ -24,7 +24,10 @@ function matching(){
                 }
                 call_stored("user_registration_001",arg_arr2).then(function(data){
                     if(data == 99){
-                        reject();
+                        reject(data);
+                    }
+                    if(data["@errno"]){
+                        reject(data["@errno"]);
                     }
                     resolve(data);
                 });
