@@ -41,6 +41,17 @@ BEGIN
         SET exit_cd = 99;
     END;
 
+    SELECT
+        COUNT(1) INTO @user_exsts
+    FROM
+        T_USR
+    WHERE
+        BNG_NO = _bng_no
+    AND
+        USR_NAME = _user_name
+    ;
+
+    IF @user_exsts = 0
     -- ユーザーのインサートを行う
     INSERT INTO
         T_USR
@@ -62,18 +73,30 @@ BEGIN
         ,NOW()
         ,NOW()
     ;
+    END
 
         SET @query = CONCAT("
             SELECT
                 BNG_NO
                 ,USR_CD
                 ,USR_NAME
+                ,GROUP_CONCAT(MSRE_NUM)
             FROM
-                T_USR
+                T_USR TU
+            LEFT OUTER JOIN
+                T_USR_MSRE TUM
+            ON
+                TU.BNG_NO = TUM.BNG_NO
+            AND
+                TU.USER_CD = TUM.USR_CD
             WHERE
                 BNG_NO = '",_bng_no,"'
             AND
                 USR_NAME = '",_user_name,"'
+            GROUP BY
+                BNG_NO
+                ,USR_CD
+                ,USR_NAME
             ;
         ")
         ;
