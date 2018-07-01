@@ -167,35 +167,7 @@ function msre_set(e){
     //ローカルストレージに配列を保存
     storager.set("msre_property", msre_property);
 }
-/*
-function canvas_change(master_obj){
-    let old_canvas_kind = 1;
-    let canvas_kind = 2;
 
-    if(!window.sessionStorage.getItem("canvas_kind")){
-        old_canvas_kind = 1;
-        canvas_kind = 2;
-    }else{
-        old_canvas_kind = storager.get("canvas_kind");
-        // トグル キャンバスの切り替え
-        canvas_kind = (old_canvas_kind % 2) + 1;
-    }
-
-    storager.set("canvas_kind",canvas_kind);
-
-    let canvas = $("#msre_canvas"+canvas_kind)[0];
-    if ( !canvas || !canvas.getContext ) { return false; }
-    let ctx = canvas.getContext('2d');
-    let arr = [ctx,parseInt(canvas_kind),parseInt(old_canvas_kind)];
-
-    ctx.clearRect(0,0,master_obj.width,master_obj.height);
-    ctx.fillStyle="rgb(255,255,255)";
-    ctx.fillRect(0,0,master_obj.width,master_obj.height);
-
-    //オブジェクトと現在のキャンバス(Visible用)と過去のキャンバス(Hidden用)を送る
-    return arr;
-}
-*/
 function draw(canvas_obj,obj){
     let ctx = canvas_obj[0];
 

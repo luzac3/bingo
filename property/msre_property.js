@@ -33,4 +33,9 @@ let Msre_property = function(msre_no,posX,posY,width,height){
     // 項目コードと項目名
     this.item_cd = "";
     this.item_name = "";
+
+    // マスの情報
+
+    // 1マスの長さ
+    this.msre_length = width;
 }

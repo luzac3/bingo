@@ -18,13 +18,13 @@ function set_property(user_property){
             const msre_num = bng_mstr["MSRE_NUM"];
 
             // ラッパーオブジェクトのサイズ
-            let wrapper_length = $("#register_wrapper").outerWidth();
+            const wrapper_length = Math.floor( $("#register_wrapper").outerWidth() / msre_ln_num) * msre_ln_num;
 
             // 1行のマス数
-            let msre_ln_num = Math.sqrt(msre_num);
+            user_property.msre_ln_num = Math.sqrt(msre_num);
 
             // 1マスの長さ
-            let msre_length = wrapper_length / msre_ln_num;
+            const msre_length = wrapper_length / msre_ln_num;
 
             let ln_count = 1;
 

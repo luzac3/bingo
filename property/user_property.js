@@ -22,4 +22,7 @@ let User_property = function(cd,name){
 
     // マス情報
     this.msre_property = [];
+
+    // 1列のマス数
+    this.msre_ln_num = 0;
 }
