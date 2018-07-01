@@ -88,7 +88,7 @@ function initialize(){
     }
 
     // 描画するCanvasの設定とCanvasオブジェクト
-    const canvas_obj = canvas_change(msre_property_master);
+    const canvas_obj = canvas_change(msre_property_master,"msre_canvas");
 
     for(let i=0; i<msre_num; i++){
         draw(canvas_obj,msre_property[i]);
@@ -154,7 +154,7 @@ function msre_set(e){
     let msre_property_master = storager.get("msre_property_master");
 
     // 描画するCanvasの設定とCanvasオブジェクト
-    canvas_obj = canvas_change(msre_property_master);
+    const canvas_obj = canvas_change(msre_property_master,"msre_canvas");
 
     for (let i=0; i<msre_num; i++){
         draw(canvas_obj,msre_property[i]);
@@ -167,7 +167,7 @@ function msre_set(e){
     //ローカルストレージに配列を保存
     storager.set("msre_property", msre_property);
 }
-
+/*
 function canvas_change(master_obj){
     let old_canvas_kind = 1;
     let canvas_kind = 2;
@@ -195,7 +195,7 @@ function canvas_change(master_obj){
     //オブジェクトと現在のキャンバス(Visible用)と過去のキャンバス(Hidden用)を送る
     return arr;
 }
-
+*/
 function draw(canvas_obj,obj){
     let ctx = canvas_obj[0];
 
