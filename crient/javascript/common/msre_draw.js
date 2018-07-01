@@ -8,7 +8,8 @@ function msre_draw(game_property,msre_property,wrapper,canvas_name){
         const property = {
             game_property:game_property
             ,draw_property:msre_property
-            ,wrapper:wrapper
+            ,wrapper_width:game_property.width
+            ,wrapper_height:game_property.height
             ,canvas_name:canvas_name
         }
         canvas_initialize(initialize_draw,property).then(function(){
@@ -19,7 +20,7 @@ function msre_draw(game_property,msre_property,wrapper,canvas_name){
     });
 }
 
-function initialize_draw(ctx,property){
+function initialize_draw(ctx,obj){
     // 色指定
     ctx.fillStyle="rgb("+obj.r+","+obj.g+","+obj.b+")";
     ctx.fillRect(obj.posX, obj.posY, obj.width, obj.height);

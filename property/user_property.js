@@ -25,4 +25,8 @@ let User_property = function(cd,name){
 
     // 1列のマス数
     this.msre_ln_num = 0;
+
+    // キャンバスの情報
+    this.width = 0;
+    this.height = 0;
 }

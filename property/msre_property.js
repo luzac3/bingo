@@ -8,7 +8,7 @@ let Msre_property = function(msre_no,posX,posY,width,height){
     this.height = height;
 
     this.free_flg = false;
-    this.end_flg = true;
+    this.end_flg = false;
 
     this.set_color = function(color){
         if(color == "red"){

@@ -2,6 +2,10 @@
  * マスごとの項目のプロパティを取得、設定する
  */
 function item_register(user_property){
+    // canvasの非表示を設定する
+    $("#register_canvas1").css('visibility','visible');
+    $("#register_canvas2").css('visibility','hidden');
+
     // ビンゴ番号入力画面を閉じる
 
     // 読み込み画像アニメーションを表示
@@ -13,7 +17,7 @@ function item_register(user_property){
             ,"register_wrapper"
             ,"register_canvas"
         ).then(function(){
-            load_anim.stop();
+            // load_anim.stop();
             // user_propertyをストレージ
             storager.set("user_property",user_property);
         });

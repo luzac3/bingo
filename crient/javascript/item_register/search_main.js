@@ -1,11 +1,14 @@
 function search_main(event){
     let arg_arr = {
-            bng_no:bng_no
-            ,user_cd:user_cd
+            bng_no:$("#set_bng_no").attr("class")
+            ,user_cd:$("#set_user_cd").attr("class")
             ,search_word:null
             ,check_box_str:null
         }
     msre_set(event);
+
+    // 初期サーチ
+    search(arg_arr);
 
     $("#search").on("click",function(){
         let search_word =$("#search_word").val();
@@ -69,8 +72,8 @@ function msre_set(e,arg_arr){
 
     search(arg_arr).then(function(){
         // 読み込み表示終了
-        stop();
-    })
+        // stop();
+    });
 }
 
 /*
