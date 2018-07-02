@@ -20,13 +20,15 @@ if(!empty($_POST)){
 
     if($result){
         // 0以外は失敗
-        echo json_encode($result);
+        // echo json_encode($result);
         // echo json_encode("更新成功");
+        echo 0;
     }else{
-        echo json_encode("データ取得エラー");
+        // echo json_encode("データ取得エラー");
+        echo 1;
     }
 }else{
-    echo json_encode("実行失敗");
+    // echo json_encode("実行失敗");
+    echo 2;
 }
-
 ?>

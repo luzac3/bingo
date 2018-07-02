@@ -55,14 +55,16 @@ function search_main(event){
 
 function msre_set(e,arg_arr){
     // ゲームプロパティ取得
-    let user_property = storager.get("user_property");
+    const user_property = storager.get("user_property");
 
-    let msre_num = user_property.msre_num;
+    const msre_num = user_property.msre_num;
 
-    let index_num = get_target_object(e,user_property.msre_property);
+    const index_num = get_target_object(e,user_property.msre_property);
+
+    const show_obj_id = "search_main";
 
     // index番号を渡してDivを表示
-    show();
+    show_obj(show_obj_id,80,80);
 
     // index番号を埋め込む
     $("#item_list").attr("class",index_num);
@@ -81,7 +83,7 @@ function msre_set(e,arg_arr){
  * 条件を入力しなかった場合は全リストを抽出
  */
 function search(arg_arr){
-    return new Promise(resolve,reject => {
+    return new Promise((resolve,reject) => {
         call_stored("get_item_list_001",arg_arr).then(function(data){
             let flag = true;
             let base = $(".class")[0];

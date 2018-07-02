@@ -38,16 +38,14 @@ function item_register(user_property){
 /*
  * オブジェクトのリストから、クリックされたオブジェクトのキーを取得する
  */
-function get_target_object(e,obj_list){
+function get_target_object(e,msre_property){
     // クリックされた場所を特定、画面上の座標からCanvas上の絶対座標に変換
     let x = 0;
     let y = 0;
 
-    let msre_property = storager.get("msre_property");
-
     let pos = null;
 
-    let rect = e.target.getBoundingClientRect();
+    const rect = e.target.getBoundingClientRect();
     x = e.clientX - rect.left;
     y = e.clientY - rect.top;
 
@@ -57,6 +55,8 @@ function get_target_object(e,obj_list){
 
     let xEnd = 0;
     let yEnd = 0;
+
+    const msre_num = msre_property.length;
 
     let index = 0;
     // 自分自身を取得
