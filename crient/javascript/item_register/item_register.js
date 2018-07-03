@@ -23,6 +23,9 @@ function item_register(user_property){
         });
     });
 
+    // 複数クリック対応
+    $("#item_register canvas").off("click");
+
     // canvasをクリックしたときの動作
     $("#item_register canvas").on("click",function(event){
         // 処理を項目選択用のJSファイル「search_main」に移す

@@ -97,13 +97,16 @@ function search(arg_arr){
     return new Promise((resolve,reject) => {
         call_stored("get_item_list_001",arg_arr).then(function(data){
             let flag = true;
-            let base = $(".item_button");
+            let base = $(".item_button").filter(":first");
+
+            // コピー用の要素を上に用意しておいて、それをコピーして子要素に加えていく方向に変更
+            // empty()が使えるようになる
+
             data.forEach(function(item){
                 if(flag){
                     // 初回はサンプルを変換
-                    base.attr("class",item["BNG_NO"]);
                     base.val(item["ITM_CD"]);
-                    base.val(item["ITM_NAME"]);
+                    base.text(item["ITM_NAME"]);
                     flag = false;
                     return;
                 }
@@ -113,7 +116,7 @@ function search(arg_arr){
                 copy.text(item["ITM_NAME"]);
 
                 // 要素の最後にコピーしたクローンを挿入
-                base.filter(":last").after(copy);
+                base.parent().append(copy);
             });
             resolve("success");
         },function(){ reject("failue"); });
