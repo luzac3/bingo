@@ -24,7 +24,7 @@ function item_register(user_property){
     });
 
     // canvasをクリックしたときの動作
-    $("canvas").on("click",function(event){
+    $("#item_register canvas").on("click",function(event){
         // 処理を項目選択用のJSファイル「search_main」に移す
         search_main(event);
     });

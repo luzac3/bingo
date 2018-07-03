@@ -1,28 +1,36 @@
 function search_main(event){
     let arg_arr = {
             bng_no:$("#set_bng_no").attr("class")
-            ,user_cd:$("#set_user_cd").attr("class")
-            ,search_word:null
-            ,check_box_str:null
+            ,tag:null
+            ,search_word1:null
+            ,search_word2:null
+            ,search_word3:null
         }
-    msre_set(event);
 
-    // 初期サーチ
-    search(arg_arr);
+    // マス情報取得、設定、表示
+    msre_set(event,arg_arr);
 
     $("#search").on("click",function(){
         let search_word =$("#search_word").val();
-        let checked_box_arr = get_checkbox("tag");
+        // 全角スペースを半角スペースに置換
+        search_word = search_word.replace(/ /g, '　');
+
+        const checked_box_arr = get_checkbox("tag");
 
         let check_box_str = "";
         checked_box_arr.foraEach(function(checked_box){
-            check_box_str += checked_box;
+            check_box_str += "'" + checked_box + "'";
             check_box_str += ",";
         });
-        check_box_str.slice(0,-1);
+        tag.slice(0,-1);
 
-        arg_arr["search_word"] = search_word;
-        arg_arr["check_box_str"] = check_box_str;
+        const search_word_arr = search_word.split(" ");
+
+        for(let i=0; i<3; i++){
+            arg_arr["search_word" + i] = search_word_arr[i];
+        }
+
+        arg_arr["tag"] = check_box_str;
 
         msre_set(event,arg_arr);
     });
@@ -72,9 +80,12 @@ function msre_set(e,arg_arr){
     // 読み込み起動
     // let load_anim =
 
-    search(arg_arr).then(function(){
-        // 読み込み表示終了
-        // stop();
+    // サーチ
+    search(arg_arr).then(function(data){
+        // 特に何もしない
+        console.log(data);
+    },function(data){
+        console.log(data);
     });
 }
 
@@ -86,24 +97,25 @@ function search(arg_arr){
     return new Promise((resolve,reject) => {
         call_stored("get_item_list_001",arg_arr).then(function(data){
             let flag = true;
-            let base = $(".class")[0];
+            let base = $(".item_button");
             data.forEach(function(item){
                 if(flag){
                     // 初回はサンプルを変換
-                    base.attr("class",item["item_cd"]);
-                    base.val(item["item_name"]);
+                    base.attr("class",item["BNG_NO"]);
+                    base.val(item["ITM_CD"]);
+                    base.val(item["ITM_NAME"]);
                     flag = false;
                     return;
                 }
                 // コピーオブジェクトを生成
                 let copy = base.clone();
-                copy.val(item["item_cd"]);
-                copy.text(item["item_name"]);
+                copy.val(item["ITM_CD"]);
+                copy.text(item["ITM_NAME"]);
 
                 // 要素の最後にコピーしたクローンを挿入
-                $(".item").filter(":last").after(copy);
+                base.filter(":last").after(copy);
             });
-            resolve();
-        },function(){ reject(); });
+            resolve("success");
+        },function(){ reject("failue"); });
     })
 }

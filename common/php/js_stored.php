@@ -19,16 +19,12 @@ if(!empty($_POST)){
     $result = stored($stored, $arg_arr);
 
     if($result){
-        // 0以外は失敗
-        // echo json_encode($result);
-        // echo json_encode("更新成功");
-        echo 0;
+        echo json_encode($result);
     }else{
-        // echo json_encode("データ取得エラー");
-        echo 1;
+    	// echo json_encode($result);
+        echo json_encode("データ取得エラー");
     }
 }else{
-    // echo json_encode("実行失敗");
-    echo 2;
+    echo json_encode("実行失敗");
 }
 ?>
