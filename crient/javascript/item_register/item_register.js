@@ -64,8 +64,8 @@ function get_target_object(e,msre_property){
     let index = 0;
     // 自分自身を取得
     for(let i = 0; i < msre_num; i++){
-        xStart = msre_property[i].x;
-        yStart = msre_property[i].y;
+        xStart = msre_property[i].posX;
+        yStart = msre_property[i].posY;
 
         xEnd = xStart + msre_property[i].width;
         yEnd = yStart + msre_property[i].height;

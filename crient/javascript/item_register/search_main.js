@@ -71,7 +71,7 @@ function msre_set(e,arg_arr){
 
     const show_obj_id = "search_main";
 
-    // index番号を渡してDivを表示
+    // Divを表示
     show_obj(show_obj_id,80,80);
 
     // index番号を埋め込む
@@ -99,24 +99,49 @@ function search(arg_arr){
             let flag = true;
             let base = $(".item_button").filter(":first");
 
-            // コピー用の要素を上に用意しておいて、それをコピーして子要素に加えていく方向に変更
-            // empty()が使えるようになる
+            // 項目リストの中身を空に
+            $("#item_list").empty();
 
             data.forEach(function(item){
-                if(flag){
-                    // 初回はサンプルを変換
-                    base.val(item["ITM_CD"]);
-                    base.text(item["ITM_NAME"]);
-                    flag = false;
-                    return;
-                }
                 // コピーオブジェクトを生成
                 let copy = base.clone();
+                copy.attr("class","item_list");
                 copy.val(item["ITM_CD"]);
                 copy.text(item["ITM_NAME"]);
 
+                // コピーした要素を表示状態に切り替え
+                copy.css("visibility","visible");
+
                 // 要素の最後にコピーしたクローンを挿入
-                base.parent().append(copy);
+                $("#item_list").append(copy);
+
+
+                // クリックイベントをセット
+                // 複数クリック対応
+                $(".item_list").off("click");
+
+                $(".item_list").on("click",function(){
+                    // アイテムのコードを取得
+                    const item_cd = $(this).val();
+                    // アイテム名を取得
+                    const item_name = $(this).text();
+
+                    // index番号取得
+                    const index = parseInt($("#item_list").prop("class"));
+
+                    // ユーザープロパティの取得
+                    const user_property = storager.get("user_property");
+
+                    // マス情報をセット
+                    user_property.msre_property[index].item_cd = item_cd;
+                    user_property.msre_property[index].item_name = item_name;
+
+                    // マスの再描画
+                    msre_draw(user_property,user_property.msre_property,"register_wrapper","register_canvas");
+
+                    storager.set("user_property",user_property);
+                });
+
             });
             resolve("success");
         },function(){ reject("failue"); });
