@@ -11,23 +11,33 @@ function search_main(event){
     msre_set(event,arg_arr);
 
     $("#search").on("click",function(){
-        let search_word =$("#search_word").val();
-        // 全角スペースを半角スペースに置換
-        search_word = search_word.replace(/ /g, '　');
+        const search_word = $("#search_word").val();
+        let search_word_arr = [];
+        if(search_word){
+            // 全角スペースを半角スペースに置換
+            search_word = search_word.replace(/ /g, '　');
+            search_word_arr = search_word.split(" ");
+        }
 
         const checked_box_arr = get_checkbox("tag");
 
         let check_box_str = "";
-        checked_box_arr.foraEach(function(checked_box){
+        checked_box_arr.forEach(function(checked_box){
             check_box_str += "'" + checked_box + "'";
             check_box_str += ",";
         });
-        tag.slice(0,-1);
+        if(check_box_str){
+            tag.slice(0,-1);
+        }
 
-        const search_word_arr = search_word.split(" ");
+        const len = search_word_arr.length;
 
-        for(let i=0; i<3; i++){
-            arg_arr["search_word" + i] = search_word_arr[i];
+        for(let i = 0; i < 3; i++){
+            if(i > len){
+                arg_arr["search_word" + i] = "";
+            }else{
+                arg_arr["search_word" + i] = search_word_arr[i];
+            }
         }
 
         arg_arr["tag"] = check_box_str;
