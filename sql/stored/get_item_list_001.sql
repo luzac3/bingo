@@ -67,7 +67,7 @@ BEGIN
 
     IF IFNULL(_tag,'') != '' THEN
         SET @query_tag = CONCAT("
-            LEFT OUTER JOIN
+            INNER JOIN
                 T_BNG_TAG TBT
             ON
                 TBI.BNG_NO = TBT.BNG_NO

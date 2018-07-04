@@ -11,7 +11,7 @@ function search_main(event){
     msre_set(event,arg_arr);
 
     $("#search").on("click",function(){
-        const search_word = $("#search_word").val();
+        let search_word = $("#search_word").val();
         let search_word_arr = [];
         if(search_word){
             // 全角スペースを半角スペースに置換
@@ -27,22 +27,22 @@ function search_main(event){
             check_box_str += ",";
         });
         if(check_box_str){
-            tag.slice(0,-1);
+            check_box_str = check_box_str.slice(0,-1);
         }
 
         const len = search_word_arr.length;
 
-        for(let i = 0; i < 3; i++){
+        for(let i = 1; i <= 3; i++){
             if(i > len){
                 arg_arr["search_word" + i] = "";
             }else{
-                arg_arr["search_word" + i] = search_word_arr[i];
+                arg_arr["search_word" + i] = search_word_arr[i-1];
             }
         }
 
         arg_arr["tag"] = check_box_str;
 
-        msre_set(event,arg_arr);
+        msre_set(null,arg_arr);
     });
 
     // 閉じるボタン
@@ -77,21 +77,28 @@ function msre_set(e,arg_arr){
 
     const msre_num = user_property.msre_num;
 
-    const index_num = get_target_object(e,user_property.msre_property);
+    let index_num = null;
+
+    // マスのクリックイベントから入った場合と検索キーから入った場合で分ける
+    if(e){
+        index_num = get_target_object(e,user_property.msre_property);
+
+        // index番号を埋め込む
+        $("#item_list").attr("class",index_num);
+    }else{
+        index_num = $("#item_list").prop("class");
+    }
 
     const show_obj_id = "search_main";
 
     // Divを表示
     show_obj(show_obj_id,80,80);
 
-    // index番号を埋め込む
-    $("#item_list").attr("class",index_num);
-
     // 読み込み起動
     // let load_anim =
 
     // 子要素がある(すでに読み込み済み)の場合再検索はしない
-    if($("#item_list").children().length){
+    if(e && $("#item_list").children().length){
         return;
     }
 
