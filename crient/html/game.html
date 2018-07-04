@@ -19,6 +19,7 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
 <script type="text/javascript" src="/bingo/crient/javascript/participate/participate.js"></script>
 
 <link rel="stylesheet" href="/bingo/common/css/canvas.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/bingo/crient/css/crient.css" type="text/css" media="screen">
 <title>ビンゴソロエールZZ</title>
 <body>
 
@@ -52,7 +53,7 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
         <button value="close"><img src="close.jpg" class="close"></button>
         <form>検索<input id="search_word" type="text"></form><button type="button" id="search" value="search">検索</button>
         <!-- タグ(ビンゴ番号を取得したときに一緒に持ってきて張っとく) -->
-        <form>タグ<input type="checkbox" value="sample">sample</form>
+        <form>タグ<input type="checkbox" value="sample" name="tag">sample</form>
 
         <!-- 項目リスト表示領域画像については未定  クラスにインデックス番号を埋め込み -->
         <button type="button" class="item_button hidden">サンプル</button>

@@ -1,7 +1,10 @@
 function get_checkbox(name){
     let result = [];
 
-    let elemnts = document.getElementByName(name);
+    const elements_list = document.getElementsByName(name);
+
+    // ノードリストを配列に変換
+    const elements = Array.prototype.slice.call(elements_list,0);
 
     elements.forEach(function(element){
         if(element.checked){

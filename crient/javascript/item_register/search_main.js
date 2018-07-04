@@ -80,6 +80,11 @@ function msre_set(e,arg_arr){
     // 読み込み起動
     // let load_anim =
 
+    // 子要素がある(すでに読み込み済み)の場合再検索はしない
+    if($("#item_list").children().length){
+        return;
+    }
+
     // サーチ
     search(arg_arr).then(function(data){
         // 特に何もしない
