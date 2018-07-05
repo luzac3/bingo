@@ -33,7 +33,8 @@ function item_register(user_property){
     });
 
     // 項目の登録処理
-    $("#register").on("click",function(){
+    $("#register_msre").on("click",function(){
+        const user_property = storager.get("user_property");
         register_user_msre(user_property);
     });
 }

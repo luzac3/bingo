@@ -2,7 +2,7 @@ function register_user_msre(user_property){
     // ロード画面表示
     str = "";
 
-    let num = 0;
+    let num = 1;
 
     user_property.msre_property.forEach(function(data){
         str += "(";
@@ -10,15 +10,15 @@ function register_user_msre(user_property){
         str += ",";
         str += "'" + user_property.user_cd + "'";
         str += ",";
-        str += "LPAD(" + num + ",2,0)";
+        str += "LPAD(" + num++ + ",2,0)";
         str += ",";
-        str += "LPAD(" + data[num].item_cd + ",3,0)";
+        str += "LPAD(" + data.item_cd + ",3,0)";
         str += ",";
         str += "null";
         str += ",";
-        str += "NOW()";
+        str += "NOW(3)";
         str += ",";
-        str += "NOW()";
+        str += "NOW(3)";
         str += ")";
         str += ",";
     });

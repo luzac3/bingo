@@ -63,6 +63,9 @@ BEGIN
     SET @query_after = CONCAT("
         WHERE
             TBI.BNG_NO = '",_bng_no,"'
+        AND
+            -- freeマスを除外
+            TBI.ITM_CD <> '0000'
     ");
 
     IF IFNULL(_tag,'') != '' THEN

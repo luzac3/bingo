@@ -49,26 +49,6 @@ function search_main(event){
     $(".close").on("click",function(){
         click_event(this);
     });
-
-    // 項目をクリック
-    $(".item_button").on("click",function(){
-        // ロード開始
-
-        let index = $("#item_list").prop("class");
-        user_property.msre_property[index].item_cd = $(this).val();
-        user_property.msre_property[index].item_name = $(this).text();
-
-        msre_draw(user_property,"register_wrapper","register_canvas").then(function(){
-            load_anim.stop();
-            // user_propertyをストレージ
-            storager.set("user_property",user_property);
-
-            // ロード終了
-
-            // 選択窓を閉じる
-            $("#search_main").attr("class",hidden);
-        });
-    });
 }
 
 function msre_set(e,arg_arr){
