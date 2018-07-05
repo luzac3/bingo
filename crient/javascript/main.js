@@ -39,7 +39,31 @@ function main(_this){
             }else{
                 // 項目リスト設定関数起動
                 // 上に合わせる
-                item_register(user_property);
+                const arg_arr = {
+                    bng_no:user_property.bng_no
+                }
+                call_stored("get_tag_list_001",arg_arr).then(function(tag_list){
+                    // タグを設定
+                    const base = $("#tag_sample input").filter(":first-child");
+
+                    tag_list.forEach(function(tag){
+                        // copyオブジェクトを作成
+                        let copy = base.clone();
+                        copy.attr("class","tag_list");
+                        copy.attr("name","tag");
+                        copy.val(tag["BNG_TAG"]);
+                        // copy.text(tag["BNG_TAG"]);
+
+                        // コピーした要素を表示状態に切り替え
+                        copy.css("visibility","visible");
+
+                        // 要素の最後にコピーしたクローンを挿入
+                        $("#tag").append(copy);
+                        $("#tag").append(tag["BNG_TAG"]);
+                    });
+
+                    item_register(user_property);
+                });
             }
         });
         break;

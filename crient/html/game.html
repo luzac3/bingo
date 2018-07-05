@@ -52,8 +52,14 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
     <div id="search_main" class="hidden">
         <button value="close"><img src="close.jpg" class="close"></button>
         <form>検索<input id="search_word" type="text"></form><button type="button" id="search" value="search">検索</button>
-        <!-- タグ(ビンゴ番号を取得したときに一緒に持ってきて張っとく) -->
-        <form>タグ<input type="checkbox" value="sample" name="tag">sample</form>
+        <!-- タグコピー元 -->
+        <form id = "tag_sample"><input class = "hidden" type="checkbox" value="sample">sample</input></form>
+        <form>
+            <p>タグ</p>
+            <p id = "tag">
+            </p>
+        </form>
+
 
         <!-- 項目リスト表示領域画像については未定  クラスにインデックス番号を埋め込み -->
         <button type="button" class="item_button hidden">サンプル</button>

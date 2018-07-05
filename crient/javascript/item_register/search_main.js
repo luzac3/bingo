@@ -15,7 +15,7 @@ function search_main(event){
         let search_word_arr = [];
         if(search_word){
             // 全角スペースを半角スペースに置換
-            search_word = search_word.replace(/ /g, '　');
+            search_word = search_word.replace(/　/g, ' ');
             search_word_arr = search_word.split(" ");
         }
 
