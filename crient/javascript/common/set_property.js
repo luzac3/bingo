@@ -7,6 +7,7 @@ function set_property(user_property){
 
         let arg_arr = {
             bng_no:user_property.bng_no
+            ,user_name:user_property.user_name
         }
 
         // ビンゴ領域の描画　コモンの描画と同じもの　マス数とかの情報が必要なので結局ゲームプロパティはコモンなのでは
@@ -18,6 +19,15 @@ function set_property(user_property){
             const msre_num_list =  bng_mstr["MSRE_NO"].split(",");
             const end_flg_list =  bng_mstr["END_FLG"].split(",");
             const free_flg_list =  bng_mstr["FREE_FLG"].split(",");
+
+            let itm_cd_list = [];
+            let itm_name_list = [];
+
+
+            if(bng_mstr["ITM_CD"]){
+                itm_cd_list = bng_mstr["ITM_CD"].split(",");
+                itm_name_list = bng_mstr["ITM_NAME"].split(",");
+            }
 
             // マス数
             user_property.msre_num = bng_mstr["MSRE_NUM"];
@@ -60,6 +70,12 @@ function set_property(user_property){
                     user_property.msre_property[i].end_flg = true;
                 }else{
                     user_property.msre_property[i].set_color("white");
+                }
+
+                // アイテムコードが取得できていれば登録
+                if(itm_cd_list[i]){
+                    user_property.msre_property[i].item_name = itm_name_list[i];
+                    user_property.msre_property[i].item_cd = itm_cd_list[i];
                 }
                 x = x + msre_length;
                 ln_count++;

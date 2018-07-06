@@ -43,10 +43,11 @@ function main(_this){
 
                 let num = 0;
 
-                data[0]["MSRE_NUM_LST"].forEach(function(msre_num){
-                    user_property.msre_property[num] = new Msre_property();
-                })
-                game_progress(user_property);
+                set_property(user_property).then(function(user_property){
+                    game_progress(user_property);
+                },function(reject){
+                    console.log(reject);
+                });
             }else{
                 // 項目リスト設定関数起動
                 // 上に合わせる
@@ -63,7 +64,6 @@ function main(_this){
                         copy.attr("class","tag_list");
                         copy.attr("name","tag");
                         copy.val(tag["BNG_TAG"]);
-                        // copy.text(tag["BNG_TAG"]);
 
                         // コピーした要素を表示状態に切り替え
                         copy.css("visibility","visible");
