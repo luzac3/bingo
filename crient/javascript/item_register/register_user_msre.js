@@ -28,6 +28,10 @@ function register_user_msre(user_property){
         insert:str
     }
     call_stored("register_user_msre_001",arg_arr).then(function(){
+        alert("登録完了");
         // ロード停止
+
+        // ゲーム進行を起動
+        game_progress(user_property);
     })
 }

@@ -80,7 +80,9 @@ BEGIN
                 TU.BNG_NO
                 ,TU.USR_CD
                 ,TU.USR_NAME
-                ,GROUP_CONCAT(TUM.MSRE_NUM) AS ITM_LST
+                ,TBM.GMSTTS_CD
+                -- flgとして返却すべき内容。総マス数と比較し、なければFalseを返す
+                ,GROUP_CONCAT(TUM.MSRE_NUM) AS MSRE_NUM_LST
             FROM
                 T_USR TU
             LEFT OUTER JOIN
@@ -89,6 +91,10 @@ BEGIN
                 TU.BNG_NO = TUM.BNG_NO
             AND
                 TU.USR_CD = TUM.USR_CD
+            LEFT OUTER JOIN
+                T_BNG_MSTR TBM
+            ON
+                TU.BNG_NO = TBM_BNG_NO
             WHERE
                 TU.BNG_NO = '",_bng_no,"'
             AND

@@ -2,9 +2,9 @@ function game_progress(user_property){
     // ロード処理
 
     // 初期描画処理
-    msre_draw(user_property,"progress_wrapper","progress_canvas").then(function(){
+    msre_draw(user_property,"bng_wrapper","bng_canvas").then(function(){
         // ロード終了
-        load_anim.stop();
+        // load_anim.stop();
 
         // タイマーを起動
         timer_storage();

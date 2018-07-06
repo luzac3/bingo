@@ -32,9 +32,20 @@ function main(_this){
             $("#set_user_cd").addClass(user_property.user_cd);
             $("#set_user_name").addClass(user_property.user_name);
 
-            if(data[0]["ITM_LST"]){
+            if(data[0]["MSRE_NUM_LST"]){
                 // 項目リスト設定済(選択済)→ゲーム進行処理起動
                 // ゲームステータスによって表示/非表示ボタンが切り替わるため、切り替えを関数内で行う
+
+                if(data[0]["GMSTTS_CD"]){
+                    alert("募集中ではありません");
+                    return;
+                }
+
+                let num = 0;
+
+                data[0]["MSRE_NUM_LST"].forEach(function(msre_num){
+                    user_property.msre_property[num] = new Msre_property();
+                })
                 game_progress(user_property);
             }else{
                 // 項目リスト設定関数起動
