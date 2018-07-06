@@ -12,7 +12,7 @@ function register_user_msre(user_property){
         str += ",";
         str += "LPAD(" + num++ + ",2,0)";
         str += ",";
-        str += "LPAD(" + data.item_cd + ",3,0)";
+        str += "LPAD(" + data.item_cd + ",4,0)";
         str += ",";
         str += "null";
         str += ",";
