@@ -32,7 +32,7 @@ function main(_this){
             $("#set_user_cd").addClass(user_property.user_cd);
             $("#set_user_name").addClass(user_property.user_name);
 
-            if(data[0]["MSRE_NUM_LST"]){
+            if(data[0]["MSRE_NO_LST"]){
                 // 項目リスト設定済(選択済)→ゲーム進行処理起動
                 // ゲームステータスによって表示/非表示ボタンが切り替わるため、切り替えを関数内で行う
 

@@ -82,7 +82,7 @@ BEGIN
                 ,TU.USR_NAME
                 ,TBM.GM_STTS_CD
                 -- flgとして返却すべき内容。総マス数と比較し、なければFalseを返す
-                ,GROUP_CONCAT(TUM.MSRE_NUM) AS MSRE_NUM_LST
+                ,GROUP_CONCAT(TUM.MSRE_NO) AS MSRE_NO_LST
             FROM
                 T_USR TU
             LEFT OUTER JOIN
@@ -98,7 +98,7 @@ BEGIN
             WHERE
                 TU.BNG_NO = '",_bng_no,"'
             AND
-                TU.USR_CD = '",_user_name,"'
+                TU.USR_NAME = '",_user_name,"'
             GROUP BY
                 TU.BNG_NO
                 ,TU.USR_CD

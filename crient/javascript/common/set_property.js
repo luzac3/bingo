@@ -7,7 +7,7 @@ function set_property(user_property){
 
         let arg_arr = {
             bng_no:user_property.bng_no
-            ,user_name:user_property.user_name
+            ,user_cd:user_property.user_cd
         }
 
         // ビンゴ領域の描画　コモンの描画と同じもの　マス数とかの情報が必要なので結局ゲームプロパティはコモンなのでは

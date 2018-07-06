@@ -2,48 +2,61 @@ function game_progress(user_property){
     // ロード処理
 
     // 初期描画処理
-    msre_draw(user_property,"bng_wrapper","bng_canvas").then(function(){
+    msre_draw(
+        user_property
+        ,user_property.msre_property
+        ,"bng_wrapper"
+        ,"bng_canvas"
+    ).then(function(){
         // ロード終了
         // load_anim.stop();
 
         // タイマーを起動
         timer_storage();
 
+        // 呼び出し回数初期化
+        const num_storager = num_storage();
+
         // 20秒以上経過していたら更新処理
         // 確認は5秒間隔
-        let update_check = (setTimeout(function(){
-            let time = check_timer(false);
+        function update_check(){
+            setTimeout(function(){
+                let time = timer_storage(false)();
 
-            if(time > 20 * 1000){
-                // 回数のチェック・一定回数(約20秒)オーバーしたら停止処理
-                let num = num_storage()();
-                if(num > 60){
-                    return;
-                }
-                let arg_arr = {
-                    bng_no:user_property.bng_no
-                    ,user_cd:user_property.user_cd
-                }
-                call_stored("update_user_001",arg_arr).then(function(data){
+                if(time > 20 * 1000){
+                    // 回数のチェック・一定回数(約20秒)オーバーしたら停止処理
+                    // 呼び出された回数
+                    let num = num_storager();
+                    if(num > 60){
+                        return;
+                    }
+                    let arg_arr = {
+                        bng_no:user_property.bng_no
+                        ,user_cd:user_property.user_cd
+                    }
+                    call_stored("update_user_001",arg_arr).then(function(data){
+                        // タイマーをリセット
+                        timer_storage(true);
+
+                        update_check();
+                    })
+                }else{
                     update_check();
+                }
+            },5*1000);
+        }
 
-                    // タイマーをリセット
-                    timer_storage(true);
-                })
-            }else{
-                update_check();
-            }
-        },5*1000));
+        update_check();
 
         // 取得待機
-        wait_get_item(user_property);
+        // wait_get_item(user_property);
     });
 }
 
 function wait_get_item(user_property){
     // タイマーをリセット
     timer_storage(true);
-    return new Promise(resolve,reject => {
+    return new Promise((resolve,reject) => {
         // 待機を開始
         call_stored_wait("get_item_001",arg_arr).then(function(data){
             // これが帰ってきた時点でコードの更新処理は走ってないといけない
@@ -141,7 +154,7 @@ function end_process(user_property){
 /*
  * 回数取得処理
  */
-function num_strage(){
+function num_storage(){
     let num = 0;
     return (function(){
         return num++;

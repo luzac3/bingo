@@ -23,6 +23,6 @@ function timer_storage(reset){
         this.timer.startTimer();
     }
     return (function(){
-        return this.timer;
+        return this.timer.getTime();
     });
 }

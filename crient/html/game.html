@@ -71,9 +71,11 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
 <!-- ゲームメイン画面 -->
 <div id="game_main">
     <!-- ビンゴ表示領域 -->
-    <div id="bng_wrapper">
-        <canvas id="bng_canvas1"></canvas>
-        <canvas id="bng_canvas2"></canvas>
+    <div id="bng_wrapper" class="wrapper">
+        <div id="bng_wrapper_inner" class="wrapper_inner">
+            <canvas id="bng_canvas1" class = "bng_canvas"></canvas>
+            <canvas id="bng_canvas2" class = "bng_canvas"></canvas>
+        </div>
     </div>
 <div id = "game" class="hidden">
 <div id = "leach">リーチ者

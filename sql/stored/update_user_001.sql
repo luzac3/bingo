@@ -33,18 +33,26 @@ COMMENT 'ステータス更新'
 BEGIN
 
     -- 異常終了ハンドラ
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION SET exit_cd = 99;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, @errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
+        SELECT @sqlstate, @errno, @text;
+        ROLLBACK;
+        SET exit_cd = 99;
+    END;
 
     UPDATE
         T_USR
     SET
         EXST_FLG = 1
-        ,KUSN_NTJ = NOW()
+        ,KUSN_NTJ = NOW(3)
     WHERE
         BNG_NO = _bng_no
     AND
         USR_CD = _user_cd
     ;
+
+    SET exit_cd = 0;
 
 END
 //
