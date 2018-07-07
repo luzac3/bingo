@@ -49,7 +49,7 @@ function game_progress(user_property){
         update_check();
 
         // 取得待機
-        // wait_get_item(user_property);
+        wait_get_item(user_property);
     });
 }
 
