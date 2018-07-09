@@ -56,11 +56,11 @@ BEGIN
                 ,GROUP_CONCAT(IFNULL(TM.FREE_FLG,0)) AS FREE_FLG
 
                 -- userのマス情報
-                ,GROUP_CONCAT(IFNULL(TUM.ITM_CD,0)) AS ITM_CD
+                ,GROUP_CONCAT(IFNULL(TUM.ITM_CD,'')) AS ITM_CD
 
                 -- マスにひもづく項目情報
-                ,GROUP_CONCAT(IFNULL(TBI.ITM_NAME,0)) AS ITM_NAME
-                ,GROUP_CONCAT(IFNULL(TBI.ITM_SH_NAME,0)) AS ITM_SH_NAME
+                ,GROUP_CONCAT(IFNULL(TBI.ITM_NAME,'')) AS ITM_NAME
+                ,GROUP_CONCAT(IFNULL(TBI.ITM_SH_NAME,'')) AS ITM_SH_NAME
             FROM
                 T_BNG_MSTR TBM
             LEFT OUTER JOIN
