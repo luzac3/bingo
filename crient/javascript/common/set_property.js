@@ -25,8 +25,8 @@ function set_property(user_property){
 
 
             if(bng_mstr["ITM_CD"]){
-                itm_cd_list = bng_mstr["ITM_CD"].split(",");
-                itm_name_list = bng_mstr["ITM_NAME"].split(",");
+                item_cd_list = bng_mstr["ITM_CD"].split(",");
+                item_name_list = bng_mstr["ITM_NAME"].split(",");
             }
 
             // マス数
@@ -74,8 +74,8 @@ function set_property(user_property){
 
                 // アイテムコードが取得できていれば登録
                 if(itm_cd_list[i]){
-                    user_property.msre_property[i].item_name = itm_name_list[i];
-                    user_property.msre_property[i].item_cd = itm_cd_list[i];
+                    user_property.msre_property[i].item_cd = item_cd_list[i];
+                    user_property.msre_property[i].item_name = item_name_list[i];
                 }
                 x = x + msre_length;
                 ln_count++;

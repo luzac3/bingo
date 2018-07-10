@@ -61,10 +61,10 @@ function wait_get_item(user_property){
         call_stored_wait("get_item_001",arg_arr).then(function(data){
             // これが帰ってきた時点でコードの更新処理は走ってないといけない
             let num = 0;
-            user_property.item_list.forEach(function(item){
-                if(data["item_cd"] == item){
+            user_property.msre_property.forEach(function(item_cd){
+                if(data["item_cd"] == item_cd){
                     // ゲームプロパティ更新
-                    user_property.item_list[num].cll_flg = 1;
+                    user_property.msre_property[num].cll_flg = 1;
 
                     // ビンゴ、リーチ判定、GameProperty更新処理
                     user_property = check_bng(user_property,data);

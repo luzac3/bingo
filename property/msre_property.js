@@ -10,6 +10,8 @@ let Msre_property = function(msre_no,posX,posY,width,height){
     this.free_flg = false;
     this.end_flg = false;
 
+    this.cll_flg = 0;
+
     this.set_color = function(color){
         if(color == "red"){
             this.r = "255";
@@ -33,6 +35,8 @@ let Msre_property = function(msre_no,posX,posY,width,height){
     // 項目コードと項目名
     this.item_cd = "";
     this.item_name = "";
+
+
 
     // マスの情報
 

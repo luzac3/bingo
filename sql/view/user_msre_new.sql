@@ -1,45 +1,18 @@
 -- ユーザーライン情報をまとめたVIEW
+DROP VIEW V_USR_LN;
 
 CREATE VIEW V_USR_LN AS
-    SELECT
+    SELECT DISTINCT
         TLM.BNG_NO AS BNG_NO
         ,TLM.LN_NUM AS LN_NUM
         ,TUM.USR_CD AS USR_CD
         ,CASE
-            WHEN
-            (
-                select
-                    count(1) as msre_num
-                from
-                    T_USR_MSRE
-            )
-            -
-            (
-                select
-                    COUNT(CLL_FLG) AS HIT_NUM
-                from
-                    T_USR_MSRE
-            )
-            = 1 THEN '1'
-            ELSE '0'
-            END AS LCH_FLG
+            WHEN COUNT(1) - COUNT(CLL_FLG) = 1 THEN '1'
+            ELSE NULL
+        END AS LCH_FLG
         ,CASE
-            WHEN
-            (
-                select
-                    count(1) as msre_num
-                from
-                    T_USR_MSRE
-            )
-            -
-            (
-                select
-                    COUNT(CLL_FLG) AS HIT_NUM
-                from
-                    T_USR_MSRE
-            )
-            = 0 THEN '1'
-            ELSE '0'
+            WHEN COUNT(1) - COUNT(CLL_FLG) = 0 THEN '1'
+            ELSE NULL
         END AS BNG_FLG
     FROM
         T_LN_MSTR TLM
@@ -48,6 +21,7 @@ CREATE VIEW V_USR_LN AS
     ON
         TLM.BNG_NO = TUM.BNG_NO
     GROUP BY
-        TLM.BNG_NO
-        ,TUM.USR_CD
-        ,TUM.CLL_FLG
+        BNG_NO
+        ,LN_NUM
+        ,USR_CD
+    ORDER BY LN_NUM ASC
