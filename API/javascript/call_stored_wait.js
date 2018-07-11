@@ -1,5 +1,5 @@
 // 呼び出してリターンを待ち、帰ってきた結果を返却する処理
-function call_stored_wait(arg,user_list,user_num){
+function call_stored_wait(arg_arr,user_list,user_num){
     if(arg_arr){
         this.arg_arr = arg_arr;
     }else{

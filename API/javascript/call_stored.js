@@ -1,4 +1,4 @@
-function call_stored(stored_name,arg_arr){
+function call_stored(stored_name,arg_arr,time_out = 10000){
     if(arg_arr){
         this.arg_arr = arg_arr;
     }else{
@@ -10,7 +10,7 @@ function call_stored(stored_name,arg_arr){
         $.ajax({
             url: "/bingo/common/php/js_stored.php",
             cache: false,
-            timeout: 10000,
+            timeout: time_out,
             type:'POST',
             dataType: 'json',
             data:{

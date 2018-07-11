@@ -13,8 +13,12 @@ let User_property = function(cd,name){
     this.name = name;
     // リーチ数
     this.leach_num = 0;
+    // リーチフラグ
+    this.leach_flg = false;
     // ビンゴ数
     this.bng_num = 0;
+    // ビンゴフラグ
+    this.bng_flg = false;
     // 終了フラグ
     this.end_flg = "0";
     // 存在フラグ(デフォルトは存在)
