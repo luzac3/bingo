@@ -95,7 +95,8 @@ function wait_get_item(user_property,arg_arr){
 
                     // 再帰呼び出し
                     wait_get_item(user_property,arg_arr).then(function(user_property){
-                        resolve(user_property);
+                        // resolve(user_property);
+                    	console.log("再帰呼び出し");
                     });
                 });
             });
@@ -163,13 +164,6 @@ function db_register(user_property){
         	reject();
         });
     });
-}
-
-/*
- * 終了判定処理
- */
-function end_process(user_property){
-
 }
 
 /*

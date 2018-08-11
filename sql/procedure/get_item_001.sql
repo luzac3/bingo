@@ -47,19 +47,21 @@ BEGIN
     set @num = 0;
 
     WHILE (@read_num = 0 and @num < 20) DO
-            SELECT
-                COUNT(1) INTO @read_num
-            FROM
-                T_BNG_ITM
-            WHERE
-                BNG_NO = _bng_no
-            AND
-                KUSN_NYU_CD = '2'
-            AND
-                KUSN_NTJ > _kusn_ntj
-            ;
 
-        SELECT SLEEP(5);
+            SELECT SLEEP(5) INTO @sleep;
+
+            SELECT EXISTS(
+                SELECT 1
+                FROM
+                    T_BNG_ITM
+                WHERE
+                    BNG_NO = _bng_no
+                AND
+                    KUSN_NYU_CD = '2'
+                AND
+                    KUSN_NTJ > _kusn_ntj
+            ) INTO @read_num
+            ;
         set @num = @num + 1;
 
     END WHILE;
