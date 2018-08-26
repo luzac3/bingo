@@ -3,3 +3,14 @@
 .register_canvas{
     position:absolute;
 }
+
+.hidden{
+    visibility:hidden;
+}
+
+#search_main{
+    height:90%;
+    width:80%;
+    position:absolute;
+    margin-left:auto;
+}
