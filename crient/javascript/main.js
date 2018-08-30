@@ -44,7 +44,9 @@ function main(_this){
                 let num = 0;
 
                 set_property(user_property).then(function(user_property){
-                    game_progress(user_property);
+                    // ゲーム進行を変更する
+                    // game_progress(user_property);
+                    game_progress_ease(user_property);
                 },function(reject){
                     console.log(reject);
                 });
