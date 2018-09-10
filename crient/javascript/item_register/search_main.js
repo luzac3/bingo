@@ -85,6 +85,8 @@ function msre_set(e,arg_arr){
     // サーチ
     search(arg_arr).then(function(data){
         // 特に何もしない
+        // サーチ完了した時点で、検索画面を表示
+        $("#search_main")[0].style.visibility = "visible";
         console.log(data);
     },function(data){
         console.log(data);

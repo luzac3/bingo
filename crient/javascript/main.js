@@ -32,6 +32,8 @@ function main(_this){
             $("#set_user_cd").addClass(user_property.user_cd);
             $("#set_user_name").addClass(user_property.user_name);
 
+            $("#input_bng_no")[0].style.visibility = "hidden";
+
             if(data[0]["MSRE_NO_LST"]){
                 // 項目リスト設定済(選択済)→ゲーム進行処理起動
                 // ゲームステータスによって表示/非表示ボタンが切り替わるため、切り替えを関数内で行う
@@ -67,9 +69,6 @@ function main(_this){
                         copy.attr("name","tag");
                         copy.val(tag["BNG_TAG"]);
 
-                        // コピーした要素を表示状態に切り替え
-                        copy.css("visibility","visible");
-
                         // 要素の最後にコピーしたクローンを挿入
                         $("#tag").append(copy);
                         $("#tag").append(tag["BNG_TAG"]);
@@ -83,13 +82,15 @@ function main(_this){
 
         // 以下開閉処理はマスタと同様
         case "open":
-          $(this).addClass("hidden");
+          $(this).addClass("visible");
           $(this).next().removeClass();
+          $(this)[0].visibility = "visible";
           game_recruit(button);
           break;
         case "close":
           $(this).addClass("hidden");
           $(this).next().removeClass();
+          $(this)[0].visibility = "hidden";
           game_progress(game_status);
           break;
     }

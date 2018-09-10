@@ -35,8 +35,27 @@ function set_property(user_property){
             // 1列のマス数
             const msre_ln_num = Math.sqrt(user_property.msre_num);
 
+            // ラッパーのサイズを調整
+            // 横か縦幅が画面のサイズの90％より大きかったら縮小
+            const outerWidth = $("#register_wrapper").outerWidth();
+            const outerHeight = $("#register_wrapper").outerHeight();
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            let length = 0;
+
+            if((outerWidth > windowWidth * 0.9) || (outerHeight > windowHeight * 0.9)){
+                if((outerWidth - windowWidth) > (outerHeight - windowHeight)){
+                    length = windowWidth * 0.9;
+                }else{
+                	length = windowHeight * 0.9;
+                }
+            }else{
+                length = outerWidth;
+            }
+
             // ラッパーオブジェクトのサイズ
-            const wrapper_length = Math.floor( $("#register_wrapper").outerWidth() / msre_ln_num) * msre_ln_num;
+            const wrapper_length = Math.floor( length / msre_ln_num) * msre_ln_num;
 
             user_property.width = wrapper_length;
             user_property.height = wrapper_length;
