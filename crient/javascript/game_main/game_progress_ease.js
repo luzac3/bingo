@@ -6,26 +6,35 @@ function game_progress_ease(user_property){
         ,"bng_wrapper"
         ,"bng_canvas"
     ).then(function(){
+        // canvas表示
+        $("#game_main")[0].style.display = "block";
+
+        // 設定したユーザープロパティを保存
+        storager.set("msre_property",user_property.msre_property);
+
         // イベント設定・カラー変換
         $("#bng_wrapper").on("click",function(event){
-            msre_set(event);
+            msre_set_b(event);
         });
     },function(){
         console.log("error");
     });
 }
 
-function msre_set(e){
+function msre_set_b(e){
     // マス数を取得
-
-    // マス数を取得
-    let msre_num = $("#MSRE_NUM").val();
+    const property_master = storager.get("property_master");
+    const msre_num = property_master.msre_num;
 
     // クリックされた場所を特定、画面上の座標からCanvas上の絶対座標に変換
     let x = 0;
     let y = 0;
 
     let msre_property = storager.get("msre_property");
+
+    for(let key in msre_property){
+        msre_property[key] = re_instance(Msre_property,msre_property[key]);
+    }
 
     let pos = null;
 
@@ -57,10 +66,9 @@ function msre_set(e){
         }
     }
 
-    let msre_property_master = storager.get("msre_property_master");
 
     // 描画するCanvasの設定とCanvasオブジェクト
-    const canvas_obj = canvas_change(msre_property_master,"msre_canvas");
+    const canvas_obj = canvas_change(property_master,"msre_canvas");
 
     for (let i=0; i<msre_num; i++){
         draw(canvas_obj,msre_property[i]);

@@ -1,11 +1,18 @@
 @CHARSET "UTF-8";
+html{
+    z-index: 1;
+}
 
 .register_canvas{
     position:absolute;
 }
 
+.bng_canvas{
+    position:absolute;
+}
+
 .hidden{
-    visibility:hidden;
+    display:none;
 }
 
 #search_main{
@@ -15,4 +22,11 @@
     left:0px;
     top:0px;
     margin-left:auto;
+    z-index: 2;
+    border: 1px solid #000000;
+}
+
+#game_main{
+    height:100%;
+    width:100%;
 }

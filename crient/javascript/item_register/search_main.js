@@ -86,7 +86,7 @@ function msre_set(e,arg_arr){
     search(arg_arr).then(function(data){
         // 特に何もしない
         // サーチ完了した時点で、検索画面を表示
-        $("#search_main")[0].style.visibility = "visible";
+        $("#search_main")[0].style.display = "block";
         console.log(data);
     },function(data){
         console.log(data);
@@ -142,6 +142,9 @@ function search(arg_arr){
 
                     // マスの再描画
                     msre_draw(user_property,user_property.msre_property,"register_wrapper","register_canvas");
+
+                    // 検索画面を閉じる
+                    $("#search_main")[0].style.display = "none";
 
                     storager.set("user_property",user_property);
                 });

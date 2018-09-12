@@ -1,7 +1,7 @@
 /*
  * マスごとの項目のプロパティを取得、設定する
  */
-function set_property(user_property){
+function set_property(user_property,wrapper_name){
     // ビンゴ番号入力画面を閉じる
     return new Promise((resolve,reject) => {
 
@@ -25,8 +25,8 @@ function set_property(user_property){
 
 
             if(bng_mstr["ITM_CD"]){
-                item_cd_list = bng_mstr["ITM_CD"].split(",");
-                item_name_list = bng_mstr["ITM_NAME"].split(",");
+                itm_cd_list = bng_mstr["ITM_CD"].split(",");
+                itm_name_list = bng_mstr["ITM_NAME"].split(",");
             }
 
             // マス数
@@ -35,12 +35,22 @@ function set_property(user_property){
             // 1列のマス数
             const msre_ln_num = Math.sqrt(user_property.msre_num);
 
+            const hidden = document.getElementsByClassName("hidden");
+
+            Object.keys(hidden).forEach(function(key){
+                hidden[key].style.display = "block";
+            });
+
             // ラッパーのサイズを調整
             // 横か縦幅が画面のサイズの90％より大きかったら縮小
-            const outerWidth = $("#register_wrapper").outerWidth();
-            const outerHeight = $("#register_wrapper").outerHeight();
+            const outerWidth = $("#"+ wrapper_name)[0].offsetWidth;
+            const outerHeight = $("#"+ wrapper_name)[0].offsetHeight;
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
+
+            Object.keys(hidden).forEach(function(key){
+                hidden[key].style.display = "none";
+            });
 
             let length = 0;
 
@@ -56,6 +66,8 @@ function set_property(user_property){
 
             // ラッパーオブジェクトのサイズ
             const wrapper_length = Math.floor( length / msre_ln_num) * msre_ln_num;
+            $("#"+ wrapper_name).outerWidth(wrapper_length);
+            $("#"+ wrapper_name).outerHeight(wrapper_length);
 
             user_property.width = wrapper_length;
             user_property.height = wrapper_length;
@@ -93,12 +105,16 @@ function set_property(user_property){
 
                 // アイテムコードが取得できていれば登録
                 if(itm_cd_list[i]){
-                    user_property.msre_property[i].item_cd = item_cd_list[i];
-                    user_property.msre_property[i].item_name = item_name_list[i];
+                    user_property.msre_property[i].item_cd = itm_cd_list[i];
+                    user_property.msre_property[i].item_name = itm_name_list[i];
                 }
                 x = x + msre_length;
                 ln_count++;
             }
+
+            // マス数を設定
+
+
             resolve(user_property);
         });
     });

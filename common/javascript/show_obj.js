@@ -11,7 +11,7 @@
  */
 function show_obj(id_name,width,height,size){
     const target = document.getElementById(id_name);
-    target.style.visiblity = "visible";
+    target.style.display = "block";
 
     let unit = "%";
 

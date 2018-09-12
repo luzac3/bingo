@@ -12,6 +12,8 @@ DELIMITER //
 --
 -- 【引数】
 --  SQL                    :_insert
+--  ビンゴ番号             :_bng_no
+--  ユーザコード           :_user_cd
 --
 -- 【戻り値】
 --      exit_cd            : exit_cd
@@ -22,7 +24,9 @@ DELIMITER //
 --  2018.6.05 大杉　新規作成
 -- ********************************************************************************************
 CREATE PROCEDURE `register_user_msre_001`(
-    IN `_insert` VARCHAR(2500)
+    IN `_bng_no` CHAR(5)
+    , IN `_user_cd` CHAR(5)
+    , IN `_insert` VARCHAR(2500)
     ,OUT `exit_cd` INTEGER
 )
 COMMENT '選択したユーザーのマスを登録する'
@@ -38,6 +42,14 @@ BEGIN
         ROLLBACK;
         SET exit_cd = 99;
     END;
+
+    DELETE FROM
+        T_USR_MSRE
+    WHERE
+        BNG_NO = _bng_no
+    AND
+        USR_CD = _user_cd
+    ;
 
     SET @query = CONCAT("
         INSERT INTO

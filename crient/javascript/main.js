@@ -32,9 +32,9 @@ function main(_this){
             $("#set_user_cd").addClass(user_property.user_cd);
             $("#set_user_name").addClass(user_property.user_name);
 
-            $("#input_bng_no")[0].style.visibility = "hidden";
+            $("#input_bng_no")[0].style.display = "none";
 
-            if(data[0]["MSRE_NO_LST"]){
+            if(data[0]["MSRE_NO_LST"] && data[0]["ITM_SLCTD_FLG"]){
                 // 項目リスト設定済(選択済)→ゲーム進行処理起動
                 // ゲームステータスによって表示/非表示ボタンが切り替わるため、切り替えを関数内で行う
 
@@ -45,7 +45,7 @@ function main(_this){
 
                 let num = 0;
 
-                set_property(user_property).then(function(user_property){
+                set_property(user_property,"bng_wrapper").then(function(user_property){
                     // ゲーム進行を変更する
                     // game_progress(user_property);
                     game_progress_ease(user_property);

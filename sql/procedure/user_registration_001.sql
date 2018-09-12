@@ -83,6 +83,19 @@ BEGIN
                 ,TBM.GM_STTS_CD
                 -- flgとして返却すべき内容。総マス数と比較し、なければFalseを返す
                 ,GROUP_CONCAT(TUM.MSRE_NO) AS MSRE_NO_LST
+                ,CASE
+                    WHEN
+                        (
+                            SELECT
+                                COUNT(ITM_CD)
+                            FROM
+                                T_USR_MSRE
+                            WHERE
+                                BNG_NO = '",_bng_no,"'
+                            AND
+                                USR_CD = TU.USR_CD
+                        ) < 25 THEN 0
+                     ELSE 1 END AS ITM_SLCTD_FLG
             FROM
                 T_USR TU
             LEFT OUTER JOIN

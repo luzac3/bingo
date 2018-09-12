@@ -31,6 +31,7 @@ function canvas_initialize(draw,property){
 
         // 全体プロパティの値を設定
         const property_master = new Property_master(wrapper_width,wrapper_height);
+        property_master.msre_num = game_property.msre_num;
 
         // 描画するCanvasの設定とCanvasオブジェクト
         const canvas_obj = canvas_change(property_master,canvas_name);

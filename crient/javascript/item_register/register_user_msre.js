@@ -25,13 +25,16 @@ function register_user_msre(user_property){
     str = str.slice(0,-1);
 
     let arg_arr = {
-        insert:str
+        bng_no:user_property.bng_no
+        ,user_cd:user_property.user_cd
+        ,insert:str
     }
     call_stored("register_user_msre_001",arg_arr).then(function(){
         alert("登録完了");
         // ロード停止
 
         // ゲーム進行を起動
-        game_progress(user_property);
-    })
+        // game_progress(user_property);
+        game_progress_ease(user_property);
+    });
 }

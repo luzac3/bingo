@@ -6,11 +6,14 @@ function item_register(user_property){
     $("#register_canvas1").css('visibility','visible');
     $("#register_canvas2").css('visibility','hidden');
 
+    // 登録枠を表示
+    $("#item_register")[0].display = "block";
+
     // ビンゴ番号入力画面を閉じる
 
     // 読み込み画像アニメーションを表示
 
-    set_property(user_property).then(function(user_property){
+    set_property(user_property,"register_wrapper").then(function(user_property){
         msre_draw(
             user_property
             ,user_property.msre_property
