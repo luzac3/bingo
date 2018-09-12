@@ -114,7 +114,7 @@ function search(arg_arr){
                 copy.text(item["ITM_NAME"]);
 
                 // コピーした要素を表示状態に切り替え
-                copy.css("visibility","visible");
+                copy[0].style.display = "block";
 
                 // 要素の最後にコピーしたクローンを挿入
                 $("#item_list").append(copy);

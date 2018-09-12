@@ -6,9 +6,6 @@ function item_register(user_property){
     $("#register_canvas1").css('visibility','visible');
     $("#register_canvas2").css('visibility','hidden');
 
-    // 登録枠を表示
-    $("#item_register")[0].display = "block";
-
     // ビンゴ番号入力画面を閉じる
 
     // 読み込み画像アニメーションを表示
@@ -23,8 +20,12 @@ function item_register(user_property){
             // load_anim.stop();
             // user_propertyをストレージ
             storager.set("user_property",user_property);
+
+            // 登録枠を表示
+            $("#item_register")[0].style.display = "block";
         });
     });
+
 
     // 複数クリック対応
     $("#item_register canvas").off("click");
