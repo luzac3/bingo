@@ -10,6 +10,7 @@ function game_progress_ease(user_property){
         $("#game_main")[0].style.display = "block";
 
         // 設定したユーザープロパティを保存
+        storager.set("user_property",user_property);
         storager.set("msre_property",user_property.msre_property);
 
         // イベント設定・カラー変換

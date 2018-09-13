@@ -33,6 +33,9 @@ function register_user_msre(user_property){
         alert("登録完了");
         // ロード停止
 
+        // 登録マスを隠す
+        $("#item_register")[0].style.display = "none";
+
         // ゲーム進行を起動
         // game_progress(user_property);
         game_progress_ease(user_property);
