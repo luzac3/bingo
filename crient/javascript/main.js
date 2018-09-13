@@ -80,6 +80,14 @@ function main(_this){
         });
         break;
 
+        case "clear":
+          bng_clear();
+          break;
+
+        case "edit":
+          item_register(storager.get("user_property"));
+          break;
+
         // 以下開閉処理はマスタと同様
         case "open":
           $(this).addClass("visible");

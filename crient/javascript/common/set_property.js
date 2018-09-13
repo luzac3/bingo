@@ -78,6 +78,9 @@ function set_property(user_property,wrapper_name){
             // 1マスの長さ
             const msre_length = wrapper_length / msre_ln_num;
 
+            // フォントのサイズ
+            const font_size = Math.floor((msre_length - (msre_length / 10)) / 4);
+
             let ln_count = 0;
 
             let x = 0;
@@ -103,10 +106,21 @@ function set_property(user_property,wrapper_name){
                     user_property.msre_property[i].set_color("white");
                 }
 
+                user_property.msre_property[i].font_size = font_size;
+
                 // アイテムコードが取得できていれば登録
                 if(itm_cd_list[i]){
                     user_property.msre_property[i].item_cd = itm_cd_list[i];
                     user_property.msre_property[i].item_name = itm_name_list[i];
+
+                    let itm_name = [];
+
+                    // 項目名を4文字区切りで分割
+                    for(let k = 0, len = itm_name_list[i].length; k < len; k += 4){
+                    	itm_name[k/4] = itm_name_list[i].substr(k,k+4);
+                    }
+                    user_property.msre_property[i].item_name = itm_name;
+
                 }
                 x = x + msre_length;
                 ln_count++;

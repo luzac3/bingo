@@ -66,9 +66,8 @@ function msre_set_b(e){
         }
     }
 
-
     // 描画するCanvasの設定とCanvasオブジェクト
-    const canvas_obj = canvas_change(property_master,"msre_canvas");
+    const canvas_obj = canvas_change(property_master,"bng_canvas");
 
     for (let i=0; i<msre_num; i++){
         draw(canvas_obj,msre_property[i]);

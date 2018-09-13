@@ -36,6 +36,8 @@ let Msre_property = function(msre_no,posX,posY,width,height){
     this.item_cd = "";
     this.item_name = "";
 
+    this.font_size = 24;
+
 
 
     // マスの情報

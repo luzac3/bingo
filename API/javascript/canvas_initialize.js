@@ -37,7 +37,7 @@ function canvas_initialize(draw,property){
         const canvas_obj = canvas_change(property_master,canvas_name);
 
         for(let i=0; i<game_property.msre_num; i++){
-            draw(canvas_obj[0],draw_property[i]);
+            draw(canvas_obj,draw_property[i]);
         }
 
         // canvasの入れ替え
