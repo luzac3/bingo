@@ -48,12 +48,14 @@ BEGIN
 
     SET @query = CONCAT("
         SELECT
-            ITM_CD
+            SELECT_CONCAT(ITM_CD) ITM_CD_LST
+            ,CHSD_NUM
         FROM
             V_CHSD
         WHERE
             BNG_NO = '",_bng_no,"'
-        LIMIT 1 OFFSET ",@rand,"
+        GROUP BY
+            CHSD_NUM
         ;
         ")
         ;

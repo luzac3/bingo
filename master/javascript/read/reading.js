@@ -30,7 +30,9 @@ function scout(bng_md = "00"){
     const arg_arr = {
         bng_no:bng_no
     }
-    call_stored("rate_chs_001",arg_arr).then(function(data){
+    // call_stored("rate_chs_001",arg_arr).then(function(data){
+    call_stored("rate_chs_001_b",arg_arr).then(function(data){
+
         const num = data.length;
 
         switch(rate_cd){
