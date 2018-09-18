@@ -25,10 +25,24 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
 <link rel="stylesheet" href="/bingo/crient/css/crient.css" type="text/css" media="screen">
 <title>ビンゴソロエールZZ</title>
 <body>
-
-<div id = 'set_bng_no' class = ''></div>
-<div id = 'set_user_cd' class = ''></div>
-<div id = 'set_user_name' class = ''></div>
+<?php
+    if(!empty($_COOKIE["user_cd"])){
+        // ユーザーコード仕込み]
+        if(!empty($_GET["bng_no"])){
+            echo "<div id = 'set_bng_no' class = '" . $_GET["bng_no"] . "'></div>";
+            echo "<div id = 'set_user_cd' class = '" . $_COOKIE["user_cd"] . "'></div>";
+            echo "<div id = 'set_user_name' class = '" . $_COOKIE["user_name"] . "'></div>";
+        }else{
+            echo "<div id = 'set_bng_no' class = ''></div>";
+            echo "<div id = 'set_user_cd' class = ''></div>";
+            echo "<div id = 'set_user_name' class = ''></div>";
+        }
+    }else{
+            echo "<div id = 'set_bng_no' class = ''></div>";
+            echo "<div id = 'set_user_cd' class = ''></div>";
+            echo "<div id = 'set_user_name' class = ''></div>";
+    }
+?>
 
 <div id = "logo">ビンゴソロエールZZ　参加者ページ</div>
 

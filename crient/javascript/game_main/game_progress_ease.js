@@ -13,6 +13,8 @@ function game_progress_ease(user_property){
         storager.set("user_property",user_property);
         storager.set("msre_property",user_property.msre_property);
 
+        $("#register_wrapper").off("click");
+
         // イベント設定・カラー変換
         $("#bng_wrapper").on("click",function(event){
             msre_set_b(event);
@@ -57,11 +59,12 @@ function msre_set_b(e){
         xEnd = xStart + msre_property[i].width;
         yEnd = yStart + msre_property[i].height;
         if(xStart < x && x < xEnd && yStart < y && y < yEnd){
-            if(msre_property[i].item_cd != "00"){
+            if(msre_property[i].item_cd != "00" && !msre_property[i].call_flg){
                 msre_property[i].set_color("red");
-            }else{
+                msre_property[i].call_flg = true;
+            }else if(msre_property[i].call_flg){
                 msre_property[i].set_color("white");
-                msre_property[i].item_cd = "";
+                msre_property[i].call_flg = false;
             }
             break;
         }

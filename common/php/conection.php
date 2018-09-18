@@ -11,7 +11,7 @@ function db_connect(){
         $server ="mysql622.db.sakura.ne.jp";
         $username="wolfnet-twei";
         $password="alderaan123";
-        $db_name="wolfnet-twei_bingo";
+        $db_name="wolfnet-twei_bng";
     }
 
     $mysqli = new mysqli($server,$username,$password,$db_name);

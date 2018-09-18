@@ -8,12 +8,12 @@ $(document).ready(function(){
             break;
           case "join":
             // クライアントページに遷移
-            location.href = "/bingo/crient/html/game.html";
-            break;
+              location.href = "/bingo/entrance/html/bng_select.html?kind=1";
+              break;
           case "master":
               // ゲーム一覧画面に遷移→マスタではなくエントランス？
               // マスタはあくまでゲーム開始後の画面を想定
-              location.href = "/bingo/entrance/html/game_list.html";
+              location.href = "/bingo/entrance/html/bng_select.html?kind=0";
               break;
         }
     });

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<?php
+    // マスタから来たかどうかでコードを分岐
+    if(!empty($_GET["kind"])){
+        $kind_cd = $GET["kind"];
+    }else{
+        header("Location: " . __root__ . "/bingo/entrance/html/index.html");
+    }
+?>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ビンゴ選択</title>
+</head>
+<body>
+echo "<div id = 'bng_list' class  = '" . $kind_cd . "'>\n";
+<?php
+    $result = stored("get_bingo_list_001",null);
+
+    forEach($result as $bingo){
+        echo "<p><a id = '" . $bingo["BNG_CD"] . "' href = 'javascript:void(0)'>" . $bingo["BNG_CD"] . "　" . $bingo["BNG_NAME"] . "</a></p>\n";
+    }
+?>
+</div>
+
+</body>
+</html>

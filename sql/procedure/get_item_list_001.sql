@@ -65,7 +65,7 @@ BEGIN
             TBI.BNG_NO = '",_bng_no,"'
         AND
             -- freeマスを除外
-            TBI.ITM_CD <> '0000'
+            TBI.ITM_NAME <> 'free'
     ");
 
     IF IFNULL(_tag,'') != '' THEN

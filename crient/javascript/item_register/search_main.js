@@ -144,7 +144,7 @@ function search(arg_arr){
 
                  // 項目名を4文字区切りで分割
                     for(let k = 0, len = item_name.length; k < len; k += 4){
-                    	item_name_arr[k/4] = item_name.substr(k,k+4);
+                    	item_name_arr[k/4] = item_name.substr(k,4);
                     }
                     user_property.msre_property[index].item_name = item_name_arr;
 
