@@ -33,16 +33,21 @@ function scout(bng_md = "00"){
     // call_stored("rate_chs_001",arg_arr).then(function(data){
     call_stored("rate_chs_001_b",arg_arr).then(function(data){
 
-        const num = data.length;
+        const chsd_num_length = data.length;
+
+        let itm_cd_lst = [];
 
         switch(rate_cd){
           case "0":
-            itm_cd = data[Math.floor(Math.random() * num)]["ITM_CD"];
+            itm_cd_lst = data[Math.floor(Math.random() * chsd_num_length)]["ITM_CD_LST"].split(",");
             break;
           case "1":
-              itm_cd = data[Math.floor(Math.pow(Math.random(),3) * num)]["ITM_CD"];
-              break;
+        	itm_cd_lst = data[Math.floor(Math.pow(Math.random(),3) * chsd_num_length)]["ITM_CD_LST"].split(",");
+            break;
         }
+
+        const itm_num = itm_cd_lst.length;
+        const itm_cd = itm_cd_lst[Math.floor(math.rondom()*itm_num)];
 
         const arg_arr2 = {
             bng_no:bng_no

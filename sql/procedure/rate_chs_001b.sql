@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS rate_chs_001b;
+DROP PROCEDURE IF EXISTS rate_chs_001_b;
 DELIMITER //
 -- ********************************************************************************************
--- rate_chs_001 確率選択
+-- rate_chs_001_b 確率選択
 --
 -- 【処理概要】
 --  選ばれた数が多いほど選択されにくくなる項目の選択
@@ -21,7 +21,7 @@ DELIMITER //
 -- 【更新履歴】
 --  2018.6.05 大杉　新規作成
 -- ********************************************************************************************
-CREATE PROCEDURE `rate_chs_001b `(
+CREATE PROCEDURE `rate_chs_001_b `(
     IN `_bng_no` CHAR(5)
     ,OUT `exit_cd` INTEGER
 )
