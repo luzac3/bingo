@@ -17,7 +17,7 @@ function canvas_change(master_obj,canvas_name){
     storager.set("canvas_kind",canvas_kind);
 
     const canvas = document.getElementById(canvas_name+canvas_kind);
-    if ( !canvas || !canvas.getContext ) { return false; }
+    if ( !canvas || !canvas.getContext ) { alert("canvasが使用できません"); return false; }
     const ctx = canvas.getContext('2d');
     const arr = [ctx,parseInt(canvas_kind),parseInt(old_canvas_kind)];
 

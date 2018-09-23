@@ -1,6 +1,6 @@
 function register_user_msre(user_property){
     // ロード画面表示
-    str = "";
+    let str = "";
 
     let num = 1;
 
@@ -12,7 +12,11 @@ function register_user_msre(user_property){
         str += ",";
         str += "LPAD(" + num++ + ",2,0)";
         str += ",";
-        str += "LPAD(" + data.item_cd + ",4,0)";
+        if(data.item_cd == ""){
+            str += "null";
+        }else{
+            str += "LPAD(" + data.item_cd + ",4,0)";
+        }
         str += ",";
         str += "null";
         str += ",";
@@ -32,6 +36,9 @@ function register_user_msre(user_property){
     call_stored("register_user_msre_001",arg_arr).then(function(){
         alert("登録完了");
         // ロード停止
+
+        // 登録マスを隠す
+        $("#item_register")[0].style.display = "none";
 
         // ゲーム進行を起動
         // game_progress(user_property);

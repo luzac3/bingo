@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+
+body{
+    font-size:62.5%;
+}
+
+#show_item{
+    border:solid 1px #000000;
+    position:absolute;
+    top:30%;
+    left:30%;
+    height:50%;
+    width:40%;
+}
+
+.large{
+    font-size:3.8rem;
+    font-style:bold;
+    font-align:center;
+}
+
+#stock{
+    border:solid 1px #000000;
+    position:absolute;
+    overflow:scroll;
+    width:20%;
+    height:80%;
+    top:10%;
+    left:75%;
+    text-align:center;
+}
+
+#finish_user{
+    border:solid 1px #000000;
+    position:absolute;
+    overflow:scroll;
+    width:20%;
+    height:80%;
+    top:10%;
+    left:5%;
+    text-align:center;
+}
+
+#user_list{
+    position:relative;
+    overflow:scroll;
+    width:100%;
+    height:80%;
+}

@@ -117,7 +117,7 @@ function set_property(user_property,wrapper_name){
 
                     // 項目名を4文字区切りで分割
                     for(let k = 0, len = itm_name_list[i].length; k < len; k += 4){
-                    	itm_name[k/4] = itm_name_list[i].substr(k,k+4);
+                    	itm_name[k/4] = itm_name_list[i].substr(k,4);
                     }
                     user_property.msre_property[i].item_name = itm_name;
 
