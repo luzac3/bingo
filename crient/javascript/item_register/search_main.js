@@ -110,8 +110,7 @@ function search(arg_arr){
 
             data.forEach(function(item){
                 // アイテム数が4で割れるかどうかで判定
-                switch(num % 4){
-                    case 0:
+                if(num % 4  == 0){
                       // コピーオブジェクトを生成
                       let copy = base.clone();
                       copy.attr("class","line");
