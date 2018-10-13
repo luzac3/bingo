@@ -56,19 +56,66 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
     <!-- サイズは80%ほど？ -->
     <div id="search_main" class="hidden">
         <button value="close"><img src="close.jpg" class="close"></button>
-        <form>検索<input id="search_word" type="text"></form><button type="button" id="search" value="search">検索</button>
+
         <!-- タグコピー元 -->
+<!--
         <form id = "tag_sample"><input class = "hidden" type="checkbox" value="sample">sample</input></form>
         <form>
             <p>タグ</p>
             <p id = "tag">
             </p>
         </form>
+ -->
 
-        <!-- 項目リスト表示領域画像については未定  クラスにインデックス番号を埋め込み -->
-        <button type="button" class="item_button hidden">サンプル</button>
-        <div id = "item_list" class="0">
+        <div id = "searc_up">
+            <form>
+                <p>
+                    検索<input id="search_word" type="text">
+
+                    タグ1<select id = "tag1"></select>
+
+                    タグ2<select id = "tag2"></select>
+
+                    タグ3<select id = "tag3"></select>
+
+                    並び替え<select id = "sort"></select>
+                </p>
+            </form>
+            <button type="button" id="search" value="search">検索</button>
         </div>
+
+            <!-- コピー元 -->
+            <div class = "line hidden">
+                <div class = "subline">
+                    <div class = "wrapper box1" >
+                        <button id = "cd_no1" class = "item_button_1 hidden2">サンプル1</button>
+                    </div>
+                    <div class = "wrapper box2">
+                        <button id = "cd_no2" class = "item_button_2 hidden2">サンプル2</button>
+                    </div>
+                </div>
+                <div class = "subline">
+                    <div class = "wrapper box1">
+                        <button id = "cd_no3" class = "item_button_3 hidden2">サンプル3</button>
+                    </div>
+                    <div class = "wrapper box2">
+                        <button id = "cd_no4" class = "item_button_4 hidden2">サンプル4</button>
+                    </div>
+                </div>
+            </div>
+
+        <div id = "search_down" class = "0">
+        </div>
+        <div id ="button_wrapper">
+            <button id = "close_button" type = "button">×</button>
+
+        </div>
+
+        <!--
+            <button type="button" class="item_button hidden">サンプル</button>
+            <div id = "item_list" class="0"></div>
+         -->
+
     </div>
     <!-- 登録 -->
     <div id = "register_wrapper" class="wrapper">

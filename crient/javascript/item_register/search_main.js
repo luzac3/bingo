@@ -101,30 +101,36 @@ function search(arg_arr){
     return new Promise((resolve,reject) => {
         call_stored("get_item_list_001",arg_arr).then(function(data){
             let flag = true;
-            let base = $(".item_button").filter(":first");
+            let base = $(".line").filter(":first");
 
             // 項目リストの中身を空に
-            $("#item_list").empty();
+            $("#search_down").empty();
+
+            let num = 0;
 
             data.forEach(function(item){
-                // コピーオブジェクトを生成
-                let copy = base.clone();
-                copy.attr("class","item_list");
-                copy.val(item["ITM_CD"]);
-                copy.text(item["ITM_NAME"]);
+                // アイテム数が4で割れるかどうかで判定
+                switch(num % 4){
+                    case 0:
+                      // コピーオブジェクトを生成
+                      let copy = base.clone();
+                      copy.attr("class","line");
 
-                // コピーした要素を表示状態に切り替え
-                copy[0].style.display = "block";
+                      // コピーした要素を表示状態に切り替え
+                      copy[0].style.display = "block";
 
-                // 要素の最後にコピーしたクローンを挿入
-                $("#item_list").append(copy);
+                      // 要素の最後にコピーしたクローンを挿入
+                      $("#search_down").append(copy);
+                }
 
+                $(".line:last").find(".item_button_" + num % 4).val(item["ITM_CD"]);
+                $(".line:last").find(".item_button_" + num % 4).text(item["ITM_NAME"]);
 
                 // クリックイベントをセット
                 // 複数クリック対応
-                $(".item_list").off("click");
+                $("#search_down:button").off("click");
 
-                $(".item_list").on("click",function(){
+                $("#search_down:button").on("click",function(){
                     // アイテムのコードを取得
                     const item_cd = $(this).val();
                     // アイテム名を取得
