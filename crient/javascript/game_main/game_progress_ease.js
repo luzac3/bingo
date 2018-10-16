@@ -56,6 +56,14 @@ function msre_set_b(e){
         xStart = msre_property[i].posX;
         yStart = msre_property[i].posY;
 
+        /* クリア条件をチェックするように変更？ */
+        // クリア条件をチェックする場合、動作ごとに通信の必要ありか
+        // 条件がユーザ設定で変更できない場合、ここに記録した分だけで問題なし(クリアマスでのクリアとビンゴ数チェックだけに絞る場合)
+        // それでいくかー
+        // コードはクリアマスかビンゴか
+        // 設定はクリアマスの場合場所、ビンゴの場合数
+        // 設定数に達したらチェックを行う(ただしビンゴ/リーチの場合ビンゴ/リーチ達成の時点でチェックと通信を行う)
+
         xEnd = xStart + msre_property[i].width;
         yEnd = yStart + msre_property[i].height;
         if(xStart < x && x < xEnd && yStart < y && y < yEnd){
