@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <?php
-// headerの読み込みファイル(APIなど)のリスト
-readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
+    // headerの読み込みファイル(APIなど)のリスト
+    readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
 ?>
 <script type="text/javascript" src="/bingo/crient/javascript/main.js"></script>
 <script type="text/javascript" src="/bingo/crient/javascript/common/set_property.js"></script>
@@ -23,21 +23,26 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
 <title>ビンゴソロエールZZ</title>
 <body>
 <?php
+    $bng_no = 0;
+    $user_cd = 0;
+    $user_name = "";
+
     if(!empty($_COOKIE["user_cd"])){
         // ユーザーコード仕込み]
-        if(!empty($_GET["bng_no"])){
-            echo "<div id = 'set_bng_no' class = '" . $_GET["bng_no"] . "'></div>";
-            echo "<div id = 'set_user_cd' class = '" . $_COOKIE["user_cd"] . "'></div>";
-            echo "<div id = 'set_user_name' class = '" . $_COOKIE["user_name"] . "'></div>";
-        }else{
-            echo "<div id = 'set_bng_no' class = ''></div>";
-            echo "<div id = 'set_user_cd' class = ''></div>";
-            echo "<div id = 'set_user_name' class = ''></div>";
-        }
+        $user_cd = $_COOKIE["user_cd"];
+        $user_name = $_COOKIE["user_name"];
+        echo "<div id = 'set_user_cd' class = '" . $_COOKIE["user_cd"] . "'></div>";
+        echo "<div id = 'set_user_name' class = '" . $_COOKIE["user_name"] . "'></div>";
     }else{
-            echo "<div id = 'set_bng_no' class = ''></div>";
-            echo "<div id = 'set_user_cd' class = ''></div>";
-            echo "<div id = 'set_user_name' class = ''></div>";
+        echo "<div id = 'set_user_cd' class = ''></div>";
+        echo "<div id = 'set_user_name' class = ''></div>";
+    }
+
+    if(!empty($_GET["bng_no"])){
+        $bng_no = $_GET["bng_no"];
+        echo "<div id = 'set_bng_no' class = '" . $_GET["bng_no"] . "'></div>";
+    }else{
+        echo "<div id = 'set_bng_no' class = ''></div>";
     }
 ?>
 
@@ -46,8 +51,19 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
 <!-- ビンゴ番号入力画面 -->
 <div id = "input_bng_no">
     <form>
-        <input type="text" id = "bng_no">
-        <input type="text" id = "user_name">
+<?php
+    if($bng_no){
+        echo "<p>ビンゴ番号<input type='text' id = 'bng_no' value = '" . $bng_no . "' disabled='disabled'></p>";
+    }else{
+        echo "<p>ビンゴ番号<input type='text' id = 'bng_no'></p>";
+    }
+
+    if($user_name){
+        echo "<p>ビンゴ番号<input type='text' id = 'user_name' value = '" . $user_name . "' disabled='disabled'></p>";
+    }else{
+        echo "<p>ビンゴ番号<input type='text' id = 'user_name'></p>";
+    }
+?>
     </form>
     <button type="button" value="enter">参加</button>
 </div>
@@ -67,7 +83,7 @@ readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
         </form>
  -->
 
-        <div id = "searc_up">
+        <div id = "search_up">
             <form>
                 <p>
                     検索<input id="search_word" type="text">

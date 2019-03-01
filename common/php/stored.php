@@ -1,6 +1,6 @@
 <?php
 function stored($stored_cd,$arr_arg = null){
-    require_once ("conection.php");
+    require_once (dirname(__FILE__) . "/conection.php");
     $mysqli = db_connect ();
 
     // ストアドプロシージャ呼び出し構文生成

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <?php
+    require_once ($_SERVER['DOCUMENT_ROOT'] . "/bingo/common/php/stored.php");
     // マスタから来たかどうかでコードを分岐
     if(!empty($_GET["kind"])){
-        $kind_cd = $GET["kind"];
+        $kind_cd = $_GET["kind"];
     }else{
         header("Location: " . __root__ . "/bingo/entrance/html/index.html");
     }
@@ -10,15 +11,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<?php
+    readfile($_SERVER['DOCUMENT_ROOT']."/bingo/common/html/header.html");
+?>
+<script type="text/javascript" src="/bingo/entrance/javascript/bng_select.js"></script>
 <title>ビンゴ選択</title>
 </head>
 <body>
-echo "<div id = 'bng_list' class  = '" . $kind_cd . "'>\n";
 <?php
+    echo "<div id = 'bng_list' class  = '" . $kind_cd . "'>\n";
     $result = stored("get_bingo_list_001",null);
 
     forEach($result as $bingo){
-        echo "<p><a id = '" . $bingo["BNG_CD"] . "' href = 'javascript:void(0)'>" . $bingo["BNG_CD"] . "　" . $bingo["BNG_NAME"] . "</a></p>\n";
+        echo "<p><a id = '" . $bingo["BNG_NO"] . "' href = 'javascript:void(0)'>" . $bingo["BNG_NO"] . "　" . $bingo["BNG_NAME"] . "</a></p>\n";
     }
 ?>
 </div>
