@@ -32,11 +32,6 @@ function search_main(event){
 
         const len = search_word_arr.length;
 
-        // 要素が一つもない場合、---を表示
-        if(len > 0){
-
-        }
-
         for(let i = 1; i <= 3; i++){
             if(i > len){
                 arg_arr["search_word" + i] = "";
@@ -129,6 +124,9 @@ function search(arg_arr){
 
                 $(".line:last").find(".item_button_" + num % 4).val(item["ITM_CD"]);
                 $(".line:last").find(".item_button_" + num % 4).text(item["ITM_NAME"]);
+                // hidden2を削除、かつ表示状態に変更
+
+                num++;
 
                 // クリックイベントをセット
                 // 複数クリック対応
