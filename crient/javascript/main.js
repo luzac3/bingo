@@ -59,22 +59,34 @@ function main(_this){
                     bng_no:user_property.bng_no
                 }
                 call_stored("get_tag_list_001",arg_arr).then(function(tag_list){
+                    const tagElem = document.getElementsByClassName("tag");
+                    let option = document.createElement("option");
 
                     if(tag_list != "データ取得エラー"){
                         // タグを設定
-                        const base = $("#tag_sample input").filter(":first-child");
-                        tag_list.forEach(function(tag){
-                            // copyオブジェクトを作成
-                            let copy = base.clone();
-                            copy.attr("class","tag_list");
-                            copy.attr("name","tag");
-                            copy.val(tag["BNG_TAG"]);
+                        for(let i = 0; i < 3; i++){
+                            if(!tag_list){
+                              option = document.createElement("option");
 
-                            // 要素の最後にコピーしたクローンを挿入
-                            $("#tag").append(copy);
-                            $("#tag").append(tag["BNG_TAG"]);
-                        });
+                              option.value = "";
+                              option.text = "---";
+
+                              // 要素の最後に挿入
+                              tagElem[i].appendChild(option);
+
+                              continue;
+                            }
+                            tag_list.forEach(function(tag){
+                                option = document.createElement("option");
+                                option.value = tag["BNG_TAG"];
+                                option.text = tag["BNG_TAG"];
+
+                                // 要素の最後に挿入
+                                tagElem[i].appendChild(option);
+                            });
+                        }
                     }
+
                     item_register(user_property);
                 });
             }
