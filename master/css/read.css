@@ -4,6 +4,14 @@ body{
     font-size:62.5%;
 }
 
+div::-webkit-scrollbar{
+    display:none;
+}
+
+div{
+    -ms-overflow-style:none;
+}
+
 #show_item{
     border:solid 1px #000000;
     position:absolute;

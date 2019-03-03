@@ -10,10 +10,10 @@ $(document).ready(function(){
             // クライアントページに遷移
               location.href = "/bingo/entrance/html/bng_select.html?kind=1";
               break;
-          case "master":
+          case "execute":
               // ゲーム一覧画面に遷移→マスタではなくエントランス？
               // マスタはあくまでゲーム開始後の画面を想定
-              location.href = "/bingo/entrance/html/bng_select.html?kind=0";
+              location.href = "/bingo/entrance/html/bng_select.html?kind=2";
               break;
         }
     });
